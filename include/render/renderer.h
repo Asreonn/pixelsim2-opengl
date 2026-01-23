@@ -1,0 +1,49 @@
+#ifndef PIXELSIM_RENDERER_H
+#define PIXELSIM_RENDERER_H
+
+#include "core/types.h"
+#include "core/config.h"
+
+struct World;
+struct Brush;
+struct GLFWwindow;
+
+// Renderer state
+typedef struct Renderer {
+    struct GLFWwindow* window;
+    u32 shader_program;
+    u32 vao, vbo, ebo;
+    u32 texture;
+    u8 pixel_buffer[WORLD_HEIGHT][WORLD_WIDTH][4];  // RGBA buffer
+    bool show_temperature;
+    bool show_pressure;
+    f32 zoom;
+    f32 offset_x, offset_y;
+} Renderer;
+
+// Lifecycle
+bool renderer_init(Renderer* renderer);
+void renderer_shutdown(Renderer* renderer);
+
+// Update texture from world
+void renderer_update_texture(Renderer* renderer, struct World* world, struct Brush* brush);
+void renderer_update_chunk_texture(Renderer* renderer, struct World* world, i32 chunk_x, i32 chunk_y);
+
+// Render
+void renderer_draw(Renderer* renderer);
+void renderer_present(Renderer* renderer);
+
+// View controls
+void renderer_set_zoom(Renderer* renderer, f32 zoom);
+void renderer_set_offset(Renderer* renderer, f32 x, f32 y);
+void renderer_toggle_temperature_view(Renderer* renderer);
+void renderer_toggle_pressure_view(Renderer* renderer);
+
+// Coordinate conversion
+void renderer_screen_to_world(Renderer* renderer, f32 screen_x, f32 screen_y, i32* world_x, i32* world_y);
+
+// Window
+bool renderer_should_close(Renderer* renderer);
+void renderer_poll_events(void);
+
+#endif

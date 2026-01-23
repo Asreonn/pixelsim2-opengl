@@ -1,0 +1,182 @@
+[
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/glad.dir/external/glad/src/glad.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/src/glad.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/src/glad.c",
+  "output": "CMakeFiles/glad.dir/external/glad/src/glad.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/main.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/main.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/main.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/main.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/core/config.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/core/config.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/core/config.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/core/config.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/core/math_utils.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/core/math_utils.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/physics/physics.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/physics.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/physics.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/physics/physics.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/physics/gravity.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/gravity.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/gravity.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/physics/gravity.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/physics/temperature.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/temperature.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/temperature.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/physics/temperature.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/physics/movement.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/movement.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/movement.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/physics/movement.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/physics/pressure.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/pressure.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/pressure.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/physics/pressure.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/physics/phase_transition.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/phase_transition.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/phase_transition.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/physics/phase_transition.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/world/pixel.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/world/pixel.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/world/pixel.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/world/pixel.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/world/chunk.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/world/chunk.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/world/chunk.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/world/chunk.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/world/world.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/world/world.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/world/world.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/world/world.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/world/grid_ops.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/world/grid_ops.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/world/grid_ops.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/world/grid_ops.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/materials/material_registry.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/material_registry.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/material_registry.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/materials/material_registry.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/interactions.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/interactions.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/materials/definitions/air.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/air.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/air.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/materials/definitions/air.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/materials/definitions/sand.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/sand.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/sand.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/materials/definitions/sand.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/materials/definitions/water.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/water.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/water.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/materials/definitions/water.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/materials/definitions/stone.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/stone.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/stone.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/materials/definitions/stone.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/materials/definitions/fire.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/fire.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/fire.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/materials/definitions/fire.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/materials/definitions/steam.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/steam.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/steam.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/materials/definitions/steam.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/ice.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/ice.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/glass.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/glass.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/mud.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/mud.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/render/renderer.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/renderer.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/renderer.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/render/renderer.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/render/shader.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/shader.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/shader.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/render/shader.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/render/color.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/color.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/color.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/render/color.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/input/input.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/input/input.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/input/input.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/input/input.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/input/brush.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/input/brush.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/input/brush.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/input/brush.c.o"
+}
+]

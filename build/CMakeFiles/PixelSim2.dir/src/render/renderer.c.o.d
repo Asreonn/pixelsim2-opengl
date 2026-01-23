@@ -1,0 +1,47 @@
+CMakeFiles/PixelSim2.dir/src/render/renderer.c.o: \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/renderer.c \
+ /usr/include/stdc-predef.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/render/renderer.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h \
+ /usr/include/stdint.h /usr/include/bits/libc-header-start.h \
+ /usr/include/features.h /usr/include/features-time64.h \
+ /usr/include/bits/wordsize.h /usr/include/bits/timesize.h \
+ /usr/include/sys/cdefs.h /usr/include/bits/long-double.h \
+ /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
+ /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+ /usr/include/bits/time64.h /usr/include/bits/wchar.h \
+ /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
+ /usr/include/bits/stdint-least.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/config.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/render/shader.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/render/color.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/world.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/chunk.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/pixel.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_registry.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/input/brush.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include/glad/glad.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include/KHR/khrplatform.h \
+ /usr/include/GLFW/glfw3.h /usr/include/ctype.h \
+ /usr/include/bits/endian.h /usr/include/bits/endianness.h \
+ /usr/include/bits/types/locale_t.h /usr/include/bits/types/__locale_t.h \
+ /usr/include/math.h /usr/include/bits/math-vector.h \
+ /usr/include/bits/libm-simd-decl-stubs.h /usr/include/bits/floatn.h \
+ /usr/include/bits/floatn-common.h /usr/include/bits/flt-eval-method.h \
+ /usr/include/bits/fp-logb.h /usr/include/bits/fp-fast.h \
+ /usr/include/bits/mathcalls-macros.h \
+ /usr/include/bits/mathcalls-helper-functions.h \
+ /usr/include/bits/mathcalls.h /usr/include/stdio.h \
+ /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h \
+ /usr/include/bits/types/__fpos_t.h /usr/include/bits/types/__mbstate_t.h \
+ /usr/include/bits/types/__fpos64_t.h /usr/include/bits/types/__FILE.h \
+ /usr/include/bits/types/FILE.h /usr/include/bits/types/struct_FILE.h \
+ /usr/include/bits/types/cookie_io_functions_t.h \
+ /usr/include/bits/stdio_lim.h /usr/include/bits/stdio.h \
+ /usr/include/string.h /usr/include/strings.h
