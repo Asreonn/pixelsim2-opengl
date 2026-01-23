@@ -8,8 +8,8 @@ MaterialDef MAT_DEF_MUD = {
     
     .mass = 0.15f,
     .density = 1800.0f,
-    .viscosity = 3.5f,
-    .friction = 0.8f,
+    .viscosity = 6.0f,
+    .friction = 1.2f,
     .elasticity = 0.0f,
     .dispersion = 1.5f,
     
@@ -26,8 +26,8 @@ MaterialDef MAT_DEF_MUD = {
     .freezes_into = MAT_MUD,  // Frozen mud stays mud
     .burns_into = MAT_AIR,
     
-    .base_color = {120, 75, 35, 255},  // Rich brown
-    .color_variation = 25,
+    .base_color = {140, 90, 50, 255},  // Earthy clay
+    .color_variation = 18,
     
     .flags = MAT_FLAG_NONE,
     .lifetime = 0,

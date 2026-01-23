@@ -35,8 +35,8 @@ MaterialDef MAT_DEF_FIRE = {
     .freezes_into = MAT_AIR,
     .burns_into = MAT_AIR,
     
-    .base_color = {255, 140, 20, 255},  // Vivid ember
-    .color_variation = 50,
+    .base_color = {255, 170, 40, 255},  // Bright ember
+    .color_variation = 40,
     
     .flags = MAT_FLAG_EMITS_HEAT | MAT_FLAG_EMITS_LIGHT,
     .lifetime = 30,  // Burns for about 0.5 second

@@ -283,7 +283,7 @@ void renderer_update_chunk_texture(Renderer* renderer, World* world, i32 chunk_x
 }
 
 void renderer_draw(Renderer* renderer) {
-    glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
+    glClearColor(0.18f, 0.23f, 0.28f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
     shader_use(renderer->shader_program);

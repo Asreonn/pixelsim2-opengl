@@ -8,10 +8,10 @@ MaterialDef MAT_DEF_SAND = {
     
     .mass = 0.1f,
     .density = 1600.0f,
-    .viscosity = 0.8f,
-    .friction = 0.45f,
+    .viscosity = 1.0f,
+    .friction = 0.55f,
     .elasticity = 0.0f,
-    .dispersion = 3.0f,
+    .dispersion = 4.0f,
     
     .thermal_conductivity = 0.25f,
     .specific_heat = 830.0f,
@@ -26,8 +26,8 @@ MaterialDef MAT_DEF_SAND = {
     .freezes_into = MAT_AIR,
     .burns_into = MAT_AIR,
     
-    .base_color = {230, 200, 90, 255},  // Vibrant sand
-    .color_variation = 20,
+    .base_color = {240, 210, 150, 255},  // Warm sand
+    .color_variation = 18,
     
     .flags = MAT_FLAG_NONE,
     .lifetime = 0,

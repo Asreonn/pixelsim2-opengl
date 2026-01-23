@@ -26,8 +26,8 @@ MaterialDef MAT_DEF_STONE = {
     .freezes_into = MAT_AIR,
     .burns_into = MAT_AIR,
     
-    .base_color = {120, 125, 140, 255},  // Cool gray
-    .color_variation = 30,
+    .base_color = {150, 155, 165, 255},  // Soft granite
+    .color_variation = 22,
     
     .flags = MAT_FLAG_NONE,
     .lifetime = 0,

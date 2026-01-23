@@ -7,7 +7,7 @@
 
 Color color_calculate_pixel(const Pixel* pixel, bool show_temp, bool show_pressure) {
     if (!pixel || pixel->material_id == MAT_AIR) {
-        return (Color){30, 30, 40, 255}; // Dark background
+        return (Color){46, 58, 70, 255}; // Soft background
     }
     
     MaterialDef* mat = material_get(pixel->material_id);
