@@ -13,10 +13,10 @@ MaterialDef MAT_DEF_SAND = {
     .elasticity = 0.0f,
     .dispersion = 4.0f,
     
-    .thermal_conductivity = 0.25f,
+    .thermal_conductivity = 0.6f,
     .specific_heat = 830.0f,
     
-    .melting_point = 1700.0f,
+    .melting_point = 1150.0f,
     .boiling_point = 0,
     .freezing_point = 0,
     .ignition_point = 0,
