@@ -67,7 +67,6 @@ void movement_update_powder(World* world, i32 x, i32 y) {
     f32 spread_f = mat->dispersion / resistance;
     i32 spread = clampi((i32)roundf(spread_f), 1, MAX_SPREAD);
     if (grid_try_move_down_diagonal_spread(world, x, y, spread)) return;
-    grid_try_move_horizontal(world, x, y, spread);
 }
 
 void movement_update_liquid(World* world, i32 x, i32 y) {
@@ -81,6 +80,8 @@ void movement_update_liquid(World* world, i32 x, i32 y) {
     if (grid_try_move_down(world, x, y)) return;
 
     i32 spread = movement_get_spread_distance(mat, pixel->temperature);
+    if (grid_try_move_horizontal(world, x, y, spread)) return;
+
     bool down_left = grid_can_move_to(world, x, y, x - 1, y + 1);
     bool down_right = grid_can_move_to(world, x, y, x + 1, y + 1);
 

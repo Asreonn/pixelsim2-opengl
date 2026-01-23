@@ -81,7 +81,7 @@ static bool interaction_apply_mud(World* world, i32 x, i32 y, f32 temp) {
         i32 best_y = 0;
         u32 best_hash = 0xFFFFFFFFu;
 
-        for (i32 dy = -r; dy <= r; dy++) {
+        for (i32 dy = 0; dy <= r; dy++) {
             for (i32 dx = -r; dx <= r; dx++) {
                 if (dx * dx + dy * dy > r_sq) continue;
 

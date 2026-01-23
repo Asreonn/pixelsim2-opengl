@@ -26,7 +26,7 @@ MaterialDef MAT_DEF_GLASS = {
     .freezes_into = MAT_AIR,
     .burns_into = MAT_AIR,
     
-    .base_color = {200, 230, 255, 180},  // Transparent blueish
+    .base_color = {180, 240, 255, 190},  // Bright glass blue
     .color_variation = 10,
     
     .flags = MAT_FLAG_NONE,

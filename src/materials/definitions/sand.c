@@ -26,7 +26,7 @@ MaterialDef MAT_DEF_SAND = {
     .freezes_into = MAT_AIR,
     .burns_into = MAT_AIR,
     
-    .base_color = {194, 178, 128, 255},  // Sandy beige
+    .base_color = {230, 200, 90, 255},  // Vibrant sand
     .color_variation = 20,
     
     .flags = MAT_FLAG_NONE,

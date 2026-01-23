@@ -15,6 +15,23 @@ static bool physics_is_gas(MaterialState state) {
     return state == STATE_GAS || state == STATE_PLASMA;
 }
 
+static void physics_reset_gas_updates(World* world) {
+    for (i32 cy = 0; cy < CHUNKS_Y; cy++) {
+        for (i32 cx = 0; cx < CHUNKS_X; cx++) {
+            Chunk* chunk = &world->chunks[cy][cx];
+            for (i32 ly = 0; ly < CHUNK_SIZE; ly++) {
+                for (i32 lx = 0; lx < CHUNK_SIZE; lx++) {
+                    Pixel* pixel = chunk_get_pixel(chunk, lx, ly);
+                    if (!pixel || pixel->material_id == MAT_AIR) continue;
+                    if (physics_is_gas(material_get_state(pixel->material_id))) {
+                        pixel->updated = 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
 static void physics_update_chunk_pass(World* world, Chunk* chunk, f32 dt, bool gas_pass) {
     i32 base_x = chunk->chunk_x * CHUNK_SIZE;
     i32 base_y = chunk->chunk_y * CHUNK_SIZE;
@@ -57,6 +74,8 @@ void physics_update(World* world, f32 dt) {
 
         if (cy == 0) break;
     }
+
+    physics_reset_gas_updates(world);
 
     for (i32 cy = 0; cy < CHUNKS_Y; cy++) {
         i32 cx_start = ((cy + world->tick) % 2 == 0) ? 0 : CHUNKS_X - 1;

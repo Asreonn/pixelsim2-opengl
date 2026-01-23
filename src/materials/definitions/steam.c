@@ -26,7 +26,7 @@ MaterialDef MAT_DEF_STEAM = {
     .freezes_into = MAT_WATER,
     .burns_into = MAT_AIR,
     
-    .base_color = {200, 200, 220, 150},  // Light gray, semi-transparent
+    .base_color = {210, 220, 240, 170},  // Soft blue-gray
     .color_variation = 20,
     
     .flags = MAT_FLAG_NONE,

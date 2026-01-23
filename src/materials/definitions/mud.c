@@ -26,7 +26,7 @@ MaterialDef MAT_DEF_MUD = {
     .freezes_into = MAT_MUD,  // Frozen mud stays mud
     .burns_into = MAT_AIR,
     
-    .base_color = {101, 67, 33, 255},  // Brown
+    .base_color = {120, 75, 35, 255},  // Rich brown
     .color_variation = 25,
     
     .flags = MAT_FLAG_NONE,

@@ -26,7 +26,7 @@ MaterialDef MAT_DEF_ICE = {
     .freezes_into = MAT_AIR,
     .burns_into = MAT_AIR,
     
-    .base_color = {180, 220, 255, 230},  // Light blue, slightly transparent
+    .base_color = {170, 230, 255, 220},  // Crisp ice blue
     .color_variation = 15,
     
     .flags = MAT_FLAG_NONE,

@@ -26,7 +26,7 @@ MaterialDef MAT_DEF_WATER = {
     .freezes_into = MAT_ICE,
     .burns_into = MAT_AIR,
     
-    .base_color = {50, 100, 200, 200},  // Blue, semi-transparent
+    .base_color = {40, 130, 240, 210},  // Vivid blue
     .color_variation = 15,
     
     .flags = MAT_FLAG_NONE,

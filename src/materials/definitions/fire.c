@@ -35,7 +35,7 @@ MaterialDef MAT_DEF_FIRE = {
     .freezes_into = MAT_AIR,
     .burns_into = MAT_AIR,
     
-    .base_color = {255, 100, 0, 255},  // Orange-red
+    .base_color = {255, 140, 20, 255},  // Vivid ember
     .color_variation = 50,
     
     .flags = MAT_FLAG_EMITS_HEAT | MAT_FLAG_EMITS_LIGHT,
