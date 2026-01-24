@@ -224,7 +224,11 @@ static void physics_wake_neighbor_chunks(World* world) {
 }
 
 void physics_update(World* world, f32 dt) {
-    // Choose parallel or serial based on configuration
+    // PHASE 1: Pre-calculate stack pressure for all pixels
+    // This must happen BEFORE movement so pixels know their pressure
+    pressure_calculate_all_stacks(world);
+    
+    // PHASE 2: Movement and physics update
     if (world->use_parallel && world->thread_pool) {
         physics_update_parallel(world, dt);
     } else {

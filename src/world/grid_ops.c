@@ -375,3 +375,38 @@ bool grid_try_pressure_push(World* world, i32 x, i32 y, f32 pressure, f32 viscos
 i32 grid_get_weight_above(World* world, i32 x, i32 y, i32 max_height) {
     return (i32)grid_get_stack_pressure(world, x, y, max_height);
 }
+
+// Propagate pressure upward - push particles above to spread out
+// This creates avalanche/cascade effect
+bool grid_propagate_pressure_up(World* world, i32 x, i32 y, i32 max_height) {
+    bool any_moved = false;
+    
+    // Start from position and go up, trying to push each particle sideways
+    for (i32 dy = 1; dy <= max_height; dy++) {
+        Pixel* above = world_get_pixel(world, x, y - dy);
+        if (!above) break;
+        if (above->material_id == MAT_AIR) break;
+        
+        MaterialState state = MAT_CACHE_STATE(above->material_id);
+        if (state != STATE_POWDER && state != STATE_LIQUID) break;
+        
+        // Try to push this particle sideways
+        f32 viscosity = MAT_CACHE_VISCOSITY(above->material_id);
+        
+        // Calculate pressure at this height (decreases as we go up)
+        f32 pressure = (f32)(max_height - dy + 1) * 0.8f;
+        
+        if (grid_try_pressure_push(world, x, y - dy, pressure, viscosity)) {
+            any_moved = true;
+            // After moving, the column above might have shifted
+            // Check if there's still something at this position
+            Pixel* check = world_get_pixel(world, x, y - dy);
+            if (!check || check->material_id == MAT_AIR) {
+                // Gap created, stop propagation
+                break;
+            }
+        }
+    }
+    
+    return any_moved;
+}

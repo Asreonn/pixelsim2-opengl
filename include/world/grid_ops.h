@@ -38,5 +38,6 @@ bool   grid_try_move_up_diagonal(World* world, i32 x, i32 y);
 f32    grid_get_stack_pressure(World* world, i32 x, i32 y, i32 max_height);
 i32    grid_get_weight_above(World* world, i32 x, i32 y, i32 max_height);
 bool   grid_try_pressure_push(World* world, i32 x, i32 y, f32 pressure, f32 viscosity);
+bool   grid_propagate_pressure_up(World* world, i32 x, i32 y, i32 max_height);
 
 #endif

@@ -29,4 +29,8 @@ void pressure_create_explosion(struct World* world, i32 x, i32 y, f32 power);
 // Transfer pressure between pixels
 void pressure_transfer(struct Pixel* p1, struct Pixel* p2, f32 rate, f32 dt);
 
+// Pre-calculate stack pressure for movement (call before movement update)
+void pressure_calculate_chunk_stack(struct World* world, i32 chunk_x, i32 chunk_y);
+void pressure_calculate_all_stacks(struct World* world);
+
 #endif

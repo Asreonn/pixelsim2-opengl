@@ -61,8 +61,10 @@ void movement_update_powder(World* world, i32 x, i32 y) {
     MaterialDef* mat = material_get(pixel->material_id);
     if (!mat) return;
 
+    // Stack pressure was pre-calculated in pressure_calculate_all_stacks()
+    f32 stack_pressure = (pixel->pressure - AMBIENT_PRESSURE) / 15000.0f;
+
     // Use velocity to determine how many steps to attempt
-    // Faster falling pixels move more cells per tick
     i32 steps = clampi((i32)fabsf(pixel->velocity_y), 1, 5);
     
     i32 curr_x = x, curr_y = y;
@@ -71,7 +73,7 @@ void movement_update_powder(World* world, i32 x, i32 y) {
     for (i32 step = 0; step < steps; step++) {
         // Try to move straight down first
         if (grid_try_move_down(world, curr_x, curr_y)) {
-            curr_y++;  // Update position for next step
+            curr_y++;
             moved = true;
             continue;
         }
@@ -82,21 +84,27 @@ void movement_update_powder(World* world, i32 x, i32 y) {
         i32 spread = clampi((i32)roundf(spread_f), 1, MAX_SPREAD);
         
         if (grid_try_move_down_diagonal_spread(world, curr_x, curr_y, spread)) {
-            // Diagonal move succeeded - reduce velocity since we hit something
-            pixel = world_get_pixel(world, curr_x, curr_y + 1);  // Get at new position
+            pixel = world_get_pixel(world, curr_x, curr_y + 1);
             if (pixel) {
-                pixel->velocity_y *= 0.7f;  // Energy loss on bounce
+                pixel->velocity_y *= 0.7f;
             }
             moved = true;
         }
-        break;  // Couldn't move, stop trying
+        break;
     }
     
-    // If couldn't move naturally, check for pressure from above
-    if (!moved) {
-        i32 weight = grid_get_weight_above(world, curr_x, curr_y, 8);
-        if (weight > 0) {
-            grid_try_pressure_push(world, curr_x, curr_y, weight);
+    // Pressure-based spreading - use pre-calculated pressure
+    if (stack_pressure > 0.3f) {
+        Pixel* current = world_get_pixel(world, curr_x, curr_y);
+        if (current && current->material_id != MAT_AIR) {
+            Pixel* below = world_get_pixel(world, curr_x, curr_y + 1);
+            if (below && below->material_id != MAT_AIR) {
+                bool pushed = grid_try_pressure_push(world, curr_x, curr_y, stack_pressure, mat->viscosity);
+                
+                if (!pushed && stack_pressure > 1.5f) {
+                    grid_propagate_pressure_up(world, curr_x, curr_y, 6);
+                }
+            }
         }
     }
 }
@@ -108,9 +116,11 @@ void movement_update_liquid(World* world, i32 x, i32 y) {
     MaterialDef* mat = material_get(pixel->material_id);
     if (!mat) return;
     
+    // Stack pressure was pre-calculated
+    f32 stack_pressure = (pixel->pressure - AMBIENT_PRESSURE) / 15000.0f;
+    
     i32 spread = movement_get_spread_distance(mat, pixel->temperature);
     
-    // Use velocity to determine movement steps
     // Liquids can move multiple cells when falling fast
     i32 steps = clampi((i32)fabsf(pixel->velocity_y), 1, 4);
     
@@ -118,20 +128,17 @@ void movement_update_liquid(World* world, i32 x, i32 y) {
     bool moved = false;
     
     for (i32 step = 0; step < steps; step++) {
-        // Try to move down first
         if (grid_try_move_down(world, curr_x, curr_y)) {
             curr_y++;
             moved = true;
             continue;
         }
         
-        // Can't move straight down - check diagonals
         bool down_left = grid_can_move_to(world, curr_x, curr_y, curr_x - 1, curr_y + 1);
         bool down_right = grid_can_move_to(world, curr_x, curr_y, curr_x + 1, curr_y + 1);
         
         if (down_left || down_right) {
             if (down_left && down_right) {
-                // Both open - use pressure-based diagonal
                 if (grid_try_move_down_diagonal(world, curr_x, curr_y)) {
                     moved = true;
                     break;
@@ -149,19 +156,22 @@ void movement_update_liquid(World* world, i32 x, i32 y) {
             }
         }
         
-        // Couldn't move down at all - spread horizontally
         if (grid_try_move_horizontal(world, curr_x, curr_y, spread)) {
             moved = true;
         }
         break;
     }
     
-    // If couldn't move naturally, check for pressure from above
-    // Liquids respond more to pressure than powders
-    if (!moved) {
-        i32 weight = grid_get_weight_above(world, curr_x, curr_y, 10);
-        if (weight > 0) {
-            grid_try_pressure_push(world, curr_x, curr_y, weight + 1);  // +1 because liquids flow easier
+    // Liquids always try pressure push - they flow very easily
+    if (stack_pressure > 0.2f) {
+        Pixel* below = world_get_pixel(world, curr_x, curr_y + 1);
+        if (below && below->material_id != MAT_AIR) {
+            f32 effective_viscosity = mat->viscosity * 0.3f;
+            bool pushed = grid_try_pressure_push(world, curr_x, curr_y, stack_pressure + 0.5f, effective_viscosity);
+            
+            if (!pushed && stack_pressure > 1.0f) {
+                grid_propagate_pressure_up(world, curr_x, curr_y, 8);
+            }
         }
     }
 }

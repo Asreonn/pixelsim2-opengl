@@ -82,15 +82,29 @@ Color color_from_temperature(f32 temperature) {
 }
 
 Color color_from_pressure(f32 pressure) {
-    f32 normalized = (pressure - AMBIENT_PRESSURE) / (EXPLOSION_THRESHOLD - AMBIENT_PRESSURE);
-    normalized = clampf(normalized, -1, 1);
+    // Scale pressure relative to ambient - stack pressure adds ~10000-120000
+    f32 over_ambient = pressure - AMBIENT_PRESSURE;
+    
+    // Normalize to 0-1 range where 50000 over ambient is "max" for visualization
+    f32 normalized = over_ambient / 80000.0f;
+    normalized = clampf(normalized, -0.5f, 1.0f);
     
     if (normalized < 0) {
-        // Low pressure: blue
-        return (Color){0, 0, (u8)(200 * -normalized), 150};
+        // Low pressure (below ambient): blue
+        f32 t = -normalized * 2.0f;
+        return (Color){0, (u8)(50 * t), (u8)(200 * t), (u8)(180 * t)};
+    } else if (normalized < 0.3f) {
+        // Low stack pressure: green tint
+        f32 t = normalized / 0.3f;
+        return (Color){0, (u8)(150 * t), (u8)(50 * t), (u8)(120 * t)};
+    } else if (normalized < 0.6f) {
+        // Medium pressure: yellow
+        f32 t = (normalized - 0.3f) / 0.3f;
+        return (Color){(u8)(255 * t), (u8)(200 - 50 * t), 0, (u8)(150 + 50 * t)};
     } else {
-        // High pressure: red
-        return (Color){(u8)(255 * normalized), (u8)(100 * (1 - normalized)), 0, 150};
+        // High pressure: orange to red
+        f32 t = (normalized - 0.6f) / 0.4f;
+        return (Color){255, (u8)(150 * (1 - t)), 0, (u8)(200 + 55 * t)};
     }
 }
 
