@@ -25,6 +25,7 @@ typedef struct Input {
     // World coordinates
     i32 world_x, world_y;
     bool in_bounds;
+    bool in_ui;  // Mouse is in UI panel area
     i32 prev_world_x, prev_world_y;
     bool prev_in_bounds;
 } Input;

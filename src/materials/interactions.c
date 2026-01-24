@@ -133,13 +133,20 @@ static bool interaction_should_apply(World* world, i32 x1, i32 y1, i32 x2, i32 y
     }
 
     // Velocity factor (0-2): squared ratio suppresses low velocities
+    // with absolute minimum threshold - no erosion below this
     f32 velocity_factor = 1.0f;
     if (inter->min_velocity > 0) {
-        // v/min_v ratio, squared to suppress low values
-        // 0.25 → 0.0625, 0.5 → 0.25, 1.0 → 1.0, 2.0 → 4.0 (capped)
-        f32 ratio = velocity / inter->min_velocity;
-        velocity_factor = ratio * ratio;
-        velocity_factor = clampf(velocity_factor, 0.0f, 2.0f);
+        // Absolute minimum threshold: below this = no erosion at all
+        const f32 ABSOLUTE_MIN_VELOCITY = 1.0f;
+        if (velocity < ABSOLUTE_MIN_VELOCITY) {
+            velocity_factor = 0.0f;  // Completely prevent erosion for still water
+        } else {
+            // v/min_v ratio, squared to suppress low values
+            // 0.25 → 0.0625, 0.5 → 0.25, 1.0 → 1.0, 2.0 → 4.0 (capped)
+            f32 ratio = velocity / inter->min_velocity;
+            velocity_factor = ratio * ratio;
+            velocity_factor = clampf(velocity_factor, 0.0f, 2.0f);
+        }
     }
 
     // Effective probability = base * all factors

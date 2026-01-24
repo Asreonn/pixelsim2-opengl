@@ -31,7 +31,6 @@ CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o: /home/asreonn/uwu/Scripts/VSCo
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
-  /usr/include/bits/stdlib-bsearch.h \
   /usr/include/bits/stdlib-float.h \
   /usr/include/bits/struct_mutex.h \
   /usr/include/bits/struct_rwlock.h \
@@ -97,9 +96,7 @@ CMakeFiles/PixelSim2.dir/src/core/thread_pool.c.o: /home/asreonn/uwu/Scripts/VSC
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
-  /usr/include/bits/stdio.h \
   /usr/include/bits/stdio_lim.h \
-  /usr/include/bits/stdlib-bsearch.h \
   /usr/include/bits/stdlib-float.h \
   /usr/include/bits/struct_mutex.h \
   /usr/include/bits/struct_rwlock.h \
@@ -264,9 +261,7 @@ CMakeFiles/PixelSim2.dir/src/main.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelS
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
-  /usr/include/bits/stdio.h \
   /usr/include/bits/stdio_lim.h \
-  /usr/include/bits/stdlib-bsearch.h \
   /usr/include/bits/stdlib-float.h \
   /usr/include/bits/struct_mutex.h \
   /usr/include/bits/struct_rwlock.h \
@@ -403,6 +398,32 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o: /home/asreonn/uwu/
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
 
 CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/ice.c \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
+  /usr/include/bits/libc-header-start.h \
+  /usr/include/bits/long-double.h \
+  /usr/include/bits/stdint-intn.h \
+  /usr/include/bits/stdint-least.h \
+  /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/time64.h \
+  /usr/include/bits/timesize.h \
+  /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h \
+  /usr/include/bits/wchar.h \
+  /usr/include/bits/wordsize.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/gnu/stubs-64.h \
+  /usr/include/gnu/stubs.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
+
+CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/metal.c \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
@@ -1047,7 +1068,6 @@ CMakeFiles/PixelSim2.dir/src/render/renderer.c.o: /home/asreonn/uwu/Scripts/VSCo
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
-  /usr/include/bits/stdio.h \
   /usr/include/bits/stdio_lim.h \
   /usr/include/bits/time64.h \
   /usr/include/bits/timesize.h \
@@ -1101,9 +1121,7 @@ CMakeFiles/PixelSim2.dir/src/render/shader.c.o: /home/asreonn/uwu/Scripts/VSCode
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
-  /usr/include/bits/stdio.h \
   /usr/include/bits/stdio_lim.h \
-  /usr/include/bits/stdlib-bsearch.h \
   /usr/include/bits/stdlib-float.h \
   /usr/include/bits/struct_mutex.h \
   /usr/include/bits/struct_rwlock.h \
@@ -1286,9 +1304,7 @@ CMakeFiles/PixelSim2.dir/src/world/world.c.o: /home/asreonn/uwu/Scripts/VSCode/C
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
-  /usr/include/bits/stdio.h \
   /usr/include/bits/stdio_lim.h \
-  /usr/include/bits/stdlib-bsearch.h \
   /usr/include/bits/stdlib-float.h \
   /usr/include/bits/struct_mutex.h \
   /usr/include/bits/struct_rwlock.h \
@@ -1356,7 +1372,6 @@ PixelSim2: /lib64/ld-linux-x86-64.so.2 \
   /usr/lib64/libm.so \
   /usr/lib/gcc/x86_64-redhat-linux/15/crtbegin.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/crtend.o \
-  /usr/lib/gcc/x86_64-redhat-linux/15/crtfastmath.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a \
   /usr/lib/gcc/x86_64-redhat-linux/15/libgcc_s.so \
   /usr/lib64/libGLX.so \
@@ -1378,6 +1393,7 @@ PixelSim2: /lib64/ld-linux-x86-64.so.2 \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/fire.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.o \
+  CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/sand.c.o \
@@ -1431,6 +1447,8 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o:
 
 CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o:
 
+CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o:
+
 CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o:
 
 CMakeFiles/PixelSim2.dir/src/main.c.o:
@@ -1444,8 +1462,6 @@ CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o:
 /usr/lib64/libOpenGL.so:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/crtfastmath.o:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/crtend.o:
 
@@ -1478,6 +1494,8 @@ CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o:
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/renderer.c:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/render/color.h:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/color.c:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/physics/pressure.h:
 
@@ -1529,14 +1547,6 @@ CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o:
 
 /usr/include/bits/types/time_t.h:
 
-CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/steam.c:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/mud.c:
-
-/usr/include/bits/types/struct_timeval.h:
-
 CMakeFiles/PixelSim2.dir/src/physics/movement.c.o:
 
 /usr/include/bits/types/struct_timespec.h:
@@ -1564,14 +1574,6 @@ CMakeFiles/PixelSim2.dir/src/core/thread_pool.c.o:
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/input/brush.c:
 
 /usr/include/bits/types/__FILE.h:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/color.c:
-
-/usr/include/bits/stdlib-bsearch.h:
-
-/usr/include/time.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h:
 
 /usr/include/bits/stdlib-float.h:
 
@@ -1644,6 +1646,14 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/air.c.o:
 /lib64/libmvec.so.1:
 
 /usr/include/bits/pthreadtypes.h:
+
+CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/steam.c:
+
+/usr/include/bits/types/struct_timeval.h:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/mud.c:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/core/config.c:
 
@@ -1729,6 +1739,10 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/air.c.o:
 
 /usr/include/bits/getopt_posix.h:
 
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/movement.c:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include/glad/glad.h:
+
 /lib64/libm.so.6:
 
 /usr/include/bits/atomic_wide_counter.h:
@@ -1746,14 +1760,6 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/air.c.o:
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/core/math_utils.c:
 
 /usr/include/bits/types/struct___jmp_buf_tag.h:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/movement.c:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include/glad/glad.h:
-
-/usr/include/bits/stdio.h:
-
-/usr/include/bits/unistd_ext.h:
 
 /usr/include/bits/flt-eval-method.h:
 
@@ -1777,9 +1783,15 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/air.c.o:
 
 /usr/include/bits/types/struct_FILE.h:
 
+/usr/include/bits/unistd_ext.h:
+
 CMakeFiles/PixelSim2.dir/src/materials/definitions/sand.c.o:
 
 /usr/include/pthread.h:
+
+/usr/include/time.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h:
 
 /usr/include/unistd.h:
 
@@ -1830,3 +1842,5 @@ CMakeFiles/PixelSim2.dir/src/world/pixel.c.o:
 /usr/include/bits/types/struct_sched_param.h:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/glass.c:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/metal.c:

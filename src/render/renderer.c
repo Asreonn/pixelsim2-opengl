@@ -113,6 +113,123 @@ static void renderer_draw_text_shadow(Renderer* renderer, i32 x, i32 y, const ch
     renderer_draw_text(renderer, x, y, text, color);
 }
 
+// Draw filled circle into UI buffer
+static void renderer_draw_ui_circle(Renderer* renderer, i32 cx, i32 cy, i32 radius, Color color) {
+    for (i32 y = -radius; y <= radius; y++) {
+        for (i32 x = -radius; x <= radius; x++) {
+            if (x * x + y * y <= radius * radius) {
+                i32 px = cx + x;
+                i32 py = cy + y;
+                if (px >= 0 && px < WINDOW_WIDTH && py >= 0 && py < UI_PANEL_HEIGHT) {
+                    renderer->ui_buffer[py][px][0] = color.r;
+                    renderer->ui_buffer[py][px][1] = color.g;
+                    renderer->ui_buffer[py][px][2] = color.b;
+                    renderer->ui_buffer[py][px][3] = color.a;
+                }
+            }
+        }
+    }
+}
+
+// Draw text into UI buffer
+static void renderer_draw_ui_char(Renderer* renderer, i32 x, i32 y, char c, Color color) {
+    const u8* glyph = renderer_get_glyph(c);
+    for (i32 row = 0; row < 7; row++) {
+        u8 bits = glyph[row];
+        for (i32 col = 0; col < 5; col++) {
+            if ((bits & (1u << (4 - col))) == 0) continue;
+            i32 px = x + col;
+            i32 py = y + row;
+            if (px < 0 || px >= WINDOW_WIDTH || py < 0 || py >= UI_PANEL_HEIGHT) continue;
+            renderer->ui_buffer[py][px][0] = color.r;
+            renderer->ui_buffer[py][px][1] = color.g;
+            renderer->ui_buffer[py][px][2] = color.b;
+            renderer->ui_buffer[py][px][3] = color.a;
+        }
+    }
+}
+
+static void renderer_draw_ui_text(Renderer* renderer, i32 x, i32 y, const char* text, Color color) {
+    i32 cursor_x = x;
+    for (size_t i = 0; text[i] != '\0'; i++) {
+        char c = (char)toupper((unsigned char)text[i]);
+        renderer_draw_ui_char(renderer, cursor_x, y, c, color);
+        cursor_x += 6;
+    }
+}
+
+// Material icon info for UI panel
+typedef struct {
+    u16 material_id;
+    const char* name;
+} MaterialIcon;
+
+static const MaterialIcon UI_MATERIALS[] = {
+    {MAT_SAND, "SAND"},
+    {MAT_WATER, "WATER"},
+    {MAT_STONE, "STONE"},
+    {MAT_FIRE, "FIRE"},
+    {MAT_STEAM, "STEAM"},
+    {MAT_ICE, "ICE"},
+    {MAT_GLASS, "GLASS"},
+    {MAT_MUD, "MUD"},
+    {MAT_METAL, "METAL"},
+    {MAT_AIR, "ERASE"}
+};
+static const i32 UI_MATERIAL_COUNT = sizeof(UI_MATERIALS) / sizeof(UI_MATERIALS[0]);
+static const i32 UI_ICON_SPACING = 50;
+static const i32 UI_ICON_START_X = 28;
+static const i32 UI_ICON_CENTER_Y = 28;
+static const i32 UI_ICON_RADIUS = 18;
+
+// Draw the UI panel with material icons
+static void renderer_draw_ui_panel(Renderer* renderer, u16 selected_material) {
+    // Fill background with dark gray
+    for (i32 y = 0; y < UI_PANEL_HEIGHT; y++) {
+        for (i32 x = 0; x < WINDOW_WIDTH; x++) {
+            renderer->ui_buffer[y][x][0] = 35;
+            renderer->ui_buffer[y][x][1] = 35;
+            renderer->ui_buffer[y][x][2] = 40;
+            renderer->ui_buffer[y][x][3] = 255;
+        }
+    }
+
+    // Draw separator line at top
+    for (i32 x = 0; x < WINDOW_WIDTH; x++) {
+        renderer->ui_buffer[0][x][0] = 60;
+        renderer->ui_buffer[0][x][1] = 60;
+        renderer->ui_buffer[0][x][2] = 70;
+        renderer->ui_buffer[0][x][3] = 255;
+    }
+
+    // Draw material icons
+    Color text_color = {200, 200, 200, 255};
+
+    for (i32 i = 0; i < UI_MATERIAL_COUNT; i++) {
+        i32 icon_x = UI_ICON_START_X + i * UI_ICON_SPACING;
+        bool selected = (UI_MATERIALS[i].material_id == selected_material);
+
+        // Draw selection ring (white outline)
+        if (selected) {
+            renderer_draw_ui_circle(renderer, icon_x, UI_ICON_CENTER_Y, UI_ICON_RADIUS + 3, (Color){255, 255, 255, 255});
+        }
+
+        // Get material color
+        MaterialDef* mat = material_get(UI_MATERIALS[i].material_id);
+        Color icon_color = mat ? mat->base_color : (Color){100, 100, 100, 255};
+
+        // Draw main circle
+        renderer_draw_ui_circle(renderer, icon_x, UI_ICON_CENTER_Y, UI_ICON_RADIUS, icon_color);
+
+        // Draw name below icon (centered)
+        const char* name = UI_MATERIALS[i].name;
+        i32 name_len = 0;
+        while (name[name_len]) name_len++;
+        i32 text_x = icon_x - (name_len * 6) / 2;
+        renderer_draw_ui_text(renderer, text_x, UI_ICON_CENTER_Y + UI_ICON_RADIUS + 6, name, text_color);
+    }
+}
+
 static const char* renderer_state_name(MaterialState state) {
     switch (state) {
         case STATE_SOLID:
@@ -262,9 +379,20 @@ bool renderer_init(Renderer* renderer) {
             renderer->chunk_dirty[cy][cx] = true;
         }
     }
-    
+
+    // Create UI panel texture
+    glGenTextures(1, &renderer->ui_texture);
+    glBindTexture(GL_TEXTURE_2D, renderer->ui_texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    memset(renderer->ui_buffer, 40, sizeof(renderer->ui_buffer));
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WINDOW_WIDTH, UI_PANEL_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, renderer->ui_buffer);
+    renderer->ui_needs_redraw = true;
+
     printf("Renderer initialized with PBO double buffering\n");
-    
+
     return true;
 }
 
@@ -274,11 +402,12 @@ void renderer_shutdown(Renderer* renderer) {
         glDeleteSync((GLsync)renderer->pbo_sync);
     }
     glDeleteBuffers(2, renderer->pbo);
-    
+
     glDeleteVertexArrays(1, &renderer->vao);
     glDeleteBuffers(1, &renderer->vbo);
     glDeleteBuffers(1, &renderer->ebo);
     glDeleteTextures(1, &renderer->texture);
+    glDeleteTextures(1, &renderer->ui_texture);
     shader_delete(renderer->shader_program);
     glfwDestroyWindow(renderer->window);
     glfwTerminate();
@@ -306,7 +435,18 @@ static void renderer_update_chunk_pixels(Renderer* renderer, World* world, i32 c
     }
 }
 
+// Update UI panel texture
+void renderer_update_ui(Renderer* renderer, Brush* brush) {
+    renderer_draw_ui_panel(renderer, brush->material_id);
+    glBindTexture(GL_TEXTURE_2D, renderer->ui_texture);
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, WINDOW_WIDTH, UI_PANEL_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, renderer->ui_buffer);
+    renderer->ui_needs_redraw = false;
+}
+
 void renderer_update_texture(Renderer* renderer, World* world, Brush* brush) {
+    // Always update UI panel
+    renderer_update_ui(renderer, brush);
+
     if (renderer->use_pbo) {
         // Wait for previous PBO upload to complete
         if (renderer->pbo_sync) {
@@ -387,14 +527,26 @@ void renderer_update_chunk_texture(Renderer* renderer, World* world, i32 chunk_x
 void renderer_draw(Renderer* renderer) {
     glClearColor(0.18f, 0.23f, 0.28f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-    
+
     shader_use(renderer->shader_program);
+    glBindVertexArray(renderer->vao);
+
+    // Draw world viewport (top part of window)
+    glViewport(0, UI_PANEL_HEIGHT, WINDOW_WIDTH, WORLD_VIEWPORT_HEIGHT);
     shader_set_vec2(renderer->shader_program, "offset", renderer->offset_x, renderer->offset_y);
     shader_set_float(renderer->shader_program, "zoom", renderer->zoom);
-    
     glBindTexture(GL_TEXTURE_2D, renderer->texture);
-    glBindVertexArray(renderer->vao);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+    // Draw UI panel (bottom part of window)
+    glViewport(0, 0, WINDOW_WIDTH, UI_PANEL_HEIGHT);
+    shader_set_vec2(renderer->shader_program, "offset", 0.0f, 0.0f);
+    shader_set_float(renderer->shader_program, "zoom", 1.0f);
+    glBindTexture(GL_TEXTURE_2D, renderer->ui_texture);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+    // Reset viewport for next frame
+    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
 void renderer_present(Renderer* renderer) {
@@ -429,4 +581,32 @@ bool renderer_should_close(Renderer* renderer) {
 
 void renderer_poll_events(void) {
     glfwPollEvents();
+}
+
+// Check if a click at screen coordinates hit a UI material icon
+// Returns true if a material was selected, false otherwise
+bool renderer_check_ui_click(i32 screen_x, i32 screen_y, Brush* brush) {
+    // UI panel is at the bottom of the screen (Y is inverted in GLFW)
+    // screen_y in GLFW starts from top, UI panel is at bottom
+    i32 ui_y = WINDOW_HEIGHT - screen_y;  // Convert to bottom-up coordinates
+
+    // Check if click is in UI panel area
+    if (ui_y < 0 || ui_y >= UI_PANEL_HEIGHT) {
+        return false;
+    }
+
+    // Check which material icon was clicked
+    for (i32 i = 0; i < UI_MATERIAL_COUNT; i++) {
+        i32 icon_x = UI_ICON_START_X + i * UI_ICON_SPACING;
+        i32 dx = screen_x - icon_x;
+        i32 dy = ui_y - UI_ICON_CENTER_Y;
+
+        // Check if within icon radius (plus a little margin)
+        if (dx * dx + dy * dy <= (UI_ICON_RADIUS + 4) * (UI_ICON_RADIUS + 4)) {
+            brush_set_material(brush, UI_MATERIALS[i].material_id);
+            return true;
+        }
+    }
+
+    return false;
 }

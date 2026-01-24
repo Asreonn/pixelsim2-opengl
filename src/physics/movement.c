@@ -259,8 +259,29 @@ void movement_update_liquid(World* world, i32 x, i32 y) {
 
         if (grid_try_move_horizontal(world, curr_x, curr_y, surface_spread)) {
             moved = true;
+            // Horizontal movement completed - reduce x velocity
+            Pixel* p = world_get_pixel(world, curr_x, curr_y);
+            if (p) p->velocity_x *= 0.3f;
         }
         break;
+    }
+
+    // Apply damping based on whether liquid moved
+    Pixel* final_pixel = world_get_pixel(world, curr_x, curr_y);
+    if (final_pixel) {
+        if (moved) {
+            // Normal damping for moving liquid
+            final_pixel->velocity_x *= 0.95f;
+            final_pixel->velocity_y *= 0.95f;
+        } else {
+            // Aggressive damping when stuck - liquid should settle quickly
+            final_pixel->velocity_x *= 0.5f;
+            final_pixel->velocity_y *= 0.5f;
+
+            // Zero out very small velocities to prevent micro-erosion
+            if (fabsf(final_pixel->velocity_x) < 0.1f) final_pixel->velocity_x = 0;
+            if (fabsf(final_pixel->velocity_y) < 0.1f) final_pixel->velocity_y = 0;
+        }
     }
 
     // Liquids always try pressure push - they flow very easily

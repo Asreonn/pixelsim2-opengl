@@ -3,6 +3,7 @@
 #include "materials/material_ids.h"
 #include "render/renderer.h"
 #include "world/world.h"
+#include "core/config.h"
 #include "core/math_utils.h"
 #include <GLFW/glfw3.h>
 #include <string.h>
@@ -85,23 +86,33 @@ void input_update(Input* input, Renderer* renderer) {
     input->prev_world_y = input->world_y;
     input->prev_in_bounds = input->in_bounds;
 
-    // Get mouse position
+    // Get mouse position (GLFW: Y=0 at top)
     double mx, my;
     glfwGetCursorPos(renderer->window, &mx, &my);
-    
+
     input->mouse_dx = (f32)mx - input->mouse_x;
     input->mouse_dy = (f32)my - input->mouse_y;
     input->mouse_x = (f32)mx;
     input->mouse_y = (f32)my;
-    
-    // Convert to world coordinates
+
+    // Check if mouse is in UI panel area (bottom of window)
+    // GLFW Y coordinates: 0 at top, WINDOW_HEIGHT at bottom
+    // UI panel is at the bottom, so Y >= WORLD_VIEWPORT_HEIGHT means UI area
+    input->in_ui = ((i32)my >= WORLD_VIEWPORT_HEIGHT);
+
+    // Convert to world coordinates (offset by UI panel position)
+    // World viewport starts at Y=0 in GLFW coordinates (top of window)
     input->world_x = (i32)mx;
-    input->world_y = (i32)my;
-    input->in_bounds = (input->world_x >= 0 && input->world_x < WORLD_WIDTH &&
+    input->world_y = (i32)my;  // Direct mapping since world is at top
+    input->in_bounds = !input->in_ui &&
+                       (input->world_x >= 0 && input->world_x < WORLD_WIDTH &&
                         input->world_y >= 0 && input->world_y < WORLD_HEIGHT);
 }
 
 void input_apply_brush(Input* input, World* world, Brush* brush) {
+    // Don't apply brush if mouse is in UI panel area
+    if (input->in_ui) return;
+
     if (input->mouse_left) {
         if (input->in_bounds && input->prev_in_bounds) {
             input_apply_brush_line(brush, world, input->prev_world_x, input->prev_world_y,
@@ -121,6 +132,11 @@ void input_apply_brush(Input* input, World* world, Brush* brush) {
 }
 
 void input_process_frame(Input* input, World* world, Brush* brush, Renderer* renderer) {
+    // Check for UI panel clicks
+    if (input->mouse_left && input->in_ui) {
+        renderer_check_ui_click((i32)input->mouse_x, (i32)input->mouse_y, brush);
+    }
+
     if (input->scroll_delta != 0) {
         if (input->scroll_delta > 0) brush_increase_size(brush);
         else brush_decrease_size(brush);

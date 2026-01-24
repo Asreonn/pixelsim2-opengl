@@ -9,8 +9,10 @@
 #define CHUNKS_Y (WORLD_HEIGHT / CHUNK_SIZE)
 
 // Window
+#define UI_PANEL_HEIGHT 68
 #define WINDOW_WIDTH 512
-#define WINDOW_HEIGHT 512
+#define WINDOW_HEIGHT (512 + UI_PANEL_HEIGHT)
+#define WORLD_VIEWPORT_HEIGHT 512
 #define WINDOW_TITLE "PixelSim2 - Physics Simulator"
 
 // Simulation

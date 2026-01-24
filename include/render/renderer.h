@@ -29,6 +29,11 @@ typedef struct Renderer {
     // Dirty chunk tracking
     bool chunk_dirty[CHUNKS_Y][CHUNKS_X];
     bool use_pbo;  // Whether PBO is available/enabled
+
+    // UI Panel
+    u32 ui_texture;
+    u8 ui_buffer[UI_PANEL_HEIGHT][WINDOW_WIDTH][4];
+    bool ui_needs_redraw;
 } Renderer;
 
 // Lifecycle
@@ -55,5 +60,8 @@ void renderer_screen_to_world(Renderer* renderer, f32 screen_x, f32 screen_y, i3
 // Window
 bool renderer_should_close(Renderer* renderer);
 void renderer_poll_events(void);
+
+// UI Panel
+bool renderer_check_ui_click(i32 screen_x, i32 screen_y, struct Brush* brush);
 
 #endif
