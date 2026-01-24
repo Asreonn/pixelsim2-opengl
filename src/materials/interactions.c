@@ -132,12 +132,14 @@ static bool interaction_should_apply(World* world, i32 x1, i32 y1, i32 x2, i32 y
         pressure_factor = clampf(pressure_factor, 0.0f, 2.0f);
     }
 
-    // Velocity factor (0-2): 0 velocity = 0 factor, high velocity = 1+
+    // Velocity factor (0-2): squared ratio suppresses low velocities
     f32 velocity_factor = 1.0f;
     if (inter->min_velocity > 0) {
-        // Sigmoid-like: v=0 → 0, v=min_v → 0.5, v=2*min_v → 0.8
-        velocity_factor = velocity / (velocity + inter->min_velocity);
-        velocity_factor *= 2.0f;  // Normalize (v=min_v → ~1.0)
+        // v/min_v ratio, squared to suppress low values
+        // 0.25 → 0.0625, 0.5 → 0.25, 1.0 → 1.0, 2.0 → 4.0 (capped)
+        f32 ratio = velocity / inter->min_velocity;
+        velocity_factor = ratio * ratio;
+        velocity_factor = clampf(velocity_factor, 0.0f, 2.0f);
     }
 
     // Effective probability = base * all factors

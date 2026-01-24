@@ -43,5 +43,5 @@ CMakeFiles/PixelSim2.dir/src/render/renderer.c.o: \
  /usr/include/bits/types/__fpos64_t.h /usr/include/bits/types/__FILE.h \
  /usr/include/bits/types/FILE.h /usr/include/bits/types/struct_FILE.h \
  /usr/include/bits/types/cookie_io_functions_t.h \
- /usr/include/bits/stdio_lim.h /usr/include/bits/stdio.h \
- /usr/include/string.h /usr/include/strings.h
+ /usr/include/bits/stdio_lim.h /usr/include/string.h \
+ /usr/include/strings.h

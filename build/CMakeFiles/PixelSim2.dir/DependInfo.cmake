@@ -18,6 +18,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/fire.c" "CMakeFiles/PixelSim2.dir/src/materials/definitions/fire.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/materials/definitions/fire.c.o.d"
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/glass.c" "CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o.d"
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/ice.c" "CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.o.d"
+  "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/metal.c" "CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o.d"
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/molten_sand.c" "CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o.d"
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/mud.c" "CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o.d"
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/sand.c" "CMakeFiles/PixelSim2.dir/src/materials/definitions/sand.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/materials/definitions/sand.c.o.d"

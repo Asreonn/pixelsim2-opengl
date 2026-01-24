@@ -450,10 +450,24 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/molten_sand.c -o CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.s
 
+CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o: CMakeFiles/PixelSim2.dir/flags.make
+CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/metal.c
+CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o: CMakeFiles/PixelSim2.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building C object CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o -MF CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o.d -o CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/metal.c
+
+CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/metal.c > CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.i
+
+CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/metal.c -o CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.s
+
 CMakeFiles/PixelSim2.dir/src/render/renderer.c.o: CMakeFiles/PixelSim2.dir/flags.make
 CMakeFiles/PixelSim2.dir/src/render/renderer.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/renderer.c
 CMakeFiles/PixelSim2.dir/src/render/renderer.c.o: CMakeFiles/PixelSim2.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building C object CMakeFiles/PixelSim2.dir/src/render/renderer.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building C object CMakeFiles/PixelSim2.dir/src/render/renderer.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/PixelSim2.dir/src/render/renderer.c.o -MF CMakeFiles/PixelSim2.dir/src/render/renderer.c.o.d -o CMakeFiles/PixelSim2.dir/src/render/renderer.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/renderer.c
 
 CMakeFiles/PixelSim2.dir/src/render/renderer.c.i: cmake_force
@@ -467,7 +481,7 @@ CMakeFiles/PixelSim2.dir/src/render/renderer.c.s: cmake_force
 CMakeFiles/PixelSim2.dir/src/render/shader.c.o: CMakeFiles/PixelSim2.dir/flags.make
 CMakeFiles/PixelSim2.dir/src/render/shader.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/shader.c
 CMakeFiles/PixelSim2.dir/src/render/shader.c.o: CMakeFiles/PixelSim2.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building C object CMakeFiles/PixelSim2.dir/src/render/shader.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building C object CMakeFiles/PixelSim2.dir/src/render/shader.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/PixelSim2.dir/src/render/shader.c.o -MF CMakeFiles/PixelSim2.dir/src/render/shader.c.o.d -o CMakeFiles/PixelSim2.dir/src/render/shader.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/shader.c
 
 CMakeFiles/PixelSim2.dir/src/render/shader.c.i: cmake_force
@@ -481,7 +495,7 @@ CMakeFiles/PixelSim2.dir/src/render/shader.c.s: cmake_force
 CMakeFiles/PixelSim2.dir/src/render/color.c.o: CMakeFiles/PixelSim2.dir/flags.make
 CMakeFiles/PixelSim2.dir/src/render/color.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/color.c
 CMakeFiles/PixelSim2.dir/src/render/color.c.o: CMakeFiles/PixelSim2.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building C object CMakeFiles/PixelSim2.dir/src/render/color.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building C object CMakeFiles/PixelSim2.dir/src/render/color.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/PixelSim2.dir/src/render/color.c.o -MF CMakeFiles/PixelSim2.dir/src/render/color.c.o.d -o CMakeFiles/PixelSim2.dir/src/render/color.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/color.c
 
 CMakeFiles/PixelSim2.dir/src/render/color.c.i: cmake_force
@@ -495,7 +509,7 @@ CMakeFiles/PixelSim2.dir/src/render/color.c.s: cmake_force
 CMakeFiles/PixelSim2.dir/src/input/input.c.o: CMakeFiles/PixelSim2.dir/flags.make
 CMakeFiles/PixelSim2.dir/src/input/input.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/input/input.c
 CMakeFiles/PixelSim2.dir/src/input/input.c.o: CMakeFiles/PixelSim2.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building C object CMakeFiles/PixelSim2.dir/src/input/input.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building C object CMakeFiles/PixelSim2.dir/src/input/input.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/PixelSim2.dir/src/input/input.c.o -MF CMakeFiles/PixelSim2.dir/src/input/input.c.o.d -o CMakeFiles/PixelSim2.dir/src/input/input.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/input/input.c
 
 CMakeFiles/PixelSim2.dir/src/input/input.c.i: cmake_force
@@ -509,7 +523,7 @@ CMakeFiles/PixelSim2.dir/src/input/input.c.s: cmake_force
 CMakeFiles/PixelSim2.dir/src/input/brush.c.o: CMakeFiles/PixelSim2.dir/flags.make
 CMakeFiles/PixelSim2.dir/src/input/brush.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/input/brush.c
 CMakeFiles/PixelSim2.dir/src/input/brush.c.o: CMakeFiles/PixelSim2.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building C object CMakeFiles/PixelSim2.dir/src/input/brush.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building C object CMakeFiles/PixelSim2.dir/src/input/brush.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/PixelSim2.dir/src/input/brush.c.o -MF CMakeFiles/PixelSim2.dir/src/input/brush.c.o.d -o CMakeFiles/PixelSim2.dir/src/input/brush.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/input/brush.c
 
 CMakeFiles/PixelSim2.dir/src/input/brush.c.i: cmake_force
@@ -549,6 +563,7 @@ PixelSim2_OBJECTS = \
 "CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o" \
 "CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o" \
 "CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o" \
+"CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o" \
 "CMakeFiles/PixelSim2.dir/src/render/renderer.c.o" \
 "CMakeFiles/PixelSim2.dir/src/render/shader.c.o" \
 "CMakeFiles/PixelSim2.dir/src/render/color.c.o" \
@@ -585,6 +600,7 @@ PixelSim2: CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.o
 PixelSim2: CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o
 PixelSim2: CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o
 PixelSim2: CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o
+PixelSim2: CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o
 PixelSim2: CMakeFiles/PixelSim2.dir/src/render/renderer.c.o
 PixelSim2: CMakeFiles/PixelSim2.dir/src/render/shader.c.o
 PixelSim2: CMakeFiles/PixelSim2.dir/src/render/color.c.o
@@ -597,7 +613,7 @@ PixelSim2: libglad.a
 PixelSim2: /usr/lib64/libGLX.so
 PixelSim2: /usr/lib64/libOpenGL.so
 PixelSim2: CMakeFiles/PixelSim2.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Linking C executable PixelSim2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Linking C executable PixelSim2"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/PixelSim2.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

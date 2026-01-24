@@ -29,6 +29,7 @@ PixelSim2: \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o \
+  CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o \
   CMakeFiles/PixelSim2.dir/src/render/renderer.c.o \
   CMakeFiles/PixelSim2.dir/src/render/shader.c.o \
   CMakeFiles/PixelSim2.dir/src/render/color.c.o \
@@ -61,7 +62,6 @@ PixelSim2: \
   /usr/lib/gcc/x86_64-redhat-linux/15/libgcc_s.so \
   /lib64/libgcc_s.so.1 \
   /usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a \
-  /usr/lib/gcc/x86_64-redhat-linux/15/crtfastmath.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/crtend.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/../../../../lib64/crtn.o \
   /lib64/ld-linux-x86-64.so.2 \
@@ -131,6 +131,8 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o:
 
 CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o:
 
+CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o:
+
 CMakeFiles/PixelSim2.dir/src/render/renderer.c.o:
 
 CMakeFiles/PixelSim2.dir/src/render/shader.c.o:
@@ -194,8 +196,6 @@ libglad.a:
 /lib64/libgcc_s.so.1:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/crtfastmath.o:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/crtend.o:
 

@@ -12,6 +12,7 @@ typedef enum MaterialID {
     MAT_GLASS,
     MAT_MUD,
     MAT_MOLTEN_SAND,
+    MAT_METAL,
     MAT_COUNT
 } MaterialID;
 

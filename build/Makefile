@@ -451,6 +451,30 @@ src/materials/definitions/ice.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.s
 .PHONY : src/materials/definitions/ice.c.s
 
+src/materials/definitions/metal.o: src/materials/definitions/metal.c.o
+.PHONY : src/materials/definitions/metal.o
+
+# target to build an object file
+src/materials/definitions/metal.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o
+.PHONY : src/materials/definitions/metal.c.o
+
+src/materials/definitions/metal.i: src/materials/definitions/metal.c.i
+.PHONY : src/materials/definitions/metal.i
+
+# target to preprocess a source file
+src/materials/definitions/metal.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.i
+.PHONY : src/materials/definitions/metal.c.i
+
+src/materials/definitions/metal.s: src/materials/definitions/metal.c.s
+.PHONY : src/materials/definitions/metal.s
+
+# target to generate assembly for a file
+src/materials/definitions/metal.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.s
+.PHONY : src/materials/definitions/metal.c.s
+
 src/materials/definitions/molten_sand.o: src/materials/definitions/molten_sand.c.o
 .PHONY : src/materials/definitions/molten_sand.o
 
@@ -1026,6 +1050,9 @@ help:
 	@echo "... src/materials/definitions/ice.o"
 	@echo "... src/materials/definitions/ice.i"
 	@echo "... src/materials/definitions/ice.s"
+	@echo "... src/materials/definitions/metal.o"
+	@echo "... src/materials/definitions/metal.i"
+	@echo "... src/materials/definitions/metal.s"
 	@echo "... src/materials/definitions/molten_sand.o"
 	@echo "... src/materials/definitions/molten_sand.i"
 	@echo "... src/materials/definitions/molten_sand.s"
