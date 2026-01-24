@@ -8,10 +8,10 @@ MaterialDef MAT_DEF_WATER = {
     
     .mass = 0.1f,
     .density = 1000.0f,
-    .viscosity = 0.1f,
-    .friction = 0.1f,
+    .viscosity = 0.03f,
+    .friction = 0.04f,
     .elasticity = 0.0f,
-    .dispersion = 5.0f,
+    .dispersion = 7.0f,      // 5.0 → 7.0 (daha hızlı yayılma)
     
     .thermal_conductivity = 1.8f,
     .specific_heat = 3000.0f,

@@ -10,21 +10,58 @@
 static MaterialInteraction interactions[MAX_INTERACTIONS];
 static u32 interaction_count = 0;
 
+// O(1) lookup matrix: interaction_matrix[mat_a][mat_b] = index or 0xFF (none)
+static u8 interaction_matrix[MAX_MATERIALS][MAX_MATERIALS];
+
 void interactions_init(void) {
     interaction_count = 0;
-    
+
+    // Initialize O(1) lookup matrix (0xFF = no interaction)
+    for (i32 i = 0; i < MAX_MATERIALS; i++) {
+        for (i32 j = 0; j < MAX_MATERIALS; j++) {
+            interaction_matrix[i][j] = 0xFF;
+        }
+    }
+
+    // === TEMEL ETKİLEŞİMLER ===
+
     // Water + Sand = Mud
     interaction_add(MAT_WATER, MAT_SAND, MAT_MUD, MAT_AIR, INTERACT_COMBINE, 1.0f);
-    
+
     // Water + Fire = Steam
     interaction_add(MAT_WATER, MAT_FIRE, MAT_STEAM, MAT_AIR, INTERACT_REACT, 0.5f);
-    
+
     // Fire + Ice = Water/Steam
     interaction_add(MAT_FIRE, MAT_ICE, MAT_STEAM, MAT_WATER, INTERACT_REACT, 0.3f);
+
+    // === SICAKLIK BAZLI ETKİLEŞİMLER ===
+
+    // Sıcak Taş + Su = Buhar (volkanik buhar)
+    interaction_add(MAT_STONE, MAT_WATER, MAT_STONE, MAT_STEAM, INTERACT_REACT, 0.8f);
+    interactions[interaction_count - 1].min_temperature = 500.0f;
+
+    // Buhar + Buz = Su (hızlı yoğuşma)
+    interaction_add(MAT_STEAM, MAT_ICE, MAT_WATER, MAT_ICE, INTERACT_REACT, 0.4f);
+
+    // Ates + Kum etkilesimi kaldirildi - artik sicaklik bazli:
+    // Kum (1150K+) -> Erimis Kum (sivi) -> soguyunca Cam (900K alti)
+
+    // === BASINÇ BAZLI ETKİLEŞİMLER ===
+
+    // Yüksek basınçlı su + taş = erozyon (taş kuma dönüşür)
+    interaction_add(MAT_WATER, MAT_STONE, MAT_WATER, MAT_SAND, INTERACT_REACT, 0.02f);
+    interactions[interaction_count - 1].min_pressure = AMBIENT_PRESSURE + 50000.0f;
 }
 
 void interactions_shutdown(void) {
     interaction_count = 0;
+
+    // Clear O(1) lookup matrix
+    for (i32 i = 0; i < MAX_MATERIALS; i++) {
+        for (i32 j = 0; j < MAX_MATERIALS; j++) {
+            interaction_matrix[i][j] = 0xFF;
+        }
+    }
 }
 
 bool interaction_register(const MaterialInteraction* interaction) {
@@ -34,8 +71,10 @@ bool interaction_register(const MaterialInteraction* interaction) {
     return true;
 }
 
-bool interaction_add(u16 mat_a, u16 mat_b, u16 result_a, u16 result_b, 
+bool interaction_add(u16 mat_a, u16 mat_b, u16 result_a, u16 result_b,
                      InteractionType type, f32 probability) {
+    if (interaction_count >= MAX_INTERACTIONS) return false;
+
     MaterialInteraction inter = {
         .material_a = mat_a,
         .material_b = mat_b,
@@ -43,32 +82,51 @@ bool interaction_add(u16 mat_a, u16 mat_b, u16 result_a, u16 result_b,
         .result_b = result_b,
         .type = type,
         .probability = probability,
-        .min_temperature = 0
+        .min_temperature = 0,
+        .min_pressure = 0  // Default: no pressure requirement
     };
-    return interaction_register(&inter);
+
+    // Register interaction
+    interactions[interaction_count] = inter;
+
+    // Update O(1) lookup matrix (both directions)
+    u8 idx = (u8)interaction_count;
+    interaction_matrix[mat_a][mat_b] = idx;
+    interaction_matrix[mat_b][mat_a] = idx;
+
+    interaction_count++;
+    return true;
 }
 
 const MaterialInteraction* interaction_find(u16 mat_a, u16 mat_b) {
-    for (u32 i = 0; i < interaction_count; i++) {
-        MaterialInteraction* inter = &interactions[i];
-        if ((inter->material_a == mat_a && inter->material_b == mat_b) ||
-            (inter->material_a == mat_b && inter->material_b == mat_a)) {
-            return inter;
-        }
-    }
-    return NULL;
+    // O(1) lookup using matrix
+    if (mat_a >= MAX_MATERIALS || mat_b >= MAX_MATERIALS) return NULL;
+
+    u8 idx = interaction_matrix[mat_a][mat_b];
+    return (idx != 0xFF) ? &interactions[idx] : NULL;
 }
 
 static bool interaction_should_apply(World* world, i32 x1, i32 y1, i32 x2, i32 y2,
-                                     const MaterialInteraction* inter, f32 temperature) {
+                                     const MaterialInteraction* inter, f32 temperature, f32 pressure) {
     if (!inter) return false;
     if (temperature < inter->min_temperature) return false;
-    if (inter->probability >= 1.0f) return true;
-    if (inter->probability <= 0.0f) return false;
+
+    // Basınç bazlı olasılık hesaplama
+    f32 effective_probability = inter->probability;
+    if (inter->min_pressure > 0) {
+        if (pressure < inter->min_pressure) return false;
+        // Basınç arttıkça olasılık artar (orantılı)
+        f32 pressure_ratio = (pressure - inter->min_pressure) / inter->min_pressure;
+        effective_probability = inter->probability * (1.0f + pressure_ratio * 2.0f);
+        effective_probability = clampf(effective_probability, 0.0f, 0.5f);  // Max %50
+    }
+
+    if (effective_probability >= 1.0f) return true;
+    if (effective_probability <= 0.0f) return false;
 
     u32 h = hash_position(x1 + x2, y1 + y2, world->tick);
     f32 sample = (f32)(h & 0xFFFFu) / 65535.0f;
-    return sample < inter->probability;
+    return sample < effective_probability;
 }
 
 static bool interaction_apply_mud(World* world, i32 x, i32 y, f32 temp) {
@@ -159,7 +217,10 @@ bool interaction_process(World* world, i32 x1, i32 y1, i32 x2, i32 y2) {
     const MaterialInteraction* inter = interaction_find(p1->material_id, p2->material_id);
     if (!inter) return false;
 
-    if (!interaction_should_apply(world, x1, y1, x2, y2, inter, avg_temp)) return false;
+    // Calculate average pressure for pressure-based interactions
+    f32 avg_pressure = (p1->pressure + p2->pressure) * 0.5f;
+
+    if (!interaction_should_apply(world, x1, y1, x2, y2, inter, avg_temp, avg_pressure)) return false;
     
     // Determine which pixel is which material
     bool swapped = (p1->material_id == inter->material_b);

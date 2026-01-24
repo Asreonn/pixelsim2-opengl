@@ -8,10 +8,10 @@ MaterialDef MAT_DEF_SAND = {
     
     .mass = 0.1f,
     .density = 1600.0f,
-    .viscosity = 1.0f,
-    .friction = 0.55f,
+    .viscosity = 0.3f,       // 0.6 → 0.3 (daha akışkan)
+    .friction = 0.50f,       // 0.55 → 0.50 (biraz daha kaygan)
     .elasticity = 0.0f,
-    .dispersion = 4.0f,
+    .dispersion = 2.0f,      // 1.5 → 2.0 (daha geniş yayılma)
     
     .thermal_conductivity = 0.6f,
     .specific_heat = 830.0f,
@@ -21,7 +21,7 @@ MaterialDef MAT_DEF_SAND = {
     .freezing_point = 0,
     .ignition_point = 0,
     
-    .melts_into = MAT_GLASS,
+    .melts_into = MAT_MOLTEN_SAND,
     .boils_into = MAT_AIR,
     .freezes_into = MAT_AIR,
     .burns_into = MAT_AIR,

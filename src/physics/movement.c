@@ -72,13 +72,60 @@ void movement_update_powder(World* world, i32 x, i32 y) {
     MaterialDef* mat = material_get(pixel->material_id);
     if (!mat) return;
 
+    // === SICAK KUM HAREKETI KONTROLU ===
+    // Kum icin ozel kontrol - sicaksa hareket etme (erimis kum olmayi bekle)
+    if (pixel->material_id == MAT_SAND) {
+        f32 melting_point = MAT_CACHE_MELTING_POINT(MAT_SAND);
+        // Daha erken sabitlenme: %40 erime noktasinda dur
+        if (pixel->temperature > melting_point * 0.4f) {
+            // Ates, cam veya erimis kum komsusu var mi kontrol et
+            for (i32 dir = 0; dir < 4; dir++) {
+                Pixel* n = grid_get_neighbor(world, x, y, (Direction)dir);
+                if (n && (n->material_id == MAT_GLASS ||
+                          n->material_id == MAT_FIRE ||
+                          n->material_id == MAT_MOLTEN_SAND)) {
+                    return;  // Hareket etme, erimeyi bekle
+                }
+            }
+            // Cok sicaksa (%60+) her durumda dur
+            if (pixel->temperature > melting_point * 0.6f) {
+                return;
+            }
+        }
+    }
+
     // Stack pressure was pre-calculated in pressure_calculate_all_stacks()
     f32 stack_pressure = (pixel->pressure - AMBIENT_PRESSURE) / 15000.0f;
+
+    // Slow powders down in liquids (drag + reduced step count)
+    f32 sink_factor = 1.0f;
+    u16 liquid_id = MAT_AIR;
+    Pixel* below = world_get_pixel(world, x, y + 1);
+    Pixel* above = world_get_pixel(world, x, y - 1);
+    if (below && MAT_CACHE_IS_LIQUID(below->material_id)) {
+        liquid_id = below->material_id;
+    } else if (above && MAT_CACHE_IS_LIQUID(above->material_id)) {
+        liquid_id = above->material_id;
+    }
+
+    if (liquid_id != MAT_AIR) {
+        f32 fluid_density = MAT_CACHE_DENSITY(liquid_id);
+        f32 fluid_viscosity = MAT_CACHE_VISCOSITY(liquid_id);
+        f32 density_ratio = fluid_density / mat->density;
+        f32 viscosity_factor = 1.0f + fluid_viscosity * 10.0f;
+
+        sink_factor = clampf(1.0f - density_ratio * 0.8f, 0.15f, 0.7f);
+        sink_factor /= viscosity_factor;
+
+        f32 velocity_damp = clampf(0.55f + 0.45f * sink_factor, 0.35f, 0.9f);
+        pixel->velocity_y *= velocity_damp;
+    }
+
     f32 fall_factor = clampf(1.0f - (fabsf(pixel->velocity_y) / 2.5f), 0.0f, 1.0f);
     stack_pressure *= fall_factor;
 
     // Use velocity to determine how many steps to attempt
-    i32 steps = clampi((i32)fabsf(pixel->velocity_y), 1, 5);
+    i32 steps = clampi((i32)fabsf(pixel->velocity_y * sink_factor), 1, 5);
     
     i32 curr_x = x, curr_y = y;
     bool moved = false;
@@ -92,16 +139,38 @@ void movement_update_powder(World* world, i32 x, i32 y) {
         }
         
         // Can't move down - try diagonal
-        f32 resistance = 1.0f + mat->friction * 2.0f + mat->viscosity * 0.2f;
-        f32 spread_f = mat->dispersion / resistance;
-        i32 spread = clampi((i32)roundf(spread_f), 1, MAX_SPREAD);
-        
-        if (grid_try_move_down_diagonal_spread(world, curr_x, curr_y, spread)) {
-            pixel = world_get_pixel(world, curr_x, curr_y + 1);
-            if (pixel) {
-                pixel->velocity_y *= 0.7f;
+
+        // === TOZ ISLAKLIK KÜMELENMESİ ===
+        // Yakındaki sıvıları say - ıslaklık viskoziteyi artırır
+        i32 liquid_neighbors = 0;
+        for (i32 dir = 0; dir < 4; dir++) {
+            Pixel* n = grid_get_neighbor(world, curr_x, curr_y, (Direction)dir);
+            if (n && MAT_CACHE_IS_LIQUID(n->material_id)) {
+                liquid_neighbors++;
             }
-            moved = true;
+        }
+        f32 wetness_factor = 1.0f + liquid_neighbors * 0.15f;
+
+        f32 resistance = 1.0f + mat->friction * 2.0f + mat->viscosity * 0.2f;
+        f32 spread_f = mat->dispersion / (resistance * wetness_factor);
+        i32 spread = clampi((i32)roundf(spread_f), 1, MAX_SPREAD);
+
+        // === TOZ YIĞIN AÇISI ===
+        // Sürtünme diyagonal kayma olasılığını belirler
+        // Yüksek sürtünme = dik yığınlar, düşük sürtünme = düz yığınlar
+        f32 angle_factor = mat->friction;
+        u32 h = hash_position(curr_x, curr_y, world->tick);
+        f32 sample = (f32)(h & 0xFFFFu) / 65535.0f;
+
+        // Yüksek sürtünme = düşük kayma olasılığı (0.8 → 0.6 daha kolay kayma)
+        if (sample > angle_factor * 0.6f) {
+            if (grid_try_move_down_diagonal_spread(world, curr_x, curr_y, spread)) {
+                pixel = world_get_pixel(world, curr_x, curr_y + 1);
+                if (pixel) {
+                    pixel->velocity_y *= 0.7f;
+                }
+                moved = true;
+            }
         }
         break;
     }
@@ -125,19 +194,28 @@ void movement_update_powder(World* world, i32 x, i32 y) {
 void movement_update_liquid(World* world, i32 x, i32 y) {
     Pixel* pixel = world_get_pixel(world, x, y);
     if (!pixel) return;
-    
+
     MaterialDef* mat = material_get(pixel->material_id);
     if (!mat) return;
-    
+
     // Stack pressure was pre-calculated
     f32 stack_pressure = (pixel->pressure - AMBIENT_PRESSURE) / 15000.0f;
     f32 fall_factor = clampf(1.0f - (fabsf(pixel->velocity_y) / 3.0f), 0.0f, 1.0f);
     stack_pressure *= fall_factor;
-    
-    i32 spread = movement_get_spread_distance(mat, pixel->temperature);
-    
+
+    // === VİSKOZİTE BAZLI AKIŞ ===
+    // Sıcaklığa bağlı efektif viskozite
+    f32 eff_viscosity = movement_get_effective_viscosity(mat, pixel->temperature);
+
+    // Viskozite adım sayısını ve yayılmayı etkiler
+    f32 viscosity_penalty = 1.0f / (1.0f + eff_viscosity * 2.0f);
+    i32 base_spread = movement_get_spread_distance(mat, pixel->temperature);
+    i32 spread = clampi((i32)(base_spread * viscosity_penalty), 1, base_spread);
+
     // Liquids can move multiple cells when falling fast
-    i32 steps = clampi((i32)fabsf(pixel->velocity_y), 1, 4);
+    // Yüksek viskozite = daha az adım
+    i32 base_steps = clampi((i32)fabsf(pixel->velocity_y), 1, 4);
+    i32 steps = clampi((i32)(base_steps * viscosity_penalty), 1, base_steps);
     
     i32 curr_x = x, curr_y = y;
     bool moved = false;
@@ -171,12 +249,20 @@ void movement_update_liquid(World* world, i32 x, i32 y) {
             }
         }
         
-        if (grid_try_move_horizontal(world, curr_x, curr_y, spread)) {
+        // === YÜZEY GERİLİMİ (azaltılmış) ===
+        // İzole sıvı damlacıkları daha az yayılır - eşik 3 → 2
+        i32 same_neighbors = grid_count_neighbors_of_type(world, curr_x, curr_y, pixel->material_id);
+        i32 surface_spread = spread;
+        if (same_neighbors < 2) {
+            surface_spread = clampi(spread - (2 - same_neighbors), 1, spread);
+        }
+
+        if (grid_try_move_horizontal(world, curr_x, curr_y, surface_spread)) {
             moved = true;
         }
         break;
     }
-    
+
     // Liquids always try pressure push - they flow very easily
     if (stack_pressure > 0.2f && movement_is_supported(world, curr_x, curr_y)) {
         Pixel* below = world_get_pixel(world, curr_x, curr_y + 1);
@@ -226,7 +312,21 @@ void movement_update_gas(World* world, i32 x, i32 y) {
         }
         break;
     }
-    
+
+    // === GAZ TÜRBULANSI ===
+    // Yüksek basınç farkı = kaotik hareket
+    f32 neighbor_pressure = grid_get_average_neighbor_pressure(world, curr_x, curr_y);
+    f32 pressure_diff = fabsf(pixel->pressure - neighbor_pressure);
+
+    if (pressure_diff > 1000.0f) {
+        // Türbülans: rastgele yatay hareket
+        u32 h = hash_position(curr_x, curr_y, world->tick);
+        if ((h % 3u) == 0u) {
+            i32 turb_dx = ((h >> 4) & 1u) ? 1 : -1;
+            grid_try_move(world, curr_x, curr_y, turb_dx, 0);
+        }
+    }
+
     // Spread horizontally
     grid_try_move_horizontal(world, curr_x, curr_y, spread);
 }

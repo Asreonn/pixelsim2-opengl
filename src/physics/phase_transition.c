@@ -147,7 +147,9 @@ void phase_update_fire(World* world, i32 x, i32 y) {
         if (neighbor->material_id != MAT_FIRE) {
             touching = true;
         }
-        neighbor->temperature += FIRE_HEAT_OUTPUT * 0.8f;
+        // Kuma biraz daha fazla ısı ama yavaş (0.8 → 1.0)
+        f32 heat_mult = (neighbor->material_id == MAT_SAND) ? 1.0f : 0.8f;
+        neighbor->temperature += FIRE_HEAT_OUTPUT * heat_mult;
         world_wake_chunk_at(world, nx, ny);
         temperature_spread_heat(world, nx, ny, FIRE_HEAT_OUTPUT * 0.2f);
     }

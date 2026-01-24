@@ -91,21 +91,31 @@ f32 grid_get_neighbor_density(World* world, i32 x, i32 y, Direction dir) {
 bool grid_can_move_to(World* world, i32 x, i32 y, i32 to_x, i32 to_y) {
     Pixel* from = world_get_pixel(world, x, y);
     Pixel* to = world_get_pixel(world, to_x, to_y);
-    
+
     if (!from || !to) return false;
     if (to->material_id == MAT_AIR) return true;
-    
+
     // Check if can swap based on density (use cached values)
     f32 from_density = MAT_CACHE_DENSITY(from->material_id);
     f32 to_density = MAT_CACHE_DENSITY(to->material_id);
     MaterialState to_state = MAT_CACHE_STATE(to->material_id);
-    
+
+    // === SICAKLIK BAZLI YOĞUNLUK KATMANLAŞMASI (KONVEKSİYON) ===
+    // Aynı malzeme için sıcaklık farkı yoğunluğu etkiler
+    // Sıcak sıvılar/gazlar daha hafif, yükselir
+    if (from->material_id == to->material_id) {
+        f32 temp_diff = from->temperature - to->temperature;
+        // Her 10K sıcaklık farkı için ~%0.1 yoğunluk değişimi
+        f32 temp_factor = 1.0f - (temp_diff * 0.0001f);
+        from_density *= clampf(temp_factor, 0.9f, 1.1f);
+    }
+
     // Can displace liquids and gases if denser
     if ((to_state == STATE_LIQUID || to_state == STATE_GAS || to_state == STATE_PLASMA) &&
         from_density > to_density) {
         return true;
     }
-    
+
     return false;
 }
 

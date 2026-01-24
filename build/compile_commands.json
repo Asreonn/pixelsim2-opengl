@@ -163,6 +163,12 @@
 },
 {
   "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
+  "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -march=native -ffast-math -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/molten_sand.c",
+  "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/molten_sand.c",
+  "output": "CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o"
+},
+{
+  "directory": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build",
   "command": "/usr/bin/cc  -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include -O3 -DNDEBUG -march=native -ffast-math -std=gnu11 -o CMakeFiles/PixelSim2.dir/src/render/renderer.c.o -c /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/renderer.c",
   "file": "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/renderer.c",
   "output": "CMakeFiles/PixelSim2.dir/src/render/renderer.c.o"

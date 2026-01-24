@@ -12,6 +12,7 @@
 #include "materials/interactions.h"
 #include "core/math_utils.h"
 #include "core/thread_pool.h"
+#include <math.h>
 
 // Work item for parallel chunk processing
 typedef struct ChunkWorkItem {
@@ -257,13 +258,26 @@ void physics_update_chunk(World* world, Chunk* chunk, f32 dt) {
 void physics_update_pixel(World* world, i32 x, i32 y, f32 dt) {
     Pixel* pixel = world_get_pixel(world, x, y);
     if (!pixel || pixel->updated) return;
-    
+
     pixel->updated = 1;
     u16 mat_id = pixel->material_id;
-    
+
     // Use cached material state for fast lookup
     MaterialState state = MAT_CACHE_STATE(mat_id);
-    
+
+    // === KATILAR İÇİN ERKEN ÇIKIŞ OPTİMİZASYONU ===
+    // Stabil katılar (ambient sıcaklık, düşük basınç) çoğu işlemi atlar
+    if (state == STATE_SOLID) {
+        f32 temp_diff = fabsf(pixel->temperature - world->ambient_temperature);
+        if (temp_diff < 5.0f && pixel->pressure < AMBIENT_PRESSURE + 1000.0f) {
+            // Her 10 tick'te bir sıcaklık kontrolü (10x dt ile)
+            if ((world->tick % 10) == 0) {
+                temperature_update(world, x, y, dt * 10.0f);
+            }
+            return;  // Çoğu işlemi atla - %80+ katı piksel için büyük tasarruf
+        }
+    }
+
     // 1. Temperature update
     temperature_update(world, x, y, dt);
     

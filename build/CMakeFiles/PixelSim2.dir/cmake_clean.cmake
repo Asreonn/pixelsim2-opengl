@@ -20,6 +20,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o.d"
   "CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.o"
   "CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.o.d"
+  "CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o"
+  "CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o.d"
   "CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o"
   "CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o.d"
   "CMakeFiles/PixelSim2.dir/src/materials/definitions/sand.c.o"

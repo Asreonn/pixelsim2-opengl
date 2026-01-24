@@ -55,6 +55,7 @@ set(SOURCES
     src/materials/definitions/ice.c
     src/materials/definitions/glass.c
     src/materials/definitions/mud.c
+    src/materials/definitions/molten_sand.c
     src/render/renderer.c
     src/render/shader.c
     src/render/color.c

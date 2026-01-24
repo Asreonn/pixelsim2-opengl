@@ -19,6 +19,7 @@ void materials_init(void) {
     material_register(&MAT_DEF_ICE);
     material_register(&MAT_DEF_GLASS);
     material_register(&MAT_DEF_MUD);
+    material_register(&MAT_DEF_MOLTEN_SAND);
 }
 
 void materials_shutdown(void) {

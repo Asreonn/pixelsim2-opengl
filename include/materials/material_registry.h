@@ -48,5 +48,6 @@ extern MaterialDef MAT_DEF_STEAM;
 extern MaterialDef MAT_DEF_ICE;
 extern MaterialDef MAT_DEF_GLASS;
 extern MaterialDef MAT_DEF_MUD;
+extern MaterialDef MAT_DEF_MOLTEN_SAND;
 
 #endif

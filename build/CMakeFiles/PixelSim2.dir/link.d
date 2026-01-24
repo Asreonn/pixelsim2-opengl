@@ -28,6 +28,7 @@ PixelSim2: \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o \
+  CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o \
   CMakeFiles/PixelSim2.dir/src/render/renderer.c.o \
   CMakeFiles/PixelSim2.dir/src/render/shader.c.o \
   CMakeFiles/PixelSim2.dir/src/render/color.c.o \
@@ -127,6 +128,8 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.o:
 CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o:
 
 CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o:
+
+CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o:
 
 CMakeFiles/PixelSim2.dir/src/render/renderer.c.o:
 

@@ -451,6 +451,30 @@ src/materials/definitions/ice.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.s
 .PHONY : src/materials/definitions/ice.c.s
 
+src/materials/definitions/molten_sand.o: src/materials/definitions/molten_sand.c.o
+.PHONY : src/materials/definitions/molten_sand.o
+
+# target to build an object file
+src/materials/definitions/molten_sand.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o
+.PHONY : src/materials/definitions/molten_sand.c.o
+
+src/materials/definitions/molten_sand.i: src/materials/definitions/molten_sand.c.i
+.PHONY : src/materials/definitions/molten_sand.i
+
+# target to preprocess a source file
+src/materials/definitions/molten_sand.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.i
+.PHONY : src/materials/definitions/molten_sand.c.i
+
+src/materials/definitions/molten_sand.s: src/materials/definitions/molten_sand.c.s
+.PHONY : src/materials/definitions/molten_sand.s
+
+# target to generate assembly for a file
+src/materials/definitions/molten_sand.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.s
+.PHONY : src/materials/definitions/molten_sand.c.s
+
 src/materials/definitions/mud.o: src/materials/definitions/mud.c.o
 .PHONY : src/materials/definitions/mud.o
 
@@ -1002,6 +1026,9 @@ help:
 	@echo "... src/materials/definitions/ice.o"
 	@echo "... src/materials/definitions/ice.i"
 	@echo "... src/materials/definitions/ice.s"
+	@echo "... src/materials/definitions/molten_sand.o"
+	@echo "... src/materials/definitions/molten_sand.i"
+	@echo "... src/materials/definitions/molten_sand.s"
 	@echo "... src/materials/definitions/mud.o"
 	@echo "... src/materials/definitions/mud.i"
 	@echo "... src/materials/definitions/mud.s"
