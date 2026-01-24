@@ -13,7 +13,7 @@ MaterialDef MAT_DEF_SAND = {
     .elasticity = 0.0f,
     .dispersion = 2.0f,      // 1.5 → 2.0 (daha geniş yayılma)
     
-    .thermal_conductivity = 0.6f,
+    .thermal_conductivity = 2.0f,   // Increased for better heat absorption (was 0.6)
     .specific_heat = 830.0f,
     
     .melting_point = 1150.0f,

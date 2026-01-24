@@ -13,7 +13,7 @@ MaterialDef MAT_DEF_STONE = {
     .elasticity = 0.1f,
     .dispersion = 0,
     
-    .thermal_conductivity = 6.0f,
+    .thermal_conductivity = 12.0f,  // Increased (was 6)
     .specific_heat = 650.0f,
     
     .melting_point = 1500.0f,

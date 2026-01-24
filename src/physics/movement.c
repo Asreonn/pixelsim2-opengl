@@ -249,6 +249,14 @@ void movement_update_liquid(World* world, i32 x, i32 y) {
             }
         }
         
+        // === DURGUN SU KONTROLÜ ===
+        // Eğer hız çok düşükse ve basınç yoksa, yatay hareket etme
+        f32 total_velocity = fabsf(pixel->velocity_x) + fabsf(pixel->velocity_y);
+        if (total_velocity < 0.5f && stack_pressure < 0.3f) {
+            // Su durgun - yatay hareket etme
+            break;
+        }
+
         // === YÜZEY GERİLİMİ (azaltılmış) ===
         // İzole sıvı damlacıkları daha az yayılır - eşik 3 → 2
         i32 same_neighbors = grid_count_neighbors_of_type(world, curr_x, curr_y, pixel->material_id);
