@@ -3,6 +3,7 @@
 #include "materials/material_registry.h"
 #include "materials/material_cache.h"
 #include "core/math_utils.h"
+#include <math.h>
 
 // Count empty/passable neighbors in a direction for pressure-based flow
 static i32 grid_count_empty_in_direction(World* world, i32 x, i32 y, i32 dx, i32 max_dist) {
@@ -248,64 +249,129 @@ bool grid_try_move_up_diagonal(World* world, i32 x, i32 y) {
     return false;
 }
 
-// Calculate weight pressure from particles stacked above
-i32 grid_get_weight_above(World* world, i32 x, i32 y, i32 max_height) {
-    i32 weight = 0;
+// Calculate weight/pressure from particles stacked above
+// Returns accumulated weight considering density and velocity
+f32 grid_get_stack_pressure(World* world, i32 x, i32 y, i32 max_height) {
+    f32 pressure = 0.0f;
+    
     for (i32 dy = 1; dy <= max_height; dy++) {
         Pixel* above = world_get_pixel(world, x, y - dy);
         if (!above) break;
         if (above->material_id == MAT_AIR) break;
         
         MaterialState state = MAT_CACHE_STATE(above->material_id);
+        f32 density = MAT_CACHE_DENSITY(above->material_id);
+        
         if (state == STATE_POWDER || state == STATE_LIQUID) {
-            weight++;
+            // Base pressure from density (normalized to ~1.0 for sand/water)
+            f32 base_weight = density / 1500.0f;
+            
+            // Velocity adds momentum pressure - fast falling = more impact
+            f32 velocity_bonus = fabsf(above->velocity_y) * 0.5f;
+            
+            pressure += base_weight + velocity_bonus;
         } else if (state == STATE_SOLID) {
-            weight += 3;  // Solids add more pressure
-            break;  // Solid blocks further pressure
+            // Solids add massive pressure and block propagation
+            pressure += (density / 1000.0f) * 3.0f;
+            break;
         } else {
             break;  // Gas/plasma don't add weight
         }
     }
-    return weight;
+    
+    return pressure;
+}
+
+// Check if there's an escape route (diagonal down or horizontal)
+static bool grid_has_escape_route(World* world, i32 x, i32 y) {
+    // Check diagonal down
+    if (grid_can_move_to(world, x, y, x - 1, y + 1)) return true;
+    if (grid_can_move_to(world, x, y, x + 1, y + 1)) return true;
+    
+    // Check horizontal
+    Pixel* left = world_get_pixel(world, x - 1, y);
+    Pixel* right = world_get_pixel(world, x + 1, y);
+    if (left && left->material_id == MAT_AIR) return true;
+    if (right && right->material_id == MAT_AIR) return true;
+    
+    return false;
 }
 
 // Try to push particle sideways due to pressure from above
-bool grid_try_pressure_push(World* world, i32 x, i32 y, i32 pressure) {
-    if (pressure < 1) return false;
+// pressure: stack pressure value (typically 0-10+)
+// viscosity: material viscosity (0 = flows easy, higher = resists)
+bool grid_try_pressure_push(World* world, i32 x, i32 y, f32 pressure, f32 viscosity) {
+    if (pressure < 0.5f) return false;
     
     Pixel* pixel = world_get_pixel(world, x, y);
     if (!pixel || pixel->material_id == MAT_AIR) return false;
     
-    // Higher pressure = more likely to push and further distance
-    i32 push_dist = clampi(pressure / 2, 1, 3);
+    // Viscosity reduces effective pressure
+    f32 effective_pressure = pressure / (1.0f + viscosity * 0.5f);
+    if (effective_pressure < 0.3f) return false;
     
     // Check if we're blocked below (otherwise we'd just fall)
     Pixel* below = world_get_pixel(world, x, y + 1);
     if (!below) return false;
-    if (below->material_id == MAT_AIR) return false;  // Can fall, don't push
+    if (below->material_id == MAT_AIR) return false;
     
-    // Also check diagonals - if either is open, prefer natural flow
-    bool diag_left = grid_can_move_to(world, x, y, x - 1, y + 1);
-    bool diag_right = grid_can_move_to(world, x, y, x + 1, y + 1);
-    if (diag_left || diag_right) return false;  // Natural diagonal flow will handle it
+    // If diagonals are open, let natural flow handle it (but only if pressure is low)
+    if (effective_pressure < 2.0f && grid_has_escape_route(world, x, y)) {
+        return false;
+    }
     
-    // We're truly stuck - try to push sideways
+    // Calculate push distance based on pressure
+    i32 push_dist = clampi((i32)(effective_pressure), 1, 4);
+    
+    // Pick direction based on where there's more space
     i32 dir = grid_pick_dir_by_pressure(world, x, y);
     
-    // Try pushing in preferred direction first
+    // High pressure can push through other particles
+    bool pushed = false;
+    
+    // First try direct horizontal movement
     for (i32 i = 1; i <= push_dist; i++) {
-        if (grid_try_move(world, x, y, dir * i, 0)) return true;
-    }
-    // Try other direction
-    for (i32 i = 1; i <= push_dist; i++) {
-        if (grid_try_move(world, x, y, -dir * i, 0)) return true;
+        if (grid_try_move(world, x, y, dir * i, 0)) {
+            pushed = true;
+            break;
+        }
     }
     
-    // Can't move horizontally - try pushing diagonally up (pile spreading)
-    if (pressure >= 3) {
-        if (grid_try_move(world, x, y, dir, -1)) return true;
-        if (grid_try_move(world, x, y, -dir, -1)) return true;
+    if (!pushed) {
+        // Try other direction
+        for (i32 i = 1; i <= push_dist; i++) {
+            if (grid_try_move(world, x, y, -dir * i, 0)) {
+                pushed = true;
+                break;
+            }
+        }
     }
     
-    return false;
+    // High pressure: try diagonal down even if blocked directly below
+    if (!pushed && effective_pressure >= 1.5f) {
+        if (grid_try_move(world, x, y, dir, 1)) pushed = true;
+        else if (grid_try_move(world, x, y, -dir, 1)) pushed = true;
+    }
+    
+    // Very high pressure: can push diagonally up (pile spreading/avalanche)
+    if (!pushed && effective_pressure >= 3.0f) {
+        if (grid_try_move(world, x, y, dir, -1)) pushed = true;
+        else if (grid_try_move(world, x, y, -dir, -1)) pushed = true;
+    }
+    
+    // Transfer some velocity from pressure
+    if (pushed) {
+        Pixel* moved = world_get_pixel(world, x + dir, y);  // approximate new pos
+        if (!moved) moved = world_get_pixel(world, x - dir, y);
+        if (moved && moved->material_id != MAT_AIR) {
+            moved->velocity_x += dir * effective_pressure * 0.3f;
+        }
+    }
+    
+    return pushed;
+}
+
+// Legacy wrapper for compatibility
+i32 grid_get_weight_above(World* world, i32 x, i32 y, i32 max_height) {
+    return (i32)grid_get_stack_pressure(world, x, y, max_height);
 }
