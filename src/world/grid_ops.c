@@ -312,26 +312,29 @@ static bool grid_has_escape_route(World* world, i32 x, i32 y) {
 // viscosity: material viscosity (0 = flows easy, higher = resists)
 bool grid_try_pressure_push(World* world, i32 x, i32 y, f32 pressure, f32 viscosity) {
     if (pressure < 0.5f) return false;
-    
+
     Pixel* pixel = world_get_pixel(world, x, y);
     if (!pixel || pixel->material_id == MAT_AIR) return false;
-    
-    // Viscosity reduces effective pressure
-    f32 effective_pressure = pressure / (1.0f + viscosity * 0.5f);
+
+    // Friction and viscosity reduce effective pressure
+    // High friction (sand=0.5, mud=0.75) greatly reduces spreading
+    f32 friction = MAT_CACHE_FRICTION(pixel->material_id);
+    f32 effective_pressure = pressure / (1.0f + viscosity * 0.5f + friction * 3.0f);
     if (effective_pressure < 0.3f) return false;
-    
+
     // Check if we're blocked below (otherwise we'd just fall)
     Pixel* below = world_get_pixel(world, x, y + 1);
     if (!below) return false;
     if (below->material_id == MAT_AIR) return false;
-    
+
     // If diagonals are open, let natural flow handle it (but only if pressure is low)
     if (effective_pressure < 2.0f && grid_has_escape_route(world, x, y)) {
         return false;
     }
-    
-    // Calculate push distance based on pressure
-    i32 push_dist = clampi((i32)(effective_pressure), 1, 4);
+
+    // Calculate push distance based on pressure and friction
+    f32 dist_factor = 1.0f / (1.0f + friction * 2.0f);
+    i32 push_dist = clampi((i32)(effective_pressure * dist_factor), 1, 4);
     
     // Pick direction based on where there's more space
     i32 dir = grid_pick_dir_by_pressure(world, x, y);

@@ -1,5 +1,6 @@
 #include "materials/interactions.h"
 #include "world/world.h"
+#include <math.h>
 #include "world/pixel.h"
 #include "materials/material_registry.h"
 #include "core/config.h"
@@ -46,11 +47,14 @@ void interactions_init(void) {
     // Ates + Kum etkilesimi kaldirildi - artik sicaklik bazli:
     // Kum (1150K+) -> Erimis Kum (sivi) -> soguyunca Cam (900K alti)
 
-    // === BASINÇ BAZLI ETKİLEŞİMLER ===
+    // === BASINC VE HIZ BAZLI ETKILESIMLER ===
 
-    // Yüksek basınçlı su + taş = erozyon (taş kuma dönüşür)
-    interaction_add(MAT_WATER, MAT_STONE, MAT_WATER, MAT_SAND, INTERACT_REACT, 0.02f);
-    interactions[interaction_count - 1].min_pressure = AMBIENT_PRESSURE + 50000.0f;
+    // Yuksek basincli ve hizli su + tas = erozyon (tas kuma donusur)
+    // Durgun su erozyon yapmaz (velocity_factor = 0)
+    // Akan su kademeli erozyon yapar
+    interaction_add(MAT_WATER, MAT_STONE, MAT_WATER, MAT_SAND, INTERACT_REACT, 0.01f);
+    interactions[interaction_count - 1].min_pressure = AMBIENT_PRESSURE + 100000.0f;
+    interactions[interaction_count - 1].min_velocity = 4.0f;  // formula coefficient
 }
 
 void interactions_shutdown(void) {
@@ -83,7 +87,8 @@ bool interaction_add(u16 mat_a, u16 mat_b, u16 result_a, u16 result_b,
         .type = type,
         .probability = probability,
         .min_temperature = 0,
-        .min_pressure = 0  // Default: no pressure requirement
+        .min_pressure = 0,   // Default: no pressure requirement
+        .min_velocity = 0    // Default: no velocity requirement
     };
 
     // Register interaction
@@ -107,22 +112,40 @@ const MaterialInteraction* interaction_find(u16 mat_a, u16 mat_b) {
 }
 
 static bool interaction_should_apply(World* world, i32 x1, i32 y1, i32 x2, i32 y2,
-                                     const MaterialInteraction* inter, f32 temperature, f32 pressure) {
+                                     const MaterialInteraction* inter,
+                                     f32 temperature, f32 pressure, f32 velocity) {
     if (!inter) return false;
-    if (temperature < inter->min_temperature) return false;
 
-    // Basınç bazlı olasılık hesaplama
-    f32 effective_probability = inter->probability;
-    if (inter->min_pressure > 0) {
-        if (pressure < inter->min_pressure) return false;
-        // Basınç arttıkça olasılık artar (orantılı)
-        f32 pressure_ratio = (pressure - inter->min_pressure) / inter->min_pressure;
-        effective_probability = inter->probability * (1.0f + pressure_ratio * 2.0f);
-        effective_probability = clampf(effective_probability, 0.0f, 0.5f);  // Max %50
+    // Temperature factor (0-2): lower temp = lower factor
+    f32 temp_factor = 1.0f;
+    if (inter->min_temperature > 0) {
+        temp_factor = temperature / inter->min_temperature;
+        temp_factor = clampf(temp_factor, 0.0f, 2.0f);
     }
 
-    if (effective_probability >= 1.0f) return true;
+    // Pressure factor (0-2): below min = low factor
+    f32 pressure_factor = 1.0f;
+    if (inter->min_pressure > 0) {
+        f32 over_min = pressure - AMBIENT_PRESSURE;
+        f32 required = inter->min_pressure - AMBIENT_PRESSURE;
+        pressure_factor = over_min / required;
+        pressure_factor = clampf(pressure_factor, 0.0f, 2.0f);
+    }
+
+    // Velocity factor (0-2): 0 velocity = 0 factor, high velocity = 1+
+    f32 velocity_factor = 1.0f;
+    if (inter->min_velocity > 0) {
+        // Sigmoid-like: v=0 → 0, v=min_v → 0.5, v=2*min_v → 0.8
+        velocity_factor = velocity / (velocity + inter->min_velocity);
+        velocity_factor *= 2.0f;  // Normalize (v=min_v → ~1.0)
+    }
+
+    // Effective probability = base * all factors
+    f32 effective_probability = inter->probability * temp_factor * pressure_factor * velocity_factor;
+    effective_probability = clampf(effective_probability, 0.0f, 0.5f);
+
     if (effective_probability <= 0.0f) return false;
+    if (effective_probability >= 1.0f) return true;
 
     u32 h = hash_position(x1 + x2, y1 + y2, world->tick);
     f32 sample = (f32)(h & 0xFFFFu) / 65535.0f;
@@ -220,7 +243,12 @@ bool interaction_process(World* world, i32 x1, i32 y1, i32 x2, i32 y2) {
     // Calculate average pressure for pressure-based interactions
     f32 avg_pressure = (p1->pressure + p2->pressure) * 0.5f;
 
-    if (!interaction_should_apply(world, x1, y1, x2, y2, inter, avg_temp, avg_pressure)) return false;
+    // Calculate velocity magnitude for velocity-based interactions
+    f32 vel1 = sqrtf(p1->velocity_x * p1->velocity_x + p1->velocity_y * p1->velocity_y);
+    f32 vel2 = sqrtf(p2->velocity_x * p2->velocity_x + p2->velocity_y * p2->velocity_y);
+    f32 max_velocity = fmaxf(vel1, vel2);
+
+    if (!interaction_should_apply(world, x1, y1, x2, y2, inter, avg_temp, avg_pressure, max_velocity)) return false;
     
     // Determine which pixel is which material
     bool swapped = (p1->material_id == inter->material_b);

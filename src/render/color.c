@@ -1,5 +1,6 @@
 #include "render/color.h"
 #include "world/pixel.h"
+#include <math.h>
 #include "materials/material_registry.h"
 #include "physics/temperature.h"
 #include "core/math_utils.h"
@@ -82,13 +83,23 @@ Color color_from_temperature(f32 temperature) {
 }
 
 Color color_from_pressure(f32 pressure) {
-    // Scale pressure relative to ambient - stack pressure adds ~10000-120000
     f32 over_ambient = pressure - AMBIENT_PRESSURE;
-    
-    // Normalize to 0-1 range where 50000 over ambient is "max" for visualization
-    f32 normalized = over_ambient / 80000.0f;
-    normalized = clampf(normalized, -0.5f, 1.0f);
-    
+
+    f32 normalized;
+    if (over_ambient <= 0) {
+        // Low pressure: linear negative scale
+        normalized = over_ambient / 50000.0f;
+        normalized = fmaxf(normalized, -0.5f);
+    } else {
+        // High pressure: logarithmic scale
+        // log10(1000)=3, log10(10000)=4, log10(100000)=5, log10(1000000)=6
+        // (log - 3) / 3 → 0.0 to 1.0 range
+        f32 log_p = log10f(over_ambient + 1.0f);
+        normalized = (log_p - 3.0f) / 3.0f;
+        normalized = clampf(normalized, 0.0f, 1.0f);
+    }
+
+    // Color bands
     if (normalized < 0) {
         // Low pressure (below ambient): blue
         f32 t = -normalized * 2.0f;

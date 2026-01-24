@@ -17,6 +17,13 @@ CMakeFiles/PixelSim2.dir/src/render/color.c.o: \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/pixel.h \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
+ /usr/include/math.h /usr/include/bits/math-vector.h \
+ /usr/include/bits/libm-simd-decl-stubs.h /usr/include/bits/floatn.h \
+ /usr/include/bits/floatn-common.h /usr/include/bits/flt-eval-method.h \
+ /usr/include/bits/fp-logb.h /usr/include/bits/fp-fast.h \
+ /usr/include/bits/mathcalls-macros.h \
+ /usr/include/bits/mathcalls-helper-functions.h \
+ /usr/include/bits/mathcalls.h \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_registry.h \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \

@@ -428,6 +428,32 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.o: /home/asreonn/uwu/Sc
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
 
+CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/molten_sand.c \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
+  /usr/include/bits/libc-header-start.h \
+  /usr/include/bits/long-double.h \
+  /usr/include/bits/stdint-intn.h \
+  /usr/include/bits/stdint-least.h \
+  /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/time64.h \
+  /usr/include/bits/timesize.h \
+  /usr/include/bits/types.h \
+  /usr/include/bits/typesizes.h \
+  /usr/include/bits/wchar.h \
+  /usr/include/bits/wordsize.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/gnu/stubs-64.h \
+  /usr/include/gnu/stubs.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
+
 CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/mud.c \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h \
@@ -1330,6 +1356,7 @@ PixelSim2: /lib64/ld-linux-x86-64.so.2 \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/fire.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.o \
+  CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/sand.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/steam.c.o \
@@ -1379,6 +1406,8 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/water.c.o:
 CMakeFiles/PixelSim2.dir/src/materials/definitions/steam.c.o:
 
 CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o:
+
+CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o:
 
 CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o:
 
@@ -1477,6 +1506,14 @@ CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o:
 /usr/include/stdlib.h:
 
 /usr/include/bits/types/time_t.h:
+
+CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/steam.c:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/mud.c:
+
+/usr/include/bits/types/struct_timeval.h:
 
 CMakeFiles/PixelSim2.dir/src/physics/movement.c.o:
 
@@ -1585,14 +1622,6 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/air.c.o:
 /lib64/libmvec.so.1:
 
 /usr/include/bits/pthreadtypes.h:
-
-CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/steam.c:
-
-/usr/include/bits/types/struct_timeval.h:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/mud.c:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/core/config.c:
 
@@ -1739,6 +1768,8 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/sand.c.o:
 /usr/lib/gcc/x86_64-redhat-linux/15/libgcc_s.so:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/molten_sand.c:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_registry.h:
 

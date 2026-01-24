@@ -14,6 +14,7 @@ typedef struct MaterialInteraction {
     f32 probability;           // 0.0 - 1.0
     f32 min_temperature;       // Minimum temp required (Kelvin)
     f32 min_pressure;          // Minimum pressure required (Pa), 0 = no requirement
+    f32 min_velocity;          // Velocity factor coefficient, 0 = not used
 } MaterialInteraction;
 
 // Initialize interaction system
