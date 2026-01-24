@@ -8,6 +8,17 @@
 #include "core/math_utils.h"
 #include <math.h>
 
+static bool movement_is_supported(World* world, i32 x, i32 y) {
+    Pixel* below = world_get_pixel(world, x, y + 1);
+    if (!below || below->material_id == MAT_AIR) return false;
+
+    if (grid_can_move_to(world, x, y + 1, x, y + 2)) return false;
+    if (grid_can_move_to(world, x, y + 1, x - 1, y + 2)) return false;
+    if (grid_can_move_to(world, x, y + 1, x + 1, y + 2)) return false;
+
+    return true;
+}
+
 void movement_apply_damping(Pixel* pixel, const MaterialDef* mat, f32 dt) {
     if (!pixel || !mat) return;
     
@@ -63,6 +74,8 @@ void movement_update_powder(World* world, i32 x, i32 y) {
 
     // Stack pressure was pre-calculated in pressure_calculate_all_stacks()
     f32 stack_pressure = (pixel->pressure - AMBIENT_PRESSURE) / 15000.0f;
+    f32 fall_factor = clampf(1.0f - (fabsf(pixel->velocity_y) / 2.5f), 0.0f, 1.0f);
+    stack_pressure *= fall_factor;
 
     // Use velocity to determine how many steps to attempt
     i32 steps = clampi((i32)fabsf(pixel->velocity_y), 1, 5);
@@ -94,13 +107,13 @@ void movement_update_powder(World* world, i32 x, i32 y) {
     }
     
     // Pressure-based spreading - use pre-calculated pressure
-    if (stack_pressure > 0.3f) {
+    if (stack_pressure > 0.3f && movement_is_supported(world, curr_x, curr_y)) {
         Pixel* current = world_get_pixel(world, curr_x, curr_y);
         if (current && current->material_id != MAT_AIR) {
             Pixel* below = world_get_pixel(world, curr_x, curr_y + 1);
             if (below && below->material_id != MAT_AIR) {
                 bool pushed = grid_try_pressure_push(world, curr_x, curr_y, stack_pressure, mat->viscosity);
-                
+
                 if (!pushed && stack_pressure > 1.5f) {
                     grid_propagate_pressure_up(world, curr_x, curr_y, 6);
                 }
@@ -118,6 +131,8 @@ void movement_update_liquid(World* world, i32 x, i32 y) {
     
     // Stack pressure was pre-calculated
     f32 stack_pressure = (pixel->pressure - AMBIENT_PRESSURE) / 15000.0f;
+    f32 fall_factor = clampf(1.0f - (fabsf(pixel->velocity_y) / 3.0f), 0.0f, 1.0f);
+    stack_pressure *= fall_factor;
     
     i32 spread = movement_get_spread_distance(mat, pixel->temperature);
     
@@ -163,7 +178,7 @@ void movement_update_liquid(World* world, i32 x, i32 y) {
     }
     
     // Liquids always try pressure push - they flow very easily
-    if (stack_pressure > 0.2f) {
+    if (stack_pressure > 0.2f && movement_is_supported(world, curr_x, curr_y)) {
         Pixel* below = world_get_pixel(world, curr_x, curr_y + 1);
         if (below && below->material_id != MAT_AIR) {
             f32 effective_viscosity = mat->viscosity * 0.3f;

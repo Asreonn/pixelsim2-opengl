@@ -143,21 +143,40 @@ void pressure_transfer(Pixel* p1, Pixel* p2, f32 rate, f32 dt) {
 // Pre-calculate stack pressure for all pixels in a chunk
 // This runs BEFORE movement update so each pixel knows its pressure
 void pressure_calculate_chunk_stack(World* world, i32 chunk_x, i32 chunk_y) {
+    Chunk* chunk = &world->chunks[chunk_y][chunk_x];
+    if (chunk->active_count == 0) return;
+
     i32 base_x = chunk_x * CHUNK_SIZE;
     i32 base_y = chunk_y * CHUNK_SIZE;
-    
-    // Process each column in the chunk
+    const i32 max_above_scan = CHUNK_SIZE * 2;
+
+    bool columns[CHUNK_SIZE] = {false};
+    if (!chunk->needs_rebuild) {
+        for (i32 i = 0; i < chunk->active_count; i++) {
+            PackedCoord coord = chunk->active_list[i];
+            columns[UNPACK_X(coord)] = true;
+        }
+    } else {
+        for (i32 lx = 0; lx < CHUNK_SIZE; lx++) {
+            columns[lx] = true;
+        }
+    }
+
+    // Process each active column in the chunk
     for (i32 lx = 0; lx < CHUNK_SIZE; lx++) {
+        if (!columns[lx]) continue;
         i32 x = base_x + lx;
-        
+
         // Scan from top to bottom, accumulating weight
         f32 accumulated_weight = 0.0f;
-        
+
         // First, check pixels above this chunk for incoming pressure
-        for (i32 check_y = base_y - 1; check_y >= 0; check_y--) {
+        i32 above_limit = base_y - max_above_scan;
+        if (above_limit < 0) above_limit = 0;
+        for (i32 check_y = base_y - 1; check_y >= above_limit; check_y--) {
             Pixel* above = world_get_pixel(world, x, check_y);
             if (!above || above->material_id == MAT_AIR) break;
-            
+
             MaterialState state = MAT_CACHE_STATE(above->material_id);
             if (state == STATE_SOLID) {
                 accumulated_weight += MAT_CACHE_DENSITY(above->material_id) / 500.0f;
@@ -170,34 +189,30 @@ void pressure_calculate_chunk_stack(World* world, i32 chunk_x, i32 chunk_y) {
                 break;
             }
         }
-        
+
         // Now process this chunk's column top to bottom
         for (i32 ly = 0; ly < CHUNK_SIZE; ly++) {
             i32 y = base_y + ly;
             Pixel* pixel = world_get_pixel(world, x, y);
             if (!pixel) continue;
-            
+
             if (pixel->material_id == MAT_AIR) {
                 accumulated_weight = 0.0f;
                 continue;
             }
-            
+
             MaterialState state = MAT_CACHE_STATE(pixel->material_id);
-            
+
             if (state == STATE_POWDER || state == STATE_LIQUID) {
-                // Store accumulated pressure from above
                 pixel->pressure = AMBIENT_PRESSURE + accumulated_weight * 15000.0f;
-                
-                // Add this pixel's weight for pixels below
+
                 f32 density = MAT_CACHE_DENSITY(pixel->material_id);
                 accumulated_weight += density / 1500.0f;
                 accumulated_weight += fabsf(pixel->velocity_y) * 0.3f;
             } else if (state == STATE_SOLID) {
-                // Solids block pressure but add their weight
                 pixel->pressure = AMBIENT_PRESSURE;
                 accumulated_weight += MAT_CACHE_DENSITY(pixel->material_id) / 500.0f;
             } else {
-                // Gas/plasma reset pressure accumulation
                 pixel->pressure = AMBIENT_PRESSURE;
                 accumulated_weight = 0.0f;
             }
@@ -210,7 +225,7 @@ void pressure_calculate_all_stacks(World* world) {
     for (i32 cy = 0; cy < CHUNKS_Y; cy++) {
         for (i32 cx = 0; cx < CHUNKS_X; cx++) {
             Chunk* chunk = &world->chunks[cy][cx];
-            if (chunk_is_sleeping(chunk)) continue;
+            if (chunk_is_sleeping(chunk) || chunk->active_count == 0) continue;
             pressure_calculate_chunk_stack(world, cx, cy);
         }
     }
