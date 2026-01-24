@@ -3,6 +3,7 @@
 #include "world/pixel.h"
 #include "world/grid_ops.h"
 #include "materials/material_registry.h"
+#include "materials/material_cache.h"
 #include "materials/material_ids.h"
 #include "core/config.h"
 #include "core/math_utils.h"
@@ -17,8 +18,11 @@ void temperature_update(World* world, i32 x, i32 y, f32 dt) {
     Pixel* pixel = world_get_pixel(world, x, y);
     if (!pixel) return;
     
-    MaterialDef* mat = material_get(pixel->material_id);
-    if (!mat) return;
+    u16 mat_id = pixel->material_id;
+    f32 mat_thermal_k = MAT_CACHE_THERMAL_K(mat_id);
+    f32 mat_density = MAT_CACHE_DENSITY(mat_id);
+    f32 mat_specific_heat = MAT_CACHE_SPECIFIC_HEAT(mat_id);
+    MaterialState mat_state = MAT_CACHE_STATE(mat_id);
     
     f32 total_heat_transfer = 0;
     i32 neighbor_count = 0;
@@ -34,16 +38,13 @@ void temperature_update(World* world, i32 x, i32 y, f32 dt) {
 
         if (neighbor->material_id == MAT_AIR) {
             air_neighbors++;
+            continue;
         }
         
-        MaterialDef* neighbor_mat = material_get(neighbor->material_id);
-        if (!neighbor_mat) continue;
+        f32 neighbor_thermal_k = MAT_CACHE_THERMAL_K(neighbor->material_id);
         
         // Effective thermal conductivity between the two materials
-        f32 k_eff = temperature_effective_conductivity(
-            mat->thermal_conductivity,
-            neighbor_mat->thermal_conductivity
-        );
+        f32 k_eff = temperature_effective_conductivity(mat_thermal_k, neighbor_thermal_k);
         
         // Heat transfer: Q = k_eff * (T_neighbor - T_pixel)
         f32 temp_diff = neighbor->temperature - pixel->temperature;
@@ -56,13 +57,8 @@ void temperature_update(World* world, i32 x, i32 y, f32 dt) {
         Pixel* neighbor = grid_get_neighbor(world, x, y, (Direction)i);
         if (!neighbor || neighbor->material_id == MAT_AIR) continue;
 
-        MaterialDef* neighbor_mat = material_get(neighbor->material_id);
-        if (!neighbor_mat) continue;
-
-        f32 k_eff = temperature_effective_conductivity(
-            mat->thermal_conductivity,
-            neighbor_mat->thermal_conductivity
-        );
+        f32 neighbor_thermal_k = MAT_CACHE_THERMAL_K(neighbor->material_id);
+        f32 k_eff = temperature_effective_conductivity(mat_thermal_k, neighbor_thermal_k);
 
         f32 temp_diff = neighbor->temperature - pixel->temperature;
         total_heat_transfer += (k_eff * temp_diff) * 0.5f;
@@ -71,8 +67,7 @@ void temperature_update(World* world, i32 x, i32 y, f32 dt) {
     
     if (neighbor_count > 0) {
         // Thermal diffusivity: alpha = k / (rho * c)
-        f32 alpha = mat->thermal_conductivity / 
-                    (mat->density * mat->specific_heat + 0.001f);
+        f32 alpha = mat_thermal_k / (mat_density * mat_specific_heat + 0.001f);
         alpha *= HEAT_TRANSFER_SCALE;
         
         // Apply heat transfer
@@ -83,7 +78,7 @@ void temperature_update(World* world, i32 x, i32 y, f32 dt) {
     if (air_neighbors > 0) {
         f32 exposure = (f32)air_neighbors / 4.0f;
         f32 exchange = COOLING_RATE;
-        switch (mat->base_state) {
+        switch (mat_state) {
             case STATE_GAS:
             case STATE_PLASMA:
                 exchange *= 1.5f;

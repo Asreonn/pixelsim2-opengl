@@ -12,7 +12,10 @@ endif()
 
 # Compiler flags
 set(CMAKE_C_FLAGS_DEBUG "-g -O0 -Wall -Wextra -Wpedantic")
-set(CMAKE_C_FLAGS_RELEASE "-O3 -DNDEBUG")
+set(CMAKE_C_FLAGS_RELEASE "-O3 -DNDEBUG -march=native -ffast-math")
+
+# Find threading library
+find_package(Threads REQUIRED)
 
 # Find packages
 find_package(OpenGL REQUIRED)
@@ -29,6 +32,7 @@ set(SOURCES
     src/main.c
     src/core/config.c
     src/core/math_utils.c
+    src/core/thread_pool.c
     src/physics/physics.c
     src/physics/gravity.c
     src/physics/temperature.c
@@ -40,6 +44,7 @@ set(SOURCES
     src/world/world.c
     src/world/grid_ops.c
     src/materials/material_registry.c
+    src/materials/material_cache.c
     src/materials/interactions.c
     src/materials/definitions/air.c
     src/materials/definitions/sand.c
@@ -69,6 +74,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     glfw
     glad
     m
+    Threads::Threads
 )
 
 # Copy assets to build directory

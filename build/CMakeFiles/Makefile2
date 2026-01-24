@@ -88,7 +88,7 @@ clean: CMakeFiles/PixelSim2.dir/clean
 CMakeFiles/glad.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/glad.dir/build.make CMakeFiles/glad.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/glad.dir/build.make CMakeFiles/glad.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=31,32 "Built target glad"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=33,34 "Built target glad"
 .PHONY : CMakeFiles/glad.dir/all
 
 # Build rule for subdir invocation for target.
@@ -105,7 +105,7 @@ glad: CMakeFiles/glad.dir/rule
 # codegen rule for target.
 CMakeFiles/glad.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/glad.dir/build.make CMakeFiles/glad.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=31,32 "Finished codegen for target glad"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=33,34 "Finished codegen for target glad"
 .PHONY : CMakeFiles/glad.dir/codegen
 
 # clean rule for target.
@@ -120,12 +120,12 @@ CMakeFiles/glad.dir/clean:
 CMakeFiles/PixelSim2.dir/all: CMakeFiles/glad.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30 "Built target PixelSim2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32 "Built target PixelSim2"
 .PHONY : CMakeFiles/PixelSim2.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/PixelSim2.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles 32
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles 34
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/PixelSim2.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles 0
 .PHONY : CMakeFiles/PixelSim2.dir/rule
@@ -137,7 +137,7 @@ PixelSim2: CMakeFiles/PixelSim2.dir/rule
 # codegen rule for target.
 CMakeFiles/PixelSim2.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30 "Finished codegen for target PixelSim2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32 "Finished codegen for target PixelSim2"
 .PHONY : CMakeFiles/PixelSim2.dir/codegen
 
 # clean rule for target.

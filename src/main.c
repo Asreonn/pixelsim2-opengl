@@ -10,6 +10,7 @@
 #include "core/math_utils.h"
 #include "world/world.h"
 #include "materials/material_registry.h"
+#include "materials/material_cache.h"
 #include "materials/interactions.h"
 #include "render/renderer.h"
 #include "input/input.h"
@@ -36,6 +37,7 @@ int main(void) {
     // Initialize materials
     printf("Initializing materials...\n");
     materials_init();
+    material_cache_init();  // Build fast lookup cache
     interactions_init();
     printf("Registered %d materials\n", material_count());
     

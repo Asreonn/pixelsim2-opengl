@@ -259,6 +259,30 @@ src/core/math_utils.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/core/math_utils.c.s
 .PHONY : src/core/math_utils.c.s
 
+src/core/thread_pool.o: src/core/thread_pool.c.o
+.PHONY : src/core/thread_pool.o
+
+# target to build an object file
+src/core/thread_pool.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/core/thread_pool.c.o
+.PHONY : src/core/thread_pool.c.o
+
+src/core/thread_pool.i: src/core/thread_pool.c.i
+.PHONY : src/core/thread_pool.i
+
+# target to preprocess a source file
+src/core/thread_pool.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/core/thread_pool.c.i
+.PHONY : src/core/thread_pool.c.i
+
+src/core/thread_pool.s: src/core/thread_pool.c.s
+.PHONY : src/core/thread_pool.s
+
+# target to generate assembly for a file
+src/core/thread_pool.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/core/thread_pool.c.s
+.PHONY : src/core/thread_pool.c.s
+
 src/input/brush.o: src/input/brush.c.o
 .PHONY : src/input/brush.o
 
@@ -570,6 +594,30 @@ src/materials/interactions.s: src/materials/interactions.c.s
 src/materials/interactions.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/materials/interactions.c.s
 .PHONY : src/materials/interactions.c.s
+
+src/materials/material_cache.o: src/materials/material_cache.c.o
+.PHONY : src/materials/material_cache.o
+
+# target to build an object file
+src/materials/material_cache.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/materials/material_cache.c.o
+.PHONY : src/materials/material_cache.c.o
+
+src/materials/material_cache.i: src/materials/material_cache.c.i
+.PHONY : src/materials/material_cache.i
+
+# target to preprocess a source file
+src/materials/material_cache.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/materials/material_cache.c.i
+.PHONY : src/materials/material_cache.c.i
+
+src/materials/material_cache.s: src/materials/material_cache.c.s
+.PHONY : src/materials/material_cache.s
+
+# target to generate assembly for a file
+src/materials/material_cache.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PixelSim2.dir/build.make CMakeFiles/PixelSim2.dir/src/materials/material_cache.c.s
+.PHONY : src/materials/material_cache.c.s
 
 src/materials/material_registry.o: src/materials/material_registry.c.o
 .PHONY : src/materials/material_registry.o
@@ -930,6 +978,9 @@ help:
 	@echo "... src/core/math_utils.o"
 	@echo "... src/core/math_utils.i"
 	@echo "... src/core/math_utils.s"
+	@echo "... src/core/thread_pool.o"
+	@echo "... src/core/thread_pool.i"
+	@echo "... src/core/thread_pool.s"
 	@echo "... src/input/brush.o"
 	@echo "... src/input/brush.i"
 	@echo "... src/input/brush.s"
@@ -969,6 +1020,9 @@ help:
 	@echo "... src/materials/interactions.o"
 	@echo "... src/materials/interactions.i"
 	@echo "... src/materials/interactions.s"
+	@echo "... src/materials/material_cache.o"
+	@echo "... src/materials/material_cache.i"
+	@echo "... src/materials/material_cache.s"
 	@echo "... src/materials/material_registry.o"
 	@echo "... src/materials/material_registry.i"
 	@echo "... src/materials/material_registry.s"

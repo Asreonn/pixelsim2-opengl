@@ -3,6 +3,7 @@
 #include "world/pixel.h"
 #include "world/grid_ops.h"
 #include "materials/material_registry.h"
+#include "materials/material_cache.h"
 #include "core/config.h"
 #include "core/math_utils.h"
 #include <math.h>
@@ -54,19 +55,50 @@ void movement_update_solid(World* world, i32 x, i32 y) {
 }
 
 void movement_update_powder(World* world, i32 x, i32 y) {
-    // Powders fall down, then diagonally
-    if (grid_try_move_down(world, x, y)) return;
-
     Pixel* pixel = world_get_pixel(world, x, y);
     if (!pixel) return;
 
     MaterialDef* mat = material_get(pixel->material_id);
     if (!mat) return;
 
-    f32 resistance = 1.0f + mat->friction * 2.0f + mat->viscosity * 0.2f;
-    f32 spread_f = mat->dispersion / resistance;
-    i32 spread = clampi((i32)roundf(spread_f), 1, MAX_SPREAD);
-    if (grid_try_move_down_diagonal_spread(world, x, y, spread)) return;
+    // Use velocity to determine how many steps to attempt
+    // Faster falling pixels move more cells per tick
+    i32 steps = clampi((i32)fabsf(pixel->velocity_y), 1, 5);
+    
+    i32 curr_x = x, curr_y = y;
+    bool moved = false;
+    
+    for (i32 step = 0; step < steps; step++) {
+        // Try to move straight down first
+        if (grid_try_move_down(world, curr_x, curr_y)) {
+            curr_y++;  // Update position for next step
+            moved = true;
+            continue;
+        }
+        
+        // Can't move down - try diagonal
+        f32 resistance = 1.0f + mat->friction * 2.0f + mat->viscosity * 0.2f;
+        f32 spread_f = mat->dispersion / resistance;
+        i32 spread = clampi((i32)roundf(spread_f), 1, MAX_SPREAD);
+        
+        if (grid_try_move_down_diagonal_spread(world, curr_x, curr_y, spread)) {
+            // Diagonal move succeeded - reduce velocity since we hit something
+            pixel = world_get_pixel(world, curr_x, curr_y + 1);  // Get at new position
+            if (pixel) {
+                pixel->velocity_y *= 0.7f;  // Energy loss on bounce
+            }
+            moved = true;
+        }
+        break;  // Couldn't move, stop trying
+    }
+    
+    // If couldn't move naturally, check for pressure from above
+    if (!moved) {
+        i32 weight = grid_get_weight_above(world, curr_x, curr_y, 8);
+        if (weight > 0) {
+            grid_try_pressure_push(world, curr_x, curr_y, weight);
+        }
+    }
 }
 
 void movement_update_liquid(World* world, i32 x, i32 y) {
@@ -76,28 +108,62 @@ void movement_update_liquid(World* world, i32 x, i32 y) {
     MaterialDef* mat = material_get(pixel->material_id);
     if (!mat) return;
     
-    // Try to move down first
-    if (grid_try_move_down(world, x, y)) return;
-
     i32 spread = movement_get_spread_distance(mat, pixel->temperature);
-    if (grid_try_move_horizontal(world, x, y, spread)) return;
-
-    bool down_left = grid_can_move_to(world, x, y, x - 1, y + 1);
-    bool down_right = grid_can_move_to(world, x, y, x + 1, y + 1);
-
-    if (down_left || down_right) {
-        if (down_left && down_right) {
-            if (grid_try_move_horizontal(world, x, y, spread)) return;
-            if (grid_try_move_down_diagonal(world, x, y)) return;
-        } else if (down_left) {
-            if (grid_try_move(world, x, y, -1, 1)) return;
-        } else {
-            if (grid_try_move(world, x, y, 1, 1)) return;
+    
+    // Use velocity to determine movement steps
+    // Liquids can move multiple cells when falling fast
+    i32 steps = clampi((i32)fabsf(pixel->velocity_y), 1, 4);
+    
+    i32 curr_x = x, curr_y = y;
+    bool moved = false;
+    
+    for (i32 step = 0; step < steps; step++) {
+        // Try to move down first
+        if (grid_try_move_down(world, curr_x, curr_y)) {
+            curr_y++;
+            moved = true;
+            continue;
+        }
+        
+        // Can't move straight down - check diagonals
+        bool down_left = grid_can_move_to(world, curr_x, curr_y, curr_x - 1, curr_y + 1);
+        bool down_right = grid_can_move_to(world, curr_x, curr_y, curr_x + 1, curr_y + 1);
+        
+        if (down_left || down_right) {
+            if (down_left && down_right) {
+                // Both open - use pressure-based diagonal
+                if (grid_try_move_down_diagonal(world, curr_x, curr_y)) {
+                    moved = true;
+                    break;
+                }
+            } else if (down_left) {
+                if (grid_try_move(world, curr_x, curr_y, -1, 1)) {
+                    moved = true;
+                    break;
+                }
+            } else {
+                if (grid_try_move(world, curr_x, curr_y, 1, 1)) {
+                    moved = true;
+                    break;
+                }
+            }
+        }
+        
+        // Couldn't move down at all - spread horizontally
+        if (grid_try_move_horizontal(world, curr_x, curr_y, spread)) {
+            moved = true;
+        }
+        break;
+    }
+    
+    // If couldn't move naturally, check for pressure from above
+    // Liquids respond more to pressure than powders
+    if (!moved) {
+        i32 weight = grid_get_weight_above(world, curr_x, curr_y, 10);
+        if (weight > 0) {
+            grid_try_pressure_push(world, curr_x, curr_y, weight + 1);  // +1 because liquids flow easier
         }
     }
-
-    // Spread horizontally based on viscosity
-    grid_try_move_horizontal(world, x, y, spread);
 }
 
 void movement_update_gas(World* world, i32 x, i32 y) {
@@ -107,21 +173,37 @@ void movement_update_gas(World* world, i32 x, i32 y) {
     MaterialDef* mat = material_get(pixel->material_id);
     if (!mat) return;
     
-    // Gases rise (if temperature is high enough)
-    if (pixel->temperature > AMBIENT_TEMPERATURE) {
-        if (grid_try_move_up(world, x, y)) return;
-        if (grid_try_move_up_diagonal(world, x, y)) return;
-    } else {
-        // Cold gas can sink
-        u32 h = hash_position(x, y, world->tick);
-        if ((h & 1u) != 0u) {
-            if (grid_try_move_down(world, x, y)) return;
+    i32 spread = movement_get_spread_distance(mat, pixel->temperature);
+    
+    // Gas movement based on temperature difference from ambient
+    // Hot gases rise faster, cold gases can sink
+    f32 temp_diff = pixel->temperature - AMBIENT_TEMPERATURE;
+    i32 steps = clampi((i32)(fabsf(temp_diff) / 50.0f) + 1, 1, 3);
+    
+    i32 curr_x = x, curr_y = y;
+    for (i32 step = 0; step < steps; step++) {
+        if (temp_diff > 0) {
+            // Hot gas rises
+            if (grid_try_move_up(world, curr_x, curr_y)) {
+                curr_y--;
+                continue;
+            }
+            if (grid_try_move_up_diagonal(world, curr_x, curr_y)) break;
+        } else {
+            // Cold gas can sink (with some randomness)
+            u32 h = hash_position(curr_x, curr_y, world->tick + (u32)step);
+            if ((h & 1u) != 0u) {
+                if (grid_try_move_down(world, curr_x, curr_y)) {
+                    curr_y++;
+                    continue;
+                }
+            }
         }
+        break;
     }
     
     // Spread horizontally
-    i32 spread = movement_get_spread_distance(mat, pixel->temperature);
-    grid_try_move_horizontal(world, x, y, spread);
+    grid_try_move_horizontal(world, curr_x, curr_y, spread);
 }
 
 void movement_update_plasma(World* world, i32 x, i32 y) {
@@ -144,10 +226,10 @@ void movement_update(World* world, i32 x, i32 y) {
     Pixel* pixel = world_get_pixel(world, x, y);
     if (!pixel) return;
     
-    MaterialDef* mat = material_get(pixel->material_id);
-    if (!mat) return;
+    // Use cached state for faster lookup
+    MaterialState state = MAT_CACHE_STATE(pixel->material_id);
     
-    switch (mat->base_state) {
+    switch (state) {
         case STATE_SOLID:
             movement_update_solid(world, x, y);
             break;

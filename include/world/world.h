@@ -5,6 +5,9 @@
 #include "core/config.h"
 #include "world/chunk.h"
 
+// Forward declaration
+struct ThreadPool;
+
 // World structure - contains all chunks
 typedef struct World {
     Chunk chunks[CHUNKS_Y][CHUNKS_X];
@@ -12,6 +15,10 @@ typedef struct World {
     f32 ambient_temperature;     // Default temperature (Kelvin)
     f32 gravity;                 // Gravity acceleration
     bool paused;                 // Simulation paused?
+    
+    // Threading
+    struct ThreadPool* thread_pool;
+    bool use_parallel;           // Enable parallel physics
 } World;
 
 // World lifecycle

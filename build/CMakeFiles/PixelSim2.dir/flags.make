@@ -6,5 +6,5 @@ C_DEFINES =
 
 C_INCLUDES = -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include -I/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include
 
-C_FLAGS = -O3 -DNDEBUG -std=gnu11
+C_FLAGS = -O3 -DNDEBUG -march=native -ffast-math -std=gnu11
 

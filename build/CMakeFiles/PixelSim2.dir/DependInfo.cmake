@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/core/config.c" "CMakeFiles/PixelSim2.dir/src/core/config.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/core/config.c.o.d"
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/core/math_utils.c" "CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o.d"
+  "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/core/thread_pool.c" "CMakeFiles/PixelSim2.dir/src/core/thread_pool.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/core/thread_pool.c.o.d"
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/input/brush.c" "CMakeFiles/PixelSim2.dir/src/input/brush.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/input/brush.c.o.d"
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/input/input.c" "CMakeFiles/PixelSim2.dir/src/input/input.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/input/input.c.o.d"
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/main.c" "CMakeFiles/PixelSim2.dir/src/main.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/main.c.o.d"
@@ -23,6 +24,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/stone.c" "CMakeFiles/PixelSim2.dir/src/materials/definitions/stone.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/materials/definitions/stone.c.o.d"
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/water.c" "CMakeFiles/PixelSim2.dir/src/materials/definitions/water.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/materials/definitions/water.c.o.d"
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/interactions.c" "CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o.d"
+  "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/material_cache.c" "CMakeFiles/PixelSim2.dir/src/materials/material_cache.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/materials/material_cache.c.o.d"
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/material_registry.c" "CMakeFiles/PixelSim2.dir/src/materials/material_registry.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/materials/material_registry.c.o.d"
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/gravity.c" "CMakeFiles/PixelSim2.dir/src/physics/gravity.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/physics/gravity.c.o.d"
   "/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/movement.c" "CMakeFiles/PixelSim2.dir/src/physics/movement.c.o" "gcc" "CMakeFiles/PixelSim2.dir/src/physics/movement.c.o.d"

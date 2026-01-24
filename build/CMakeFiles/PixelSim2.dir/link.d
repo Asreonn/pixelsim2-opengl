@@ -5,6 +5,7 @@ PixelSim2: \
   CMakeFiles/PixelSim2.dir/src/main.c.o \
   CMakeFiles/PixelSim2.dir/src/core/config.c.o \
   CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o \
+  CMakeFiles/PixelSim2.dir/src/core/thread_pool.c.o \
   CMakeFiles/PixelSim2.dir/src/physics/physics.c.o \
   CMakeFiles/PixelSim2.dir/src/physics/gravity.c.o \
   CMakeFiles/PixelSim2.dir/src/physics/temperature.c.o \
@@ -16,6 +17,7 @@ PixelSim2: \
   CMakeFiles/PixelSim2.dir/src/world/world.c.o \
   CMakeFiles/PixelSim2.dir/src/world/grid_ops.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/material_registry.c.o \
+  CMakeFiles/PixelSim2.dir/src/materials/material_cache.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/air.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/sand.c.o \
@@ -58,6 +60,7 @@ PixelSim2: \
   /usr/lib/gcc/x86_64-redhat-linux/15/libgcc_s.so \
   /lib64/libgcc_s.so.1 \
   /usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a \
+  /usr/lib/gcc/x86_64-redhat-linux/15/crtfastmath.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/crtend.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/../../../../lib64/crtn.o \
   /lib64/ld-linux-x86-64.so.2 \
@@ -78,6 +81,8 @@ CMakeFiles/PixelSim2.dir/src/main.c.o:
 CMakeFiles/PixelSim2.dir/src/core/config.c.o:
 
 CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o:
+
+CMakeFiles/PixelSim2.dir/src/core/thread_pool.c.o:
 
 CMakeFiles/PixelSim2.dir/src/physics/physics.c.o:
 
@@ -100,6 +105,8 @@ CMakeFiles/PixelSim2.dir/src/world/world.c.o:
 CMakeFiles/PixelSim2.dir/src/world/grid_ops.c.o:
 
 CMakeFiles/PixelSim2.dir/src/materials/material_registry.c.o:
+
+CMakeFiles/PixelSim2.dir/src/materials/material_cache.c.o:
 
 CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o:
 
@@ -184,6 +191,8 @@ libglad.a:
 /lib64/libgcc_s.so.1:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/crtfastmath.o:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/crtend.o:
 

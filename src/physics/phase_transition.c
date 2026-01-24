@@ -4,6 +4,7 @@
 #include "world/pixel.h"
 #include "world/grid_ops.h"
 #include "materials/material_registry.h"
+#include "materials/material_cache.h"
 #include "core/config.h"
 #include "core/math_utils.h"
 
@@ -29,12 +30,13 @@ bool phase_check_melting(World* world, i32 x, i32 y) {
     Pixel* pixel = world_get_pixel(world, x, y);
     if (!pixel) return false;
     
-    MaterialDef* mat = material_get(pixel->material_id);
-    if (!mat) return false;
+    u16 mat_id = pixel->material_id;
+    f32 melting_point = MAT_CACHE_MELTING_POINT(mat_id);
     
-    if (mat->melting_point > 0 && pixel->temperature >= mat->melting_point) {
-        if (mat->melts_into != MAT_AIR) {
-            phase_transform(world, x, y, mat->melts_into);
+    if (melting_point > 0 && pixel->temperature >= melting_point) {
+        u16 melts_into = MAT_CACHE_MELTS_INTO(mat_id);
+        if (melts_into != MAT_AIR) {
+            phase_transform(world, x, y, melts_into);
             return true;
         }
     }
@@ -45,12 +47,13 @@ bool phase_check_freezing(World* world, i32 x, i32 y) {
     Pixel* pixel = world_get_pixel(world, x, y);
     if (!pixel) return false;
     
-    MaterialDef* mat = material_get(pixel->material_id);
-    if (!mat) return false;
+    u16 mat_id = pixel->material_id;
+    f32 freezing_point = MAT_CACHE_FREEZING_POINT(mat_id);
     
-    if (mat->freezing_point > 0 && pixel->temperature <= mat->freezing_point) {
-        if (mat->freezes_into != MAT_AIR) {
-            phase_transform(world, x, y, mat->freezes_into);
+    if (freezing_point > 0 && pixel->temperature <= freezing_point) {
+        u16 freezes_into = MAT_CACHE_FREEZES_INTO(mat_id);
+        if (freezes_into != MAT_AIR) {
+            phase_transform(world, x, y, freezes_into);
             return true;
         }
     }
@@ -61,12 +64,13 @@ bool phase_check_boiling(World* world, i32 x, i32 y) {
     Pixel* pixel = world_get_pixel(world, x, y);
     if (!pixel) return false;
     
-    MaterialDef* mat = material_get(pixel->material_id);
-    if (!mat) return false;
+    u16 mat_id = pixel->material_id;
+    f32 boiling_point = MAT_CACHE_BOILING_POINT(mat_id);
     
-    if (mat->boiling_point > 0 && pixel->temperature >= mat->boiling_point) {
-        if (mat->boils_into != MAT_AIR) {
-            phase_transform(world, x, y, mat->boils_into);
+    if (boiling_point > 0 && pixel->temperature >= boiling_point) {
+        u16 boils_into = MAT_CACHE_BOILS_INTO(mat_id);
+        if (boils_into != MAT_AIR) {
+            phase_transform(world, x, y, boils_into);
             return true;
         }
     }
@@ -94,16 +98,18 @@ bool phase_check_combustion(World* world, i32 x, i32 y) {
     Pixel* pixel = world_get_pixel(world, x, y);
     if (!pixel) return false;
     
-    MaterialDef* mat = material_get(pixel->material_id);
-    if (!mat) return false;
+    u16 mat_id = pixel->material_id;
+    u32 flags = MAT_CACHE_FLAGS(mat_id);
+    f32 ignition_point = MAT_CACHE_IGNITION_POINT(mat_id);
     
     // Check if flammable and above ignition point
-    if ((mat->flags & MAT_FLAG_FLAMMABLE) && 
-        mat->ignition_point > 0 && 
-        pixel->temperature >= mat->ignition_point) {
+    if ((flags & MAT_FLAG_FLAMMABLE) && 
+        ignition_point > 0 && 
+        pixel->temperature >= ignition_point) {
         
-        if (mat->burns_into != MAT_AIR) {
-            phase_transform(world, x, y, mat->burns_into);
+        u16 burns_into = MAT_CACHE_BURNS_INTO(mat_id);
+        if (burns_into != MAT_AIR) {
+            phase_transform(world, x, y, burns_into);
         } else {
             phase_transform(world, x, y, MAT_FIRE);
         }
@@ -165,11 +171,8 @@ void phase_spread_fire(World* world, i32 x, i32 y) {
         Pixel* neighbor = world_get_pixel(world, nx, ny);
         if (!neighbor) continue;
         
-        MaterialDef* mat = material_get(neighbor->material_id);
-        if (!mat) continue;
-        
-        // Ignite flammable neighbors
-        if ((mat->flags & MAT_FLAG_FLAMMABLE) && neighbor->material_id != MAT_FIRE) {
+        // Ignite flammable neighbors (use cached flags)
+        if (MAT_CACHE_IS_FLAMMABLE(neighbor->material_id) && neighbor->material_id != MAT_FIRE) {
             neighbor->temperature += FIRE_HEAT_OUTPUT;
         }
     }

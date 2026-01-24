@@ -244,10 +244,37 @@ bool renderer_init(Renderer* renderer) {
     renderer->offset_x = 0;
     renderer->offset_y = 0;
     
+    // Initialize PBO double buffering
+    renderer->pbo_index = 0;
+    renderer->pbo_sync = NULL;
+    renderer->use_pbo = true;
+    
+    glGenBuffers(2, renderer->pbo);
+    for (int i = 0; i < 2; i++) {
+        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, renderer->pbo[i]);
+        glBufferData(GL_PIXEL_UNPACK_BUFFER, WORLD_WIDTH * WORLD_HEIGHT * 4, NULL, GL_STREAM_DRAW);
+    }
+    glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+    
+    // Initialize chunk dirty tracking - all dirty initially
+    for (i32 cy = 0; cy < CHUNKS_Y; cy++) {
+        for (i32 cx = 0; cx < CHUNKS_X; cx++) {
+            renderer->chunk_dirty[cy][cx] = true;
+        }
+    }
+    
+    printf("Renderer initialized with PBO double buffering\n");
+    
     return true;
 }
 
 void renderer_shutdown(Renderer* renderer) {
+    // Cleanup PBO
+    if (renderer->pbo_sync) {
+        glDeleteSync((GLsync)renderer->pbo_sync);
+    }
+    glDeleteBuffers(2, renderer->pbo);
+    
     glDeleteVertexArrays(1, &renderer->vao);
     glDeleteBuffers(1, &renderer->vbo);
     glDeleteBuffers(1, &renderer->ebo);
@@ -257,29 +284,104 @@ void renderer_shutdown(Renderer* renderer) {
     glfwTerminate();
 }
 
-void renderer_update_texture(Renderer* renderer, World* world, Brush* brush) {
-    for (i32 y = 0; y < WORLD_HEIGHT; y++) {
-        for (i32 x = 0; x < WORLD_WIDTH; x++) {
+// Update a single chunk's pixels into the buffer
+static void renderer_update_chunk_pixels(Renderer* renderer, World* world, i32 chunk_x, i32 chunk_y, u8* buffer) {
+    i32 base_x = chunk_x * CHUNK_SIZE;
+    i32 base_y = chunk_y * CHUNK_SIZE;
+    
+    for (i32 ly = 0; ly < CHUNK_SIZE; ly++) {
+        i32 y = base_y + ly;
+        for (i32 lx = 0; lx < CHUNK_SIZE; lx++) {
+            i32 x = base_x + lx;
             Pixel* pixel = world_get_pixel(world, x, y);
             Color color = pixel ? color_calculate_pixel(pixel, renderer->show_temperature, renderer->show_pressure) 
                                : (Color){30, 30, 40, 255};
             
-            renderer->pixel_buffer[y][x][0] = color.r;
-            renderer->pixel_buffer[y][x][1] = color.g;
-            renderer->pixel_buffer[y][x][2] = color.b;
-            renderer->pixel_buffer[y][x][3] = color.a;
+            i32 idx = (y * WORLD_WIDTH + x) * 4;
+            buffer[idx + 0] = color.r;
+            buffer[idx + 1] = color.g;
+            buffer[idx + 2] = color.b;
+            buffer[idx + 3] = color.a;
         }
     }
+}
 
-    renderer_draw_hud(renderer, world, brush);
-    
-    glBindTexture(GL_TEXTURE_2D, renderer->texture);
-    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, WORLD_WIDTH, WORLD_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, renderer->pixel_buffer);
+void renderer_update_texture(Renderer* renderer, World* world, Brush* brush) {
+    if (renderer->use_pbo) {
+        // Wait for previous PBO upload to complete
+        if (renderer->pbo_sync) {
+            glClientWaitSync((GLsync)renderer->pbo_sync, GL_SYNC_FLUSH_COMMANDS_BIT, 1000000000); // 1 second timeout
+            glDeleteSync((GLsync)renderer->pbo_sync);
+            renderer->pbo_sync = NULL;
+        }
+        
+        // Swap PBO index
+        renderer->pbo_index = 1 - renderer->pbo_index;
+        
+        // Map PBO for writing
+        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, renderer->pbo[renderer->pbo_index]);
+        u8* buffer = (u8*)glMapBuffer(GL_PIXEL_UNPACK_BUFFER, GL_WRITE_ONLY);
+        
+        if (buffer) {
+            // Update only dirty chunks (or all if view mode changed)
+            bool force_all = renderer->show_temperature || renderer->show_pressure;
+            
+            for (i32 cy = 0; cy < CHUNKS_Y; cy++) {
+                for (i32 cx = 0; cx < CHUNKS_X; cx++) {
+                    Chunk* chunk = &world->chunks[cy][cx];
+                    if (force_all || chunk->dirty || renderer->chunk_dirty[cy][cx]) {
+                        renderer_update_chunk_pixels(renderer, world, cx, cy, buffer);
+                        renderer->chunk_dirty[cy][cx] = false;
+                    }
+                }
+            }
+            
+            // Draw HUD directly to buffer
+            // Copy buffer to renderer->pixel_buffer for HUD drawing
+            memcpy(renderer->pixel_buffer, buffer, WORLD_WIDTH * WORLD_HEIGHT * 4);
+            renderer_draw_hud(renderer, world, brush);
+            memcpy(buffer, renderer->pixel_buffer, WORLD_WIDTH * WORLD_HEIGHT * 4);
+            
+            glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
+            
+            // Async texture upload from PBO
+            glBindTexture(GL_TEXTURE_2D, renderer->texture);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, WORLD_WIDTH, WORLD_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+            
+            // Create fence for next frame
+            renderer->pbo_sync = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+        } else {
+            // Fallback if map fails
+            renderer->use_pbo = false;
+        }
+        
+        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+    } else {
+        // Fallback: direct upload (slower)
+        for (i32 y = 0; y < WORLD_HEIGHT; y++) {
+            for (i32 x = 0; x < WORLD_WIDTH; x++) {
+                Pixel* pixel = world_get_pixel(world, x, y);
+                Color color = pixel ? color_calculate_pixel(pixel, renderer->show_temperature, renderer->show_pressure) 
+                                   : (Color){30, 30, 40, 255};
+                
+                renderer->pixel_buffer[y][x][0] = color.r;
+                renderer->pixel_buffer[y][x][1] = color.g;
+                renderer->pixel_buffer[y][x][2] = color.b;
+                renderer->pixel_buffer[y][x][3] = color.a;
+            }
+        }
+
+        renderer_draw_hud(renderer, world, brush);
+        
+        glBindTexture(GL_TEXTURE_2D, renderer->texture);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, WORLD_WIDTH, WORLD_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, renderer->pixel_buffer);
+    }
 }
 
 void renderer_update_chunk_texture(Renderer* renderer, World* world, i32 chunk_x, i32 chunk_y) {
-    (void)renderer; (void)world; (void)chunk_x; (void)chunk_y;
-    // For optimization later
+    if (chunk_x >= 0 && chunk_x < CHUNKS_X && chunk_y >= 0 && chunk_y < CHUNKS_Y) {
+        renderer->chunk_dirty[chunk_y][chunk_x] = true;
+    }
 }
 
 void renderer_draw(Renderer* renderer) {

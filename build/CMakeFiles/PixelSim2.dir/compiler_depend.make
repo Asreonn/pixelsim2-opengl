@@ -69,6 +69,94 @@ CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o: /home/asreonn/uwu/Scripts/VSCo
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
 
+CMakeFiles/PixelSim2.dir/src/core/thread_pool.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/core/thread_pool.c \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/thread_pool.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h \
+  /usr/include/alloca.h \
+  /usr/include/bits/atomic_wide_counter.h \
+  /usr/include/bits/byteswap.h \
+  /usr/include/bits/confname.h \
+  /usr/include/bits/cpu-set.h \
+  /usr/include/bits/endian.h \
+  /usr/include/bits/endianness.h \
+  /usr/include/bits/environments.h \
+  /usr/include/bits/floatn-common.h \
+  /usr/include/bits/floatn.h \
+  /usr/include/bits/getopt_core.h \
+  /usr/include/bits/getopt_posix.h \
+  /usr/include/bits/libc-header-start.h \
+  /usr/include/bits/long-double.h \
+  /usr/include/bits/posix_opt.h \
+  /usr/include/bits/pthread_stack_min-dynamic.h \
+  /usr/include/bits/pthread_stack_min.h \
+  /usr/include/bits/pthreadtypes-arch.h \
+  /usr/include/bits/pthreadtypes.h \
+  /usr/include/bits/sched.h \
+  /usr/include/bits/select.h \
+  /usr/include/bits/setjmp.h \
+  /usr/include/bits/stdint-intn.h \
+  /usr/include/bits/stdint-least.h \
+  /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/stdio.h \
+  /usr/include/bits/stdio_lim.h \
+  /usr/include/bits/stdlib-bsearch.h \
+  /usr/include/bits/stdlib-float.h \
+  /usr/include/bits/struct_mutex.h \
+  /usr/include/bits/struct_rwlock.h \
+  /usr/include/bits/thread-shared-types.h \
+  /usr/include/bits/time.h \
+  /usr/include/bits/time64.h \
+  /usr/include/bits/timesize.h \
+  /usr/include/bits/types.h \
+  /usr/include/bits/types/FILE.h \
+  /usr/include/bits/types/__FILE.h \
+  /usr/include/bits/types/__fpos64_t.h \
+  /usr/include/bits/types/__fpos_t.h \
+  /usr/include/bits/types/__locale_t.h \
+  /usr/include/bits/types/__mbstate_t.h \
+  /usr/include/bits/types/__sigset_t.h \
+  /usr/include/bits/types/clock_t.h \
+  /usr/include/bits/types/clockid_t.h \
+  /usr/include/bits/types/cookie_io_functions_t.h \
+  /usr/include/bits/types/locale_t.h \
+  /usr/include/bits/types/sigset_t.h \
+  /usr/include/bits/types/struct_FILE.h \
+  /usr/include/bits/types/struct___jmp_buf_tag.h \
+  /usr/include/bits/types/struct_itimerspec.h \
+  /usr/include/bits/types/struct_sched_param.h \
+  /usr/include/bits/types/struct_timespec.h \
+  /usr/include/bits/types/struct_timeval.h \
+  /usr/include/bits/types/struct_tm.h \
+  /usr/include/bits/types/time_t.h \
+  /usr/include/bits/types/timer_t.h \
+  /usr/include/bits/typesizes.h \
+  /usr/include/bits/uintn-identity.h \
+  /usr/include/bits/unistd_ext.h \
+  /usr/include/bits/waitflags.h \
+  /usr/include/bits/waitstatus.h \
+  /usr/include/bits/wchar.h \
+  /usr/include/bits/wordsize.h \
+  /usr/include/endian.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/gnu/stubs-64.h \
+  /usr/include/gnu/stubs.h \
+  /usr/include/pthread.h \
+  /usr/include/sched.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/stdio.h \
+  /usr/include/stdlib.h \
+  /usr/include/sys/cdefs.h \
+  /usr/include/sys/select.h \
+  /usr/include/sys/types.h \
+  /usr/include/time.h \
+  /usr/include/unistd.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
+
 CMakeFiles/PixelSim2.dir/src/input/brush.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/input/brush.c \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/config.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/math_utils.h \
@@ -152,6 +240,7 @@ CMakeFiles/PixelSim2.dir/src/main.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelS
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/input/brush.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/input/input.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/interactions.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_cache.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_registry.h \
@@ -502,6 +591,39 @@ CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o: /home/asreonn/uwu/Scrip
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
 
+CMakeFiles/PixelSim2.dir/src/materials/material_cache.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/material_cache.c \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/config.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_cache.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_registry.h \
+  /usr/include/bits/libc-header-start.h \
+  /usr/include/bits/long-double.h \
+  /usr/include/bits/stdint-intn.h \
+  /usr/include/bits/stdint-least.h \
+  /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/time64.h \
+  /usr/include/bits/timesize.h \
+  /usr/include/bits/types.h \
+  /usr/include/bits/types/__locale_t.h \
+  /usr/include/bits/types/locale_t.h \
+  /usr/include/bits/typesizes.h \
+  /usr/include/bits/wchar.h \
+  /usr/include/bits/wordsize.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/gnu/stubs-64.h \
+  /usr/include/gnu/stubs.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
+  /usr/include/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
+
 CMakeFiles/PixelSim2.dir/src/materials/material_registry.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/material_registry.c \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/config.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h \
@@ -571,6 +693,7 @@ CMakeFiles/PixelSim2.dir/src/physics/movement.c.o: /home/asreonn/uwu/Scripts/VSC
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/config.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/math_utils.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_cache.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_registry.h \
@@ -616,6 +739,7 @@ CMakeFiles/PixelSim2.dir/src/physics/phase_transition.c.o: /home/asreonn/uwu/Scr
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/config.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/math_utils.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_cache.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_registry.h \
@@ -650,8 +774,10 @@ CMakeFiles/PixelSim2.dir/src/physics/phase_transition.c.o: /home/asreonn/uwu/Scr
 CMakeFiles/PixelSim2.dir/src/physics/physics.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/physics.c \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/config.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/math_utils.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/thread_pool.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/interactions.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_cache.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_registry.h \
@@ -665,14 +791,40 @@ CMakeFiles/PixelSim2.dir/src/physics/physics.c.o: /home/asreonn/uwu/Scripts/VSCo
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/grid_ops.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/pixel.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/world.h \
+  /usr/include/bits/atomic_wide_counter.h \
+  /usr/include/bits/cpu-set.h \
+  /usr/include/bits/endian.h \
+  /usr/include/bits/endianness.h \
   /usr/include/bits/libc-header-start.h \
   /usr/include/bits/long-double.h \
+  /usr/include/bits/pthread_stack_min-dynamic.h \
+  /usr/include/bits/pthread_stack_min.h \
+  /usr/include/bits/pthreadtypes-arch.h \
+  /usr/include/bits/pthreadtypes.h \
+  /usr/include/bits/sched.h \
+  /usr/include/bits/setjmp.h \
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/struct_mutex.h \
+  /usr/include/bits/struct_rwlock.h \
+  /usr/include/bits/thread-shared-types.h \
+  /usr/include/bits/time.h \
   /usr/include/bits/time64.h \
   /usr/include/bits/timesize.h \
   /usr/include/bits/types.h \
+  /usr/include/bits/types/__locale_t.h \
+  /usr/include/bits/types/__sigset_t.h \
+  /usr/include/bits/types/clock_t.h \
+  /usr/include/bits/types/clockid_t.h \
+  /usr/include/bits/types/locale_t.h \
+  /usr/include/bits/types/struct___jmp_buf_tag.h \
+  /usr/include/bits/types/struct_itimerspec.h \
+  /usr/include/bits/types/struct_sched_param.h \
+  /usr/include/bits/types/struct_timespec.h \
+  /usr/include/bits/types/struct_tm.h \
+  /usr/include/bits/types/time_t.h \
+  /usr/include/bits/types/timer_t.h \
   /usr/include/bits/typesizes.h \
   /usr/include/bits/wchar.h \
   /usr/include/bits/wordsize.h \
@@ -680,9 +832,12 @@ CMakeFiles/PixelSim2.dir/src/physics/physics.c.o: /home/asreonn/uwu/Scripts/VSCo
   /usr/include/features.h \
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
+  /usr/include/pthread.h \
+  /usr/include/sched.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
   /usr/include/sys/cdefs.h \
+  /usr/include/time.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
@@ -736,6 +891,7 @@ CMakeFiles/PixelSim2.dir/src/physics/temperature.c.o: /home/asreonn/uwu/Scripts/
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/config.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/math_utils.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_cache.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_registry.h \
@@ -969,6 +1125,7 @@ CMakeFiles/PixelSim2.dir/src/world/grid_ops.c.o: /home/asreonn/uwu/Scripts/VSCod
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/config.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/math_utils.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_cache.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_registry.h \
@@ -1031,30 +1188,87 @@ CMakeFiles/PixelSim2.dir/src/world/pixel.c.o: /home/asreonn/uwu/Scripts/VSCode/C
 
 CMakeFiles/PixelSim2.dir/src/world/world.c.o: /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/world/world.c \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/config.h \
+  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/thread_pool.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/physics/physics.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/chunk.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/pixel.h \
   /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/world.h \
+  /usr/include/alloca.h \
+  /usr/include/bits/atomic_wide_counter.h \
+  /usr/include/bits/byteswap.h \
+  /usr/include/bits/cpu-set.h \
+  /usr/include/bits/endian.h \
+  /usr/include/bits/endianness.h \
+  /usr/include/bits/floatn-common.h \
+  /usr/include/bits/floatn.h \
   /usr/include/bits/libc-header-start.h \
   /usr/include/bits/long-double.h \
+  /usr/include/bits/pthread_stack_min-dynamic.h \
+  /usr/include/bits/pthread_stack_min.h \
+  /usr/include/bits/pthreadtypes-arch.h \
+  /usr/include/bits/pthreadtypes.h \
+  /usr/include/bits/sched.h \
+  /usr/include/bits/select.h \
+  /usr/include/bits/setjmp.h \
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/stdio.h \
+  /usr/include/bits/stdio_lim.h \
+  /usr/include/bits/stdlib-bsearch.h \
+  /usr/include/bits/stdlib-float.h \
+  /usr/include/bits/struct_mutex.h \
+  /usr/include/bits/struct_rwlock.h \
+  /usr/include/bits/thread-shared-types.h \
+  /usr/include/bits/time.h \
   /usr/include/bits/time64.h \
   /usr/include/bits/timesize.h \
   /usr/include/bits/types.h \
+  /usr/include/bits/types/FILE.h \
+  /usr/include/bits/types/__FILE.h \
+  /usr/include/bits/types/__fpos64_t.h \
+  /usr/include/bits/types/__fpos_t.h \
+  /usr/include/bits/types/__locale_t.h \
+  /usr/include/bits/types/__mbstate_t.h \
+  /usr/include/bits/types/__sigset_t.h \
+  /usr/include/bits/types/clock_t.h \
+  /usr/include/bits/types/clockid_t.h \
+  /usr/include/bits/types/cookie_io_functions_t.h \
+  /usr/include/bits/types/locale_t.h \
+  /usr/include/bits/types/sigset_t.h \
+  /usr/include/bits/types/struct_FILE.h \
+  /usr/include/bits/types/struct___jmp_buf_tag.h \
+  /usr/include/bits/types/struct_itimerspec.h \
+  /usr/include/bits/types/struct_sched_param.h \
+  /usr/include/bits/types/struct_timespec.h \
+  /usr/include/bits/types/struct_timeval.h \
+  /usr/include/bits/types/struct_tm.h \
+  /usr/include/bits/types/time_t.h \
+  /usr/include/bits/types/timer_t.h \
   /usr/include/bits/typesizes.h \
+  /usr/include/bits/uintn-identity.h \
+  /usr/include/bits/waitflags.h \
+  /usr/include/bits/waitstatus.h \
   /usr/include/bits/wchar.h \
   /usr/include/bits/wordsize.h \
+  /usr/include/endian.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
   /usr/include/gnu/stubs-64.h \
   /usr/include/gnu/stubs.h \
+  /usr/include/pthread.h \
+  /usr/include/sched.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
+  /usr/include/stdio.h \
+  /usr/include/stdlib.h \
   /usr/include/sys/cdefs.h \
+  /usr/include/sys/select.h \
+  /usr/include/sys/types.h \
+  /usr/include/time.h \
+  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
   /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h
@@ -1071,6 +1285,7 @@ PixelSim2: /lib64/ld-linux-x86-64.so.2 \
   /usr/lib64/libm.so \
   /usr/lib/gcc/x86_64-redhat-linux/15/crtbegin.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/crtend.o \
+  /usr/lib/gcc/x86_64-redhat-linux/15/crtfastmath.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a \
   /usr/lib/gcc/x86_64-redhat-linux/15/libgcc_s.so \
   /usr/lib64/libGLX.so \
@@ -1084,6 +1299,7 @@ PixelSim2: /lib64/ld-linux-x86-64.so.2 \
   /usr/lib64/libxcb.so.1 \
   CMakeFiles/PixelSim2.dir/src/core/config.c.o \
   CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o \
+  CMakeFiles/PixelSim2.dir/src/core/thread_pool.c.o \
   CMakeFiles/PixelSim2.dir/src/input/brush.c.o \
   CMakeFiles/PixelSim2.dir/src/input/input.c.o \
   CMakeFiles/PixelSim2.dir/src/main.c.o \
@@ -1097,6 +1313,7 @@ PixelSim2: /lib64/ld-linux-x86-64.so.2 \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/stone.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/definitions/water.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o \
+  CMakeFiles/PixelSim2.dir/src/materials/material_cache.c.o \
   CMakeFiles/PixelSim2.dir/src/materials/material_registry.c.o \
   CMakeFiles/PixelSim2.dir/src/physics/gravity.c.o \
   CMakeFiles/PixelSim2.dir/src/physics/movement.c.o \
@@ -1132,17 +1349,15 @@ CMakeFiles/PixelSim2.dir/src/physics/physics.c.o:
 
 CMakeFiles/PixelSim2.dir/src/physics/phase_transition.c.o:
 
+CMakeFiles/PixelSim2.dir/src/materials/material_cache.c.o:
+
 CMakeFiles/PixelSim2.dir/src/materials/definitions/water.c.o:
 
 CMakeFiles/PixelSim2.dir/src/materials/definitions/steam.c.o:
 
-CMakeFiles/PixelSim2.dir/src/materials/definitions/sand.c.o:
-
 CMakeFiles/PixelSim2.dir/src/materials/definitions/mud.c.o:
 
 CMakeFiles/PixelSim2.dir/src/materials/definitions/glass.c.o:
-
-CMakeFiles/PixelSim2.dir/src/materials/definitions/fire.c.o:
 
 CMakeFiles/PixelSim2.dir/src/main.c.o:
 
@@ -1152,13 +1367,11 @@ CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o:
 
 /usr/lib64/libc_nonshared.a:
 
-/usr/lib64/libXext.so.6:
-
-/usr/lib64/libX11.so.6:
-
 /usr/lib64/libOpenGL.so:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/crtfastmath.o:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/crtend.o:
 
@@ -1188,15 +1401,39 @@ CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/shader.c:
 
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/render/shader.h:
-
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/renderer.c:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/render/color.h:
 
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/physics/pressure.h:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/physics/physics.h:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/physics.c:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/grid_ops.h:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/physics/movement.h:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/physics/gravity.h:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/gravity.c:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/material_cache.c:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/interactions.c:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/water.c:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/stone.c:
+
 /usr/include/stdint.h:
 
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/physics/pressure.h:
+/usr/lib64/libGLdispatch.so.0:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/sand.c:
+
+/usr/include/math.h:
 
 /usr/lib64/libXau.so.6:
 
@@ -1210,7 +1447,9 @@ CMakeFiles/PixelSim2.dir/src/core/math_utils.c.o:
 
 /usr/include/bits/typesizes.h:
 
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/physics/physics.h:
+/usr/lib64/libXext.so.6:
+
+/usr/include/bits/cpu-set.h:
 
 /usr/include/stdlib.h:
 
@@ -1220,19 +1459,17 @@ CMakeFiles/PixelSim2.dir/src/physics/movement.c.o:
 
 /usr/include/bits/types/struct_timespec.h:
 
+CMakeFiles/PixelSim2.dir/src/core/thread_pool.c.o:
+
 /usr/include/bits/types/clockid_t.h:
-
-/lib64/libm.so.6:
-
-/usr/include/bits/atomic_wide_counter.h:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/main.c:
 
 /usr/include/bits/types.h:
 
-/usr/include/bits/thread-shared-types.h:
+/usr/include/bits/getopt_core.h:
 
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/core/math_utils.c:
+/usr/include/bits/thread-shared-types.h:
 
 /usr/include/gnu/stubs-64.h:
 
@@ -1246,6 +1483,10 @@ CMakeFiles/PixelSim2.dir/src/physics/movement.c.o:
 
 /usr/include/bits/types/__FILE.h:
 
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/color.c:
+
+/usr/include/bits/stdlib-bsearch.h:
+
 /usr/include/time.h:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h:
@@ -1254,9 +1495,9 @@ CMakeFiles/PixelSim2.dir/src/physics/movement.c.o:
 
 /usr/include/bits/time64.h:
 
-/usr/include/bits/mathcalls-helper-functions.h:
-
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/temperature.c:
+
+/usr/include/bits/mathcalls-helper-functions.h:
 
 /usr/include/string.h:
 
@@ -1276,8 +1517,6 @@ CMakeFiles/PixelSim2.dir/src/input/input.c.o:
 
 /usr/include/bits/types/__sigset_t.h:
 
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/gravity.c:
-
 CMakeFiles/PixelSim2.dir/src/render/renderer.c.o:
 
 /usr/include/bits/endian.h:
@@ -1287,8 +1526,6 @@ CMakeFiles/PixelSim2.dir/src/materials/material_registry.c.o:
 /usr/include/bits/timesize.h:
 
 /usr/include/bits/waitstatus.h:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/grid_ops.h:
 
 /usr/include/bits/fp-fast.h:
 
@@ -1300,6 +1537,12 @@ CMakeFiles/PixelSim2.dir/src/core/config.c.o:
 
 /usr/include/stdc-predef.h:
 
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/pressure.c:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/bits/pthreadtypes-arch.h:
+
 /usr/include/bits/libm-simd-decl-stubs.h:
 
 CMakeFiles/PixelSim2.dir/src/materials/definitions/stone.c.o:
@@ -1307,6 +1550,10 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/stone.c.o:
 /usr/include/features.h:
 
 /usr/include/bits/endianness.h:
+
+CMakeFiles/PixelSim2.dir/src/materials/definitions/fire.c.o:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_cache.h:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/config.h:
 
@@ -1318,9 +1565,9 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/air.c.o:
 
 CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o:
 
-/usr/include/bits/types/struct_timeval.h:
-
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/steam.c:
+
+/usr/include/bits/types/struct_timeval.h:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/mud.c:
 
@@ -1346,11 +1593,13 @@ CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o:
 
 /usr/include/bits/stdint-uintn.h:
 
+/usr/lib64/libX11.so.6:
+
+/usr/include/bits/sched.h:
+
 /usr/lib64/libxcb.so.1:
 
 /usr/include/bits/types/cookie_io_functions_t.h:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/water.c:
 
 /usr/include/bits/types/timer_t.h:
 
@@ -1372,7 +1621,15 @@ CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o:
 
 /usr/include/alloca.h:
 
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/phase_transition.c:
+
+/usr/include/bits/stdint-least.h:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/core/thread_pool.c:
+
 /usr/include/sys/select.h:
+
+/usr/include/bits/environments.h:
 
 /usr/lib64/libglfw.so.3.4:
 
@@ -1384,6 +1641,74 @@ CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h:
 
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/material_registry.c:
+
+/usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/render/shader.h:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/thread_pool.h:
+
+/usr/include/bits/long-double.h:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/input/input.h:
+
+/usr/include/bits/getopt_posix.h:
+
+/lib64/libm.so.6:
+
+/usr/include/bits/atomic_wide_counter.h:
+
+/usr/include/bits/posix_opt.h:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h:
+
+/usr/include/bits/pthread_stack_min-dynamic.h:
+
+/usr/include/bits/pthread_stack_min.h:
+
+/usr/include/bits/setjmp.h:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/core/math_utils.c:
+
+/usr/include/bits/types/struct___jmp_buf_tag.h:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/movement.c:
+
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include/glad/glad.h:
+
+/usr/include/bits/stdio.h:
+
+/usr/include/bits/unistd_ext.h:
+
+/usr/include/bits/flt-eval-method.h:
+
+/usr/include/bits/types/FILE.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/GLFW/glfw3.h:
+
+/usr/include/bits/types/__locale_t.h:
+
+/usr/include/sched.h:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/include/bits/time.h:
+
+/usr/include/bits/types/__mbstate_t.h:
+
+/usr/include/bits/types/locale_t.h:
+
+/usr/include/bits/types/struct_FILE.h:
+
+CMakeFiles/PixelSim2.dir/src/materials/definitions/sand.c.o:
+
+/usr/include/pthread.h:
+
+/usr/include/unistd.h:
+
 /usr/include/bits/floatn-common.h:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/input/brush.h:
@@ -1392,15 +1717,13 @@ CMakeFiles/PixelSim2.dir/src/materials/interactions.c.o:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h:
 
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h:
-
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_registry.h:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/render/renderer.h:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/chunk.h:
 
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/physics.c:
+/usr/include/bits/confname.h:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/pixel.h:
 
@@ -1408,23 +1731,11 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/ice.c.o:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/input/input.c:
 
-/usr/include/bits/long-double.h:
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/physics/temperature.h:
 
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/input/input.h:
+/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include/KHR/khrplatform.h:
 
 /usr/include/GL/glext.h:
-
-/usr/include/sys/cdefs.h:
-
-/usr/include/GLFW/glfw3.h:
-
-/usr/include/bits/flt-eval-method.h:
-
-/usr/include/bits/types/FILE.h:
-
-/usr/include/bits/types/__locale_t.h:
-
-/usr/include/bits/types/locale_t.h:
 
 /usr/include/strings.h:
 
@@ -1434,60 +1745,12 @@ CMakeFiles/PixelSim2.dir/src/render/shader.c.o:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/interactions.h:
 
-/usr/include/bits/stdio_lim.h:
-
-/usr/include/bits/time.h:
-
-/usr/include/bits/types/__mbstate_t.h:
-
-/usr/include/bits/types/struct_FILE.h:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/physics/movement.h:
-
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/air.c:
 
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/physics/phase_transition.h:
 
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include/glad/glad.h:
-
-/usr/include/bits/stdio.h:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/movement.c:
-
 CMakeFiles/PixelSim2.dir/src/world/pixel.c.o:
 
+/usr/include/bits/types/struct_sched_param.h:
+
 /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/glass.c:
-
-/usr/lib64/libGLdispatch.so.0:
-
-/usr/include/math.h:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/sand.c:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/stone.c:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/interactions.c:
-
-/usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/material_registry.c:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/physics/gravity.h:
-
-/usr/include/bits/stdint-least.h:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/phase_transition.c:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include/KHR/khrplatform.h:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/physics/temperature.h:
-
-/usr/include/gnu/stubs.h:
-
-/usr/include/bits/pthreadtypes-arch.h:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/physics/pressure.c:
-
-/usr/include/bits/stdlib-bsearch.h:
-
-/home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/render/color.c:

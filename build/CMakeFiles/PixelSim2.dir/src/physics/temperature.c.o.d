@@ -24,5 +24,6 @@ CMakeFiles/PixelSim2.dir/src/physics/temperature.c.o: \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_registry.h \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_cache.h \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/math_utils.h \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h

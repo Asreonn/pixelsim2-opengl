@@ -34,4 +34,8 @@ bool   grid_try_move_horizontal(World* world, i32 x, i32 y, i32 spread);
 bool   grid_try_move_up(World* world, i32 x, i32 y);
 bool   grid_try_move_up_diagonal(World* world, i32 x, i32 y);
 
+// Pressure-based movement
+i32    grid_get_weight_above(World* world, i32 x, i32 y, i32 max_height);
+bool   grid_try_pressure_push(World* world, i32 x, i32 y, i32 pressure);
+
 #endif

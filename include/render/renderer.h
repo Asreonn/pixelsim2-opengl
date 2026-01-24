@@ -14,11 +14,21 @@ typedef struct Renderer {
     u32 shader_program;
     u32 vao, vbo, ebo;
     u32 texture;
+    
+    // PBO double buffering for async texture upload
+    u32 pbo[2];
+    i32 pbo_index;
+    void* pbo_sync;  // GLsync fence
+    
     u8 pixel_buffer[WORLD_HEIGHT][WORLD_WIDTH][4];  // RGBA buffer
     bool show_temperature;
     bool show_pressure;
     f32 zoom;
     f32 offset_x, offset_y;
+    
+    // Dirty chunk tracking
+    bool chunk_dirty[CHUNKS_Y][CHUNKS_X];
+    bool use_pbo;  // Whether PBO is available/enabled
 } Renderer;
 
 // Lifecycle
