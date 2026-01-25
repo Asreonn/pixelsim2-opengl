@@ -166,16 +166,35 @@ void phase_spread_fire(World* world, i32 x, i32 y) {
     for (i32 i = 0; i < 8; i++) {
         u32 h = hash_position(x + DIR_DX[i], y + DIR_DY[i], world->tick);
         if ((h % 10u) != 0u) continue; // 10% chance per neighbor
-        
+
         i32 nx = x + DIR_DX[i];
         i32 ny = y + DIR_DY[i];
-        
+
         Pixel* neighbor = world_get_pixel(world, nx, ny);
         if (!neighbor) continue;
-        
+
         // Ignite flammable neighbors (use cached flags)
         if (MAT_CACHE_IS_FLAMMABLE(neighbor->material_id) && neighbor->material_id != MAT_FIRE) {
             neighbor->temperature += FIRE_HEAT_OUTPUT;
+        }
+    }
+}
+
+void phase_update_molten_sand(World* world, i32 x, i32 y) {
+    Pixel* pixel = world_get_pixel(world, x, y);
+    if (!pixel || pixel->material_id != MAT_MOLTEN_SAND) return;
+
+    // Erimiş kum komşu kumları ısıtır (8 yön)
+    for (i32 i = 0; i < 8; i++) {
+        i32 nx = x + DIR_DX[i];
+        i32 ny = y + DIR_DY[i];
+        Pixel* neighbor = world_get_pixel(world, nx, ny);
+        if (!neighbor) continue;
+
+        if (neighbor->material_id == MAT_SAND) {
+            // Kuma direk ısı ver - zincir ısıtma
+            neighbor->temperature += 15.0f;
+            world_wake_chunk_at(world, nx, ny);
         }
     }
 }

@@ -249,12 +249,23 @@ void movement_update_liquid(World* world, i32 x, i32 y) {
             }
         }
         
-        // === DURGUN SU KONTROLÜ ===
-        // Eğer hız çok düşükse ve basınç yoksa, yatay hareket etme
+        // === DURGUN SU KONTROLÜ (AGRESİF) ===
+        // Çok düşük hızda veya destekleniyorsa yatay hareket YAPMA
         f32 total_velocity = fabsf(pixel->velocity_x) + fabsf(pixel->velocity_y);
-        if (total_velocity < 0.5f && stack_pressure < 0.3f) {
-            // Su durgun - yatay hareket etme
+        bool is_supported = movement_is_supported(world, curr_x, curr_y);
+        if (total_velocity < 0.8f && is_supported) {
+            // Tamamen durgun - hiçbir hareket yok
+            pixel->velocity_x = 0;
+            pixel->velocity_y = 0;
             break;
+        }
+
+        // Yüzeydeki su (üstü boş) daha hızlı durmalı
+        Pixel* above = world_get_pixel(world, curr_x, curr_y - 1);
+        bool at_surface = (!above || above->material_id == MAT_AIR);
+        if (at_surface && total_velocity < 1.0f) {
+            pixel->velocity_x *= 0.3f;
+            pixel->velocity_y *= 0.3f;
         }
 
         // === YÜZEY GERİLİMİ (azaltılmış) ===
@@ -282,13 +293,13 @@ void movement_update_liquid(World* world, i32 x, i32 y) {
             final_pixel->velocity_x *= 0.95f;
             final_pixel->velocity_y *= 0.95f;
         } else {
-            // Aggressive damping when stuck - liquid should settle quickly
-            final_pixel->velocity_x *= 0.5f;
-            final_pixel->velocity_y *= 0.5f;
+            // Hareket etmediyse - çok hızlı durma
+            final_pixel->velocity_x *= 0.3f;
+            final_pixel->velocity_y *= 0.3f;
 
-            // Zero out very small velocities to prevent micro-erosion
-            if (fabsf(final_pixel->velocity_x) < 0.1f) final_pixel->velocity_x = 0;
-            if (fabsf(final_pixel->velocity_y) < 0.1f) final_pixel->velocity_y = 0;
+            // Eşik yükselt - daha hızlı sıfırlama
+            if (fabsf(final_pixel->velocity_x) < 0.2f) final_pixel->velocity_x = 0;
+            if (fabsf(final_pixel->velocity_y) < 0.2f) final_pixel->velocity_y = 0;
         }
     }
 

@@ -13,7 +13,7 @@ MaterialDef MAT_DEF_METAL = {
     .elasticity = 0.3f,
     .dispersion = 0,
 
-    .thermal_conductivity = 40.0f,  // Reduced heat conduction (was 80)
+    .thermal_conductivity = 12.0f,  // Same as stone (was 40)
     .specific_heat = 450.0f,        // Iron: 449 J/(kg·K)
 
     .melting_point = 1800.0f,       // ~1538K iron, slightly higher

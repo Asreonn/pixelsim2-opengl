@@ -23,6 +23,9 @@ void phase_transform(struct World* world, i32 x, i32 y, u16 new_material);
 // Fire-specific updates
 void phase_update_fire(struct World* world, i32 x, i32 y);
 
+// Molten sand updates - heats neighboring sand
+void phase_update_molten_sand(struct World* world, i32 x, i32 y);
+
 // Try to ignite neighboring flammable materials
 void phase_spread_fire(struct World* world, i32 x, i32 y);
 

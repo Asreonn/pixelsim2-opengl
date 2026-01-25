@@ -16,4 +16,9 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o: \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
  /usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
- /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/pixel.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/world.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/config.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/chunk.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/physics/phase_transition.h

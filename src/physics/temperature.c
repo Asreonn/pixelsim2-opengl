@@ -69,9 +69,21 @@ void temperature_update(World* world, i32 x, i32 y, f32 dt) {
         // Thermal diffusivity: alpha = k / (rho * c)
         f32 alpha = mat_thermal_k / (mat_density * mat_specific_heat + 0.001f);
         alpha *= HEAT_TRANSFER_SCALE;
-        
+
         // Apply heat transfer
         pixel->temperature += alpha * total_heat_transfer * dt;
+    }
+
+    // === SICAK MATERYAL EKSTRA ISI YAYIMI ===
+    // Sıcak materyaller (>800K) komşularını ekstra ısıtır (conductivity bypass)
+    if (pixel->temperature > 800.0f) {
+        f32 excess_heat = (pixel->temperature - 800.0f) * 0.002f;
+        for (i32 i = 0; i < 4; i++) {
+            Pixel* neighbor = grid_get_neighbor(world, x, y, (Direction)i);
+            if (neighbor && neighbor->material_id != MAT_AIR) {
+                neighbor->temperature += excess_heat;
+            }
+        }
     }
     
     // Ambient exchange only if exposed to air

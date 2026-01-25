@@ -1,5 +1,13 @@
 #include "materials/material_def.h"
 #include "materials/material_ids.h"
+#include "world/pixel.h"
+#include "world/world.h"
+#include "physics/phase_transition.h"
+
+static void molten_sand_update(Pixel* pixel, World* world, i32 x, i32 y) {
+    phase_update_molten_sand(world, x, y);
+    (void)pixel;
+}
 
 MaterialDef MAT_DEF_MOLTEN_SAND = {
     .id = MAT_MOLTEN_SAND,
@@ -31,5 +39,5 @@ MaterialDef MAT_DEF_MOLTEN_SAND = {
 
     .flags = MAT_FLAG_EMITS_HEAT,        // Isi yayar
     .lifetime = 0,
-    .custom_update = NULL
+    .custom_update = molten_sand_update
 };
