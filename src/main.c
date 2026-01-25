@@ -110,7 +110,7 @@ int main(void) {
         }
         
         // Render
-        renderer_update_texture(&renderer, &world, &brush);
+        renderer_update_texture(&renderer, &world, &brush, &input);
         renderer_draw(&renderer);
         renderer_present(&renderer);
     }

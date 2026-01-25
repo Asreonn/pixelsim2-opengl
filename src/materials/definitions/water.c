@@ -13,8 +13,8 @@ MaterialDef MAT_DEF_WATER = {
     .elasticity = 0.0f,
     .dispersion = 7.0f,      // 5.0 → 7.0 (daha hızlı yayılma)
     
-    .thermal_conductivity = 1.8f,
-    .specific_heat = 3000.0f,
+    .thermal_conductivity = 3.0f,   // 1.8 → 3.0
+    .specific_heat = 2000.0f,       // 3000 → 2000
     
     .melting_point = 0,
     .boiling_point = 373.0f,

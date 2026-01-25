@@ -75,8 +75,8 @@ static void physics_update_chunk_pass(World* world, Chunk* chunk, f32 dt, bool g
     i32 base_x = chunk->chunk_x * CHUNK_SIZE;
     i32 base_y = chunk->chunk_y * CHUNK_SIZE;
 
-    // ALWAYS use ordered grid scan for correct falling physics
-    // Bottom-to-top for non-gas (falling), top-to-bottom for gas (rising)
+    // Katılar (düşen): alttan üste - alttaki önce düşer, üstteki boşalan yere geçer
+    // Gazlar (yükselen): üstten alta - üstteki önce yükselir, alttaki boşalan yere geçer
     i32 ly_start = gas_pass ? 0 : CHUNK_SIZE - 1;
     i32 ly_end = gas_pass ? CHUNK_SIZE : -1;
     i32 ly_step = gas_pass ? 1 : -1;
@@ -121,6 +121,7 @@ static void physics_update_serial(World* world, f32 dt) {
 
     physics_reset_gas_updates(world);
 
+    // Gas pass - ÜSTTEN ALTA (üstteki gaz önce yükselir, alttaki boşalan yere geçer)
     for (i32 cy = 0; cy < CHUNKS_Y; cy++) {
         i32 cx_start = ((cy + world->tick) % 2 == 0) ? 0 : CHUNKS_X - 1;
         i32 cx_end = ((cy + world->tick) % 2 == 0) ? CHUNKS_X : -1;
@@ -163,8 +164,8 @@ static void physics_update_parallel(World* world, f32 dt) {
     }
     
     physics_reset_gas_updates(world);
-    
-    // Phase 2: Gas pass (top to bottom for rising gases, row by row)
+
+    // Phase 2: Gas pass - ÜSTTEN ALTA (yükselen gazlar için)
     for (i32 cy = 0; cy < CHUNKS_Y; cy++) {
         // Even columns
         for (i32 cx = 0; cx < CHUNKS_X; cx += 2) {
@@ -175,7 +176,7 @@ static void physics_update_parallel(World* world, f32 dt) {
             }
         }
         thread_pool_wait(pool);
-        
+
         // Odd columns
         for (i32 cx = 1; cx < CHUNKS_X; cx += 2) {
             Chunk* chunk = &world->chunks[cy][cx];

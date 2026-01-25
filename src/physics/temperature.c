@@ -7,6 +7,7 @@
 #include "materials/material_ids.h"
 #include "core/config.h"
 #include "core/math_utils.h"
+#include <math.h>
 
 f32 temperature_effective_conductivity(f32 k1, f32 k2) {
     // Harmonic mean for conductivity between different materials
@@ -38,7 +39,7 @@ void temperature_update(World* world, i32 x, i32 y, f32 dt) {
 
         if (neighbor->material_id == MAT_AIR) {
             air_neighbors++;
-            continue;
+            // continue kaldırıldı - hava da ısı transferine dahil
         }
         
         f32 neighbor_thermal_k = MAT_CACHE_THERMAL_K(neighbor->material_id);
@@ -46,9 +47,10 @@ void temperature_update(World* world, i32 x, i32 y, f32 dt) {
         // Effective thermal conductivity between the two materials
         f32 k_eff = temperature_effective_conductivity(mat_thermal_k, neighbor_thermal_k);
         
-        // Heat transfer: Q = k_eff * (T_neighbor - T_pixel)
+        // Heat transfer: Q = k_eff * (T_neighbor - T_pixel) * speed_factor
         f32 temp_diff = neighbor->temperature - pixel->temperature;
-        total_heat_transfer += k_eff * temp_diff;
+        f32 speed_factor = 1.0f + fabsf(temp_diff) / 1000.0f;  // Fark arttıkça hız artar
+        total_heat_transfer += k_eff * temp_diff * speed_factor;
         neighbor_count++;
     }
 
@@ -61,7 +63,8 @@ void temperature_update(World* world, i32 x, i32 y, f32 dt) {
         f32 k_eff = temperature_effective_conductivity(mat_thermal_k, neighbor_thermal_k);
 
         f32 temp_diff = neighbor->temperature - pixel->temperature;
-        total_heat_transfer += (k_eff * temp_diff) * 0.5f;
+        f32 speed_factor = 1.0f + fabsf(temp_diff) / 1000.0f;
+        total_heat_transfer += (k_eff * temp_diff * speed_factor) * 0.5f;
         neighbor_count++;
     }
     
@@ -74,72 +77,17 @@ void temperature_update(World* world, i32 x, i32 y, f32 dt) {
         pixel->temperature += alpha * total_heat_transfer * dt;
     }
 
-    // === ATEŞ KOMŞU KONTROLÜ ===
-    bool has_fire_neighbor = false;
-    for (i32 i = 0; i < 4; i++) {
-        Pixel* neighbor = grid_get_neighbor(world, x, y, (Direction)i);
-        if (neighbor && neighbor->material_id == MAT_FIRE) {
-            has_fire_neighbor = true;
-            break;
-        }
-    }
-
-    // === SICAK MATERYAL EKSTRA ISI YAYIMI ===
-    // Sıcak materyaller komşularını ısıtır (ateş varken daha güçlü)
-    if (pixel->temperature > 800.0f) {
-        f32 heat_mult = has_fire_neighbor ? 0.0003f : 0.0001f;
-        f32 excess_heat = (pixel->temperature - 800.0f) * heat_mult;
-        for (i32 i = 0; i < 4; i++) {
-            Pixel* neighbor = grid_get_neighbor(world, x, y, (Direction)i);
-            if (neighbor && neighbor->material_id != MAT_AIR) {
-                neighbor->temperature += excess_heat;
-            }
-        }
-    }
-
-    // === SOĞUK KOMŞU SOĞUTMASI (Cold Sink Cooling) ===
-    // Sadece ateş yokken çalışır - sıcak materyal soğuk katıya temas edince soğur
-    if (!has_fire_neighbor && pixel->temperature > AMBIENT_TEMPERATURE + 100.0f) {
-        for (i32 i = 0; i < 4; i++) {
-            Pixel* neighbor = grid_get_neighbor(world, x, y, (Direction)i);
-            if (!neighbor || neighbor->material_id == MAT_AIR) continue;
-
-            // Komşu daha soğuksa ve önemli fark varsa, ısı çeker
-            if (neighbor->temperature < pixel->temperature - 150.0f) {
-                f32 temp_diff = pixel->temperature - neighbor->temperature;
-                f32 cooling = temp_diff * 0.005f;  // %0.5 transfer (daha yavaş)
-                pixel->temperature -= cooling;
-                neighbor->temperature += cooling * 0.5f;
-            }
-        }
-    }
-
-    // Ambient exchange - ateş yokken tüm materyaller minimum soğuma alır
-    f32 exposure;
-    if (has_fire_neighbor) {
-        // Ateş varken sadece havaya açık olanlar soğur
-        exposure = (f32)air_neighbors / 4.0f;
-    } else {
-        // Ateş yokken minimum %10 exposure
-        exposure = (f32)(air_neighbors * 2 + 1) / 10.0f;  // 0.1 - 0.9 arası
-    }
-
+    // Ambient cooling - sadece havaya temas eden pikseller soğur
+    f32 exposure = (f32)air_neighbors / 4.0f;
     if (exposure > 0.0f) {
         f32 exchange = COOLING_RATE;
 
-        // === MATERYAL BAZLI SOĞUMA ORANLARI ===
-        // Önce materyal-spesifik kontrol
+        // Materyal bazlı çarpanlar
         if (mat_id == MAT_MOLTEN_SAND) {
-            // Erimiş kum çok hızlı soğumalı
             exchange *= 5.0f;
-        } else if (mat_id == MAT_METAL && pixel->temperature > 400.0f) {
-            // Sıcak metal hızlı soğur
-            exchange *= 2.0f;
         } else if (mat_id == MAT_STEAM) {
-            // Buhar yavaş soğur (geç yoğunlaşma)
             exchange *= 0.4f;
         } else {
-            // Varsayılan state bazlı soğuma
             switch (mat_state) {
                 case STATE_GAS:
                 case STATE_PLASMA:
@@ -183,10 +131,14 @@ void temperature_transfer(Pixel* p1, Pixel* p2, f32 dt) {
 
 void temperature_apply_cooling(Pixel* pixel, f32 ambient_temp, f32 exposure, f32 dt) {
     if (!pixel) return;
-    
+
     // Gradual cooling toward ambient
     f32 temp_diff = ambient_temp - pixel->temperature;
-    pixel->temperature += temp_diff * exposure * dt;
+
+    // Simetrik soğuma/ısınma
+    f32 rate = 1.0f;
+
+    pixel->temperature += temp_diff * exposure * rate * dt;
 }
 
 void temperature_spread_heat(World* world, i32 x, i32 y, f32 heat_amount) {

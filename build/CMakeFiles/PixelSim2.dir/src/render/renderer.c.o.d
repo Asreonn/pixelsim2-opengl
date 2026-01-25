@@ -26,6 +26,7 @@ CMakeFiles/PixelSim2.dir/src/render/renderer.c.o: \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/input/brush.h \
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/input/input.h \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include/glad/glad.h \
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/external/glad/include/KHR/khrplatform.h \
  /usr/include/GLFW/glfw3.h /usr/include/ctype.h \

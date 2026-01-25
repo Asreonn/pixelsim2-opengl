@@ -14,7 +14,7 @@ MaterialDef MAT_DEF_AIR = {
     .elasticity = 0.0f,
     .dispersion = 5.0f,
     
-    .thermal_conductivity = 0.024f,
+    .thermal_conductivity = 0.5f,   // Simülasyon için artırıldı
     .specific_heat = 1005.0f,
     
     .melting_point = 0,

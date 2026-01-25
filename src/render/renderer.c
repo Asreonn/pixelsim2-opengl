@@ -5,6 +5,7 @@
 #include "world/pixel.h"
 #include "materials/material_registry.h"
 #include "input/brush.h"
+#include "input/input.h"
 #include "core/config.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -251,7 +252,7 @@ static i32 renderer_temp_to_celsius(f32 temp_k) {
     return (i32)(temp_k - 273.15f + (temp_k >= 273.15f ? 0.5f : -0.5f));
 }
 
-static void renderer_draw_hud(Renderer* renderer, World* world, Brush* brush) {
+static void renderer_draw_hud(Renderer* renderer, World* world, Brush* brush, Input* input) {
     if (!world || !brush) return;
 
     Color text_color = (Color){230, 230, 230, 230};
@@ -280,6 +281,25 @@ static void renderer_draw_hud(Renderer* renderer, World* world, Brush* brush) {
 
     snprintf(line, sizeof(line), "SIZE %d", brush->size);
     renderer_draw_text_shadow(renderer, 4, y, line, text_color);
+
+    // Hover temperature in top-right corner
+    if (input && input->in_bounds) {
+        Pixel* hover_pixel = world_get_pixel(world, input->world_x, input->world_y);
+        if (hover_pixel) {
+            i32 hover_c = (i32)(hover_pixel->temperature - 273.15f);
+            char hover_line[32];
+
+            if (hover_pixel->material_id == MAT_AIR) {
+                snprintf(hover_line, sizeof(hover_line), "AIR %dC", hover_c);
+            } else {
+                snprintf(hover_line, sizeof(hover_line), "%dC", hover_c);
+            }
+
+            i32 text_len = strlen(hover_line);
+            i32 text_x = WORLD_WIDTH - (text_len * 6) - 4;
+            renderer_draw_text_shadow(renderer, text_x, 4, hover_line, text_color);
+        }
+    }
 }
 
 bool renderer_init(Renderer* renderer) {
@@ -443,7 +463,7 @@ void renderer_update_ui(Renderer* renderer, Brush* brush) {
     renderer->ui_needs_redraw = false;
 }
 
-void renderer_update_texture(Renderer* renderer, World* world, Brush* brush) {
+void renderer_update_texture(Renderer* renderer, World* world, Brush* brush, Input* input) {
     // Always update UI panel
     renderer_update_ui(renderer, brush);
 
@@ -479,7 +499,7 @@ void renderer_update_texture(Renderer* renderer, World* world, Brush* brush) {
             // Draw HUD directly to buffer
             // Copy buffer to renderer->pixel_buffer for HUD drawing
             memcpy(renderer->pixel_buffer, buffer, WORLD_WIDTH * WORLD_HEIGHT * 4);
-            renderer_draw_hud(renderer, world, brush);
+            renderer_draw_hud(renderer, world, brush, input);
             memcpy(buffer, renderer->pixel_buffer, WORLD_WIDTH * WORLD_HEIGHT * 4);
             
             glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
@@ -511,7 +531,7 @@ void renderer_update_texture(Renderer* renderer, World* world, Brush* brush) {
             }
         }
 
-        renderer_draw_hud(renderer, world, brush);
+        renderer_draw_hud(renderer, world, brush, input);
         
         glBindTexture(GL_TEXTURE_2D, renderer->texture);
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, WORLD_WIDTH, WORLD_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, renderer->pixel_buffer);

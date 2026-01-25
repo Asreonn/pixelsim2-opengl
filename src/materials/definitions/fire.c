@@ -22,7 +22,7 @@ MaterialDef MAT_DEF_FIRE = {
     .elasticity = 0.0f,
     .dispersion = 3.0f,
     
-    .thermal_conductivity = 0.1f,
+    .thermal_conductivity = 100.0f,  // Isı kaynağı - yüksek iletkenlik
     .specific_heat = 1000.0f,
     
     .melting_point = 0,

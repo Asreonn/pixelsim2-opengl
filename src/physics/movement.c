@@ -374,16 +374,63 @@ void movement_update_gas(World* world, i32 x, i32 y) {
 void movement_update_plasma(World* world, i32 x, i32 y) {
     Pixel* pixel = world_get_pixel(world, x, y);
     if (!pixel) return;
-    
-    // Plasma always rises and spreads
-    if (grid_try_move_up(world, x, y)) return;
-    if (grid_try_move_up_diagonal(world, x, y)) return;
-    
-    // Deterministic horizontal movement
+
+    MaterialDef* mat = material_get(pixel->material_id);
+    if (!mat) return;
+
+    // Sıcaklık farkına bağlı yükselme hızı
+    f32 temp_diff = pixel->temperature - AMBIENT_TEMPERATURE;
+    f32 rise_factor = clampf(temp_diff / 500.0f, 0.3f, 1.0f);
+
+    // Lifetime'a bağlı hız - yeni ateş daha hızlı yükselir
+    f32 life_factor = 1.0f;
+    if (mat->lifetime > 0 && pixel->lifetime > 0) {
+        life_factor = (f32)pixel->lifetime / (f32)mat->lifetime;
+        life_factor = 0.4f + life_factor * 0.6f;  // 0.4 - 1.0 arası
+    }
+
+    // Kaç adım yükselecek
+    i32 steps = clampi((i32)(rise_factor * life_factor * 2.0f), 1, 3);
+
+    i32 curr_x = x, curr_y = y;
     u32 h = hash_position(x, y, world->tick);
-    if ((h % 10u) < 3u) {
-        i32 dx = (h & 1u) ? 1 : -1;
-        grid_try_move(world, x, y, dx, 0);
+
+    for (i32 step = 0; step < steps; step++) {
+        // Ana yükselme - önce düz yukarı dene
+        if (grid_try_move_up(world, curr_x, curr_y)) {
+            curr_y--;
+            continue;
+        }
+
+        // Diyagonal yükselme - rastgele yön seç
+        bool left_first = ((h >> step) & 1u) != 0u;
+        i32 dx1 = left_first ? -1 : 1;
+        i32 dx2 = left_first ? 1 : -1;
+
+        if (grid_try_move(world, curr_x, curr_y, dx1, -1)) {
+            curr_x += dx1;
+            curr_y--;
+            continue;
+        }
+        if (grid_try_move(world, curr_x, curr_y, dx2, -1)) {
+            curr_x += dx2;
+            curr_y--;
+            continue;
+        }
+
+        // Yukarı gidemiyorsa yatay hareket - dalgalanma efekti
+        f32 flicker = (f32)((h + (u32)step * 7u) % 100u) / 100.0f;
+        if (flicker < 0.4f) {
+            i32 dx = ((h >> 4) & 1u) ? 1 : -1;
+            grid_try_move(world, curr_x, curr_y, dx, 0);
+        }
+        break;
+    }
+
+    // Ek yatay dalgalanma - titreme efekti
+    if ((h % 5u) < 2u) {
+        i32 flicker_dx = ((h >> 2) & 1u) ? 1 : -1;
+        grid_try_move(world, curr_x, curr_y, flicker_dx, 0);
     }
 }
 

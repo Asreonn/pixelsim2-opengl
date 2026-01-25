@@ -133,7 +133,7 @@ bool phase_check_combustion(World* world, i32 x, i32 y) {
 void phase_update_fire(World* world, i32 x, i32 y) {
     Pixel* pixel = world_get_pixel(world, x, y);
     if (!pixel || pixel->material_id != MAT_FIRE) return;
-    
+
     // Decrease lifetime
     if (pixel->lifetime > 0) {
         pixel->lifetime--;
@@ -142,25 +142,27 @@ void phase_update_fire(World* world, i32 x, i32 y) {
         pixel_reset(pixel);
         return;
     }
-    
-    // Fire emits heat
-    pixel->temperature = FIRE_TEMPERATURE;
-    temperature_spread_heat(world, x, y, FIRE_HEAT_OUTPUT * 0.5f);
 
+    // Fire maintains high temperature - conductivity will spread it
+    pixel->temperature = FIRE_TEMPERATURE;
+
+    // Only heat DIRECT contact neighbors (4 cardinal), small amount
+    // Let thermal conductivity do the real spreading
     bool touching = false;
-    for (i32 i = 0; i < 8; i++) {
-        i32 nx = x + DIR_DX[i];
-        i32 ny = y + DIR_DY[i];
-        Pixel* neighbor = world_get_pixel(world, nx, ny);
-        if (!neighbor || neighbor->material_id == MAT_AIR) continue;
+    for (i32 i = 0; i < 4; i++) {
+        Pixel* neighbor = grid_get_neighbor(world, x, y, (Direction)i);
+        if (!neighbor) continue;
+        if (neighbor->material_id == MAT_AIR) {
+            // Hava daha hızlı ısınsın (konveksiyon simülasyonu)
+            neighbor->temperature += FIRE_HEAT_OUTPUT * 0.5f;  // 25K/tick
+            continue;
+        }
         if (neighbor->material_id != MAT_FIRE) {
             touching = true;
+            // Small direct heat boost only to immediate neighbors
+            neighbor->temperature += FIRE_HEAT_OUTPUT * 0.3f;  // 15K instead of 40K
+            world_wake_chunk_at(world, x + DIR_DX[i], y + DIR_DY[i]);
         }
-        // Kuma biraz daha fazla ısı ama yavaş (0.8 → 1.0)
-        f32 heat_mult = (neighbor->material_id == MAT_SAND) ? 1.0f : 0.8f;
-        neighbor->temperature += FIRE_HEAT_OUTPUT * heat_mult;
-        world_wake_chunk_at(world, nx, ny);
-        temperature_spread_heat(world, nx, ny, FIRE_HEAT_OUTPUT * 0.2f);
     }
 
     if (touching && pixel->lifetime > 0) {

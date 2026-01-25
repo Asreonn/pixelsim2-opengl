@@ -7,8 +7,30 @@
 #include "core/config.h"
 
 Color color_calculate_pixel(const Pixel* pixel, bool show_temp, bool show_pressure) {
-    if (!pixel || pixel->material_id == MAT_AIR) {
+    if (!pixel) {
         return (Color){46, 58, 70, 255}; // Soft background
+    }
+
+    // Hava için sıcaklık/basınç gösterimi
+    if (pixel->material_id == MAT_AIR) {
+        Color bg = (Color){46, 58, 70, 255};
+
+        if (show_temp && pixel->temperature > AMBIENT_TEMPERATURE + 10.0f) {
+            // Sıcak hava gösterimi
+            Color temp_tint = temperature_get_color_tint(pixel->temperature);
+            if (temp_tint.a > 0) {
+                f32 blend = (f32)temp_tint.a / 255.0f * 0.7f;
+                temp_tint.a = 255;
+                bg = color_blend(bg, temp_tint, blend);
+            }
+        }
+
+        if (show_pressure) {
+            Color pressure_color = color_from_pressure(pixel->pressure);
+            bg = color_blend(bg, pressure_color, 0.3f);
+        }
+
+        return bg;
     }
     
     MaterialDef* mat = material_get(pixel->material_id);
@@ -18,27 +40,43 @@ Color color_calculate_pixel(const Pixel* pixel, bool show_temp, bool show_pressu
     Color color = color_add_variation(mat->base_color, mat->color_variation, pixel->color_seed);
 
     if (pixel->material_id == MAT_FIRE && mat->lifetime > 0) {
-        f32 life = (f32)pixel->lifetime / (f32)mat->lifetime;
-        life = clampf(life, 0.0f, 1.0f);
+        // lifetime: 30 → 0, life_ratio: 1.0 → 0.0
+        f32 life_ratio = (f32)pixel->lifetime / (f32)mat->lifetime;
+        life_ratio = clampf(life_ratio, 0.0f, 1.0f);
 
-        u8 flicker_seed = (u8)(pixel->color_seed + pixel->lifetime * 17u);
-        f32 flicker = (f32)(flicker_seed % 20) / 19.0f;
-        f32 glow = 0.2f + 0.25f * flicker;
+        // 6-aşamalı gradient - daha canlı renkler
+        static const Color FIRE_GRADIENT[6] = {
+            {255, 255, 240, 255},   // 0: Parlak beyaz (çekirdek)
+            {255, 240, 120, 255},   // 1: Açık sarı
+            {255, 180,  40, 255},   // 2: Altın sarısı
+            {255, 100,  20, 245},   // 3: Parlak turuncu
+            {230,  50,  10, 200},   // 4: Kırmızı
+            {150,  30,   5, 100},   // 5: Sönen kor
+        };
 
-        Color start = (Color){255, 240, 160, 255};
-        Color mid = (Color){255, 140, 40, 255};
-        Color end = (Color){120, 20, 0, 0};
+        // Hangi aşamadayız? (5 geçiş var)
+        f32 pos = (1.0f - life_ratio) * 5.0f;  // 0.0 → 5.0
+        i32 stage = (i32)pos;
+        if (stage > 4) stage = 4;
+        f32 t = pos - (f32)stage;
 
-        if (life > 0.5f) {
-            f32 t = (life - 0.5f) / 0.5f;
-            color = color_blend(mid, start, t);
-        } else {
-            f32 t = life / 0.5f;
-            color = color_blend(end, mid, t);
-        }
+        // İki aşama arası interpolasyon
+        Color c1 = FIRE_GRADIENT[stage];
+        Color c2 = FIRE_GRADIENT[stage + 1];
+        color = color_blend(c1, c2, t);
 
+        // Dinamik titreme efekti
+        u8 flicker_seed = (u8)(pixel->color_seed + pixel->lifetime * 17u + (u8)(pixel->temperature * 0.1f));
+        f32 flicker = (f32)(flicker_seed % 30) / 29.0f;
+
+        // Yeni ateş daha parlak titremeye sahip
+        f32 base_glow = 0.1f + life_ratio * 0.15f;
+        f32 flicker_intensity = 0.15f + life_ratio * 0.1f;
+        f32 glow = base_glow + flicker_intensity * flicker;
         color = color_lighten(color, glow);
-        color.a = (u8)((255.0f * clampf(life * 1.2f, 0.0f, 1.0f)) * (0.7f + 0.3f * flicker));
+
+        // Alpha: yeni ateş tam opak, sönerken şeffaflaşır
+        color.a = (u8)(255.0f * clampf(0.4f + life_ratio * 0.6f, 0.0f, 1.0f));
     }
     
     // Temperature overlay

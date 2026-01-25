@@ -7,6 +7,7 @@
 struct World;
 struct Brush;
 struct GLFWwindow;
+struct Input;
 
 // Renderer state
 typedef struct Renderer {
@@ -41,7 +42,7 @@ bool renderer_init(Renderer* renderer);
 void renderer_shutdown(Renderer* renderer);
 
 // Update texture from world
-void renderer_update_texture(Renderer* renderer, struct World* world, struct Brush* brush);
+void renderer_update_texture(Renderer* renderer, struct World* world, struct Brush* brush, struct Input* input);
 void renderer_update_chunk_texture(Renderer* renderer, struct World* world, i32 chunk_x, i32 chunk_y);
 
 // Render
