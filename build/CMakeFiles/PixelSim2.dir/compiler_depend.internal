@@ -462,9 +462,14 @@ CMakeFiles/PixelSim2.dir/src/materials/definitions/metal.c.o
 
 CMakeFiles/PixelSim2.dir/src/materials/definitions/molten_sand.c.o
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/src/materials/definitions/molten_sand.c
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/config.h
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/core/types.h
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_def.h
  /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/materials/material_ids.h
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/physics/phase_transition.h
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/chunk.h
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/pixel.h
+ /home/asreonn/uwu/Scripts/VSCode/C/PixelSim2/include/world/world.h
  /usr/include/bits/libc-header-start.h
  /usr/include/bits/long-double.h
  /usr/include/bits/stdint-intn.h

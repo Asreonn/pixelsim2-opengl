@@ -18,7 +18,7 @@ MaterialDef MAT_DEF_STEAM = {
     
     .melting_point = 0,
     .boiling_point = 0,
-    .freezing_point = 373.0f,  // Condenses below 100C
+    .freezing_point = 340.0f,  // Condenses at ~67C (slower condensation)
     .ignition_point = 0,
     
     .melts_into = MAT_AIR,

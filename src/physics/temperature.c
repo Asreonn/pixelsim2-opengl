@@ -90,19 +90,34 @@ void temperature_update(World* world, i32 x, i32 y, f32 dt) {
     if (air_neighbors > 0) {
         f32 exposure = (f32)air_neighbors / 4.0f;
         f32 exchange = COOLING_RATE;
-        switch (mat_state) {
-            case STATE_GAS:
-            case STATE_PLASMA:
-                exchange *= 1.5f;
-                break;
-            case STATE_SOLID:
-                exchange *= 0.7f;
-                break;
-            case STATE_LIQUID:
-                exchange *= 1.1f;
-                break;
-            default:
-                break;
+
+        // === MATERYAL BAZLI SOĞUMA ORANLARI ===
+        // Önce materyal-spesifik kontrol
+        if (mat_id == MAT_MOLTEN_SAND) {
+            // Erimiş kum çok hızlı soğumalı
+            exchange *= 3.0f;
+        } else if (mat_id == MAT_METAL && pixel->temperature > 400.0f) {
+            // Sıcak metal hızlı soğur
+            exchange *= 2.0f;
+        } else if (mat_id == MAT_STEAM) {
+            // Buhar yavaş soğur (geç yoğunlaşma)
+            exchange *= 0.4f;
+        } else {
+            // Varsayılan state bazlı soğuma
+            switch (mat_state) {
+                case STATE_GAS:
+                case STATE_PLASMA:
+                    exchange *= 1.5f;
+                    break;
+                case STATE_SOLID:
+                    exchange *= 0.7f;
+                    break;
+                case STATE_LIQUID:
+                    exchange *= 1.1f;
+                    break;
+                default:
+                    break;
+            }
         }
         temperature_apply_cooling(pixel, world->ambient_temperature, exposure * exchange, dt);
     }

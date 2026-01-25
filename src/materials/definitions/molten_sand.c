@@ -21,8 +21,8 @@ MaterialDef MAT_DEF_MOLTEN_SAND = {
     .elasticity = 0.0f,
     .dispersion = 2.0f,                  // Yavas yayilma
 
-    .thermal_conductivity = 1.2f,
-    .specific_heat = 900.0f,
+    .thermal_conductivity = 8.0f,        // Yüksek - hızlı soğuma için
+    .specific_heat = 600.0f,             // Düşük - daha az ısı tutma
 
     .melting_point = 0,                  // Zaten sivi
     .boiling_point = 2500.0f,            // Cok yuksek (buharlasmasaz)
