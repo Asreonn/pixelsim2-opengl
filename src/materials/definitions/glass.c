@@ -13,7 +13,7 @@ MaterialDef MAT_DEF_GLASS = {
     .elasticity = 0.0f,
     .dispersion = 0,
     
-    .thermal_conductivity = 1.0f,
+    .thermal_conductivity = 5.0f,   // Increased for better heat transfer
     .specific_heat = 840.0f,
     
     .melting_point = 1400.0f,

@@ -74,10 +74,21 @@ void temperature_update(World* world, i32 x, i32 y, f32 dt) {
         pixel->temperature += alpha * total_heat_transfer * dt;
     }
 
+    // === ATEŞ KOMŞU KONTROLÜ ===
+    bool has_fire_neighbor = false;
+    for (i32 i = 0; i < 4; i++) {
+        Pixel* neighbor = grid_get_neighbor(world, x, y, (Direction)i);
+        if (neighbor && neighbor->material_id == MAT_FIRE) {
+            has_fire_neighbor = true;
+            break;
+        }
+    }
+
     // === SICAK MATERYAL EKSTRA ISI YAYIMI ===
-    // Sıcak materyaller (>800K) komşularını ekstra ısıtır (conductivity bypass)
+    // Sıcak materyaller komşularını ısıtır (ateş varken daha güçlü)
     if (pixel->temperature > 800.0f) {
-        f32 excess_heat = (pixel->temperature - 800.0f) * 0.002f;
+        f32 heat_mult = has_fire_neighbor ? 0.0003f : 0.0001f;
+        f32 excess_heat = (pixel->temperature - 800.0f) * heat_mult;
         for (i32 i = 0; i < 4; i++) {
             Pixel* neighbor = grid_get_neighbor(world, x, y, (Direction)i);
             if (neighbor && neighbor->material_id != MAT_AIR) {
@@ -85,17 +96,42 @@ void temperature_update(World* world, i32 x, i32 y, f32 dt) {
             }
         }
     }
-    
-    // Ambient exchange only if exposed to air
-    if (air_neighbors > 0) {
-        f32 exposure = (f32)air_neighbors / 4.0f;
+
+    // === SOĞUK KOMŞU SOĞUTMASI (Cold Sink Cooling) ===
+    // Sadece ateş yokken çalışır - sıcak materyal soğuk katıya temas edince soğur
+    if (!has_fire_neighbor && pixel->temperature > AMBIENT_TEMPERATURE + 100.0f) {
+        for (i32 i = 0; i < 4; i++) {
+            Pixel* neighbor = grid_get_neighbor(world, x, y, (Direction)i);
+            if (!neighbor || neighbor->material_id == MAT_AIR) continue;
+
+            // Komşu daha soğuksa ve önemli fark varsa, ısı çeker
+            if (neighbor->temperature < pixel->temperature - 150.0f) {
+                f32 temp_diff = pixel->temperature - neighbor->temperature;
+                f32 cooling = temp_diff * 0.005f;  // %0.5 transfer (daha yavaş)
+                pixel->temperature -= cooling;
+                neighbor->temperature += cooling * 0.5f;
+            }
+        }
+    }
+
+    // Ambient exchange - ateş yokken tüm materyaller minimum soğuma alır
+    f32 exposure;
+    if (has_fire_neighbor) {
+        // Ateş varken sadece havaya açık olanlar soğur
+        exposure = (f32)air_neighbors / 4.0f;
+    } else {
+        // Ateş yokken minimum %10 exposure
+        exposure = (f32)(air_neighbors * 2 + 1) / 10.0f;  // 0.1 - 0.9 arası
+    }
+
+    if (exposure > 0.0f) {
         f32 exchange = COOLING_RATE;
 
         // === MATERYAL BAZLI SOĞUMA ORANLARI ===
         // Önce materyal-spesifik kontrol
         if (mat_id == MAT_MOLTEN_SAND) {
             // Erimiş kum çok hızlı soğumalı
-            exchange *= 3.0f;
+            exchange *= 5.0f;
         } else if (mat_id == MAT_METAL && pixel->temperature > 400.0f) {
             // Sıcak metal hızlı soğur
             exchange *= 2.0f;
@@ -163,35 +199,59 @@ void temperature_spread_heat(World* world, i32 x, i32 y, f32 heat_amount) {
 }
 
 Color temperature_get_color_tint(f32 temperature) {
-    f32 temp_c = temperature - 273.15f;
-    f32 ambient_c = AMBIENT_TEMPERATURE - 273.15f;
+    f32 t;
 
-    if (temp_c < ambient_c) {
-        f32 t = (ambient_c - temp_c) / 80.0f;
+    if (temperature < 200.0f) {
+        // Çok soğuk: koyu mavi
+        return (Color){20, 40, 180, 200};
+    } else if (temperature < AMBIENT_TEMPERATURE) {
+        // Soğuk: mavi → cyan
+        t = (temperature - 200.0f) / (AMBIENT_TEMPERATURE - 200.0f);
         t = clampf(t, 0, 1);
-        Color cold = (Color){20, 40, 140, 0};
-        Color mid = (Color){80, 180, 255, 0};
-        Color color = color_lerp(cold, mid, t);
-        color.a = (u8)(t * 200);
-        return color;
-    }
-
-    if (temp_c > ambient_c) {
-        f32 t = (temp_c - ambient_c) / 500.0f;
+        return (Color){
+            (u8)(20 + 60 * t),
+            (u8)(40 + 160 * t),
+            (u8)(180 - 20 * t),
+            (u8)(180 - 80 * t)
+        };
+    } else if (temperature < 400.0f) {
+        // Ilık: yeşil → sarı
+        t = (temperature - AMBIENT_TEMPERATURE) / (400.0f - AMBIENT_TEMPERATURE);
         t = clampf(t, 0, 1);
-        Color warm = (Color){255, 220, 80, 0};
-        Color hot = (Color){255, 120, 20, 0};
-        Color white = (Color){255, 255, 255, 0};
-        Color color;
-
-        if (t < 0.5f) {
-            color = color_lerp(warm, hot, t * 2.0f);
-        } else {
-            color = color_lerp(hot, white, (t - 0.5f) * 2.0f);
-        }
-        color.a = (u8)(t * 220);
-        return color;
+        return (Color){
+            (u8)(80 + 175 * t),
+            (u8)(200 - 55 * t),
+            20,
+            (u8)(100 + 100 * t)
+        };
+    } else if (temperature < 800.0f) {
+        // Sıcak: sarı → turuncu
+        t = (temperature - 400.0f) / 400.0f;
+        t = clampf(t, 0, 1);
+        return (Color){
+            255,
+            (u8)(145 - 95 * t),
+            20,
+            (u8)(200 + 30 * t)
+        };
+    } else if (temperature < 1200.0f) {
+        // Çok sıcak: turuncu → kırmızı
+        t = (temperature - 800.0f) / 400.0f;
+        t = clampf(t, 0, 1);
+        return (Color){
+            255,
+            (u8)(50 - 30 * t),
+            (u8)(20 * t),
+            230
+        };
+    } else {
+        // Aşırı sıcak: kırmızı → beyaz
+        t = clampf((temperature - 1200.0f) / 800.0f, 0, 1);
+        return (Color){
+            255,
+            (u8)(20 + 235 * t),
+            (u8)(20 + 235 * t),
+            255
+        };
     }
-
-    return (Color){0, 0, 0, 0};
 }

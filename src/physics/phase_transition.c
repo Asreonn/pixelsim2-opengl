@@ -46,13 +46,22 @@ bool phase_check_melting(World* world, i32 x, i32 y) {
 bool phase_check_freezing(World* world, i32 x, i32 y) {
     Pixel* pixel = world_get_pixel(world, x, y);
     if (!pixel) return false;
-    
+
     u16 mat_id = pixel->material_id;
     f32 freezing_point = MAT_CACHE_FREEZING_POINT(mat_id);
-    
+
     if (freezing_point > 0 && pixel->temperature <= freezing_point) {
         u16 freezes_into = MAT_CACHE_FREEZES_INTO(mat_id);
         if (freezes_into != MAT_AIR) {
+            // Ekzotermik: Donma sırasında komşulara ısı ver
+            // (Molten sand -> glass latent heat release)
+            f32 latent_heat = 50.0f;  // Isı miktarı
+            for (i32 i = 0; i < 4; i++) {
+                Pixel* neighbor = grid_get_neighbor(world, x, y, (Direction)i);
+                if (neighbor && neighbor->material_id != MAT_AIR) {
+                    neighbor->temperature += latent_heat * 0.25f;
+                }
+            }
             phase_transform(world, x, y, freezes_into);
             return true;
         }
@@ -184,7 +193,7 @@ void phase_update_molten_sand(World* world, i32 x, i32 y) {
     Pixel* pixel = world_get_pixel(world, x, y);
     if (!pixel || pixel->material_id != MAT_MOLTEN_SAND) return;
 
-    // Erimiş kum komşu kumları ısıtır (8 yön)
+    // Erimiş kum komşu kumları ısıtır ve camdan soğur (8 yön)
     for (i32 i = 0; i < 8; i++) {
         i32 nx = x + DIR_DX[i];
         i32 ny = y + DIR_DY[i];
@@ -195,6 +204,12 @@ void phase_update_molten_sand(World* world, i32 x, i32 y) {
             // Kuma direk ısı ver - zincir ısıtma
             neighbor->temperature += 15.0f;
             world_wake_chunk_at(world, nx, ny);
+        } else if (neighbor->material_id == MAT_GLASS) {
+            // Cam erimiş kumu hızlı soğutur (zincir soğutma)
+            f32 temp_diff = pixel->temperature - neighbor->temperature;
+            if (temp_diff > 50.0f) {
+                pixel->temperature -= temp_diff * 0.02f;  // %2 soğuma
+            }
         }
     }
 }

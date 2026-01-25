@@ -23,8 +23,8 @@
 // Physics constants
 #define GRAVITY 9.81f
 #define THERMAL_LIFT_CONSTANT 0.05f
-#define COOLING_RATE 0.35f
-#define HEAT_TRANSFER_SCALE 20000.0f
+#define COOLING_RATE 1.5f
+#define HEAT_TRANSFER_SCALE 80000.0f
 #define MAX_SPREAD 5
 #define MAX_VELOCITY 10.0f
 
